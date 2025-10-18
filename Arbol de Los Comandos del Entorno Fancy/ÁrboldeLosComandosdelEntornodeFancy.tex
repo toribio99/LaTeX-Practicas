@@ -1,0 +1,1086 @@
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+% Paquetes Fancy principales
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+
+% Colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{codebackground}{RGB}{245,245,245}
+
+% Configuración de listings con soporte para español
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	backgroundcolor=\color{codebackground},
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true,
+	frame=single,
+	rulecolor=\color{gray!30},
+	inputencoding=utf8,
+	extendedchars=true,
+	literate=
+		{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+		{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+		{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+		{ü}{{\"u}}1 {Ü}{{\"U}}1
+		{¿}{{?`}}1 {¡}{{!`}}1
+}
+
+% Configuración de fancyhdr para este documento
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\textit{Guía de Paquetes Fancy en \LaTeX{}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-3pt}
+
+% Título
+\title{\textbf{\Huge Paquetes Fancy en \LaTeX{}}\\\large Guía Completa de Comandos, Entornos y Personalización}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+Los paquetes \textbf{Fancy} de \LaTeX{} proporcionan herramientas avanzadas para personalizar y mejorar la presentación de documentos. Esta guía cubre todos los paquetes disponibles con el prefijo "fancy", incluyendo comandos, entornos, opciones y ejemplos prácticos.
+\end{tcolorbox}
+
+\tableofcontents
+%\newpage
+
+\section{Paquete fancyhdr}
+
+\subsection{Introducción a fancyhdr}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El paquete \texttt{fancyhdr} permite personalizar completamente los encabezados y pies de página de un documento.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyhdr}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Estilos de Página}
+
+\subsubsection*{\texttt{\textbackslash pagestyle\{fancy\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Activa el estilo fancy para todas las páginas
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\pagestyle{fancy}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash thispagestyle\{fancy\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Aplica el estilo fancy solo a la página actual
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\thispagestyle{fancy}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comandos de Configuración}
+
+\subsubsection*{\texttt{\textbackslash fancyhf\{\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Limpia todos los campos de encabezado y pie de página
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\fancyhf{} % Limpia todo
+\fancyhf[L]{Texto} % Solo limpia y establece izquierda
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Encabezados (Headers)}
+
+\subsubsection*{\texttt{\textbackslash fancyhead[posición]\{contenido\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el contenido del encabezado en una posición específica
+
+	\textbf{Posiciones disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{L} -- Left (izquierda)
+		\item \texttt{C} -- Center (centro)
+		\item \texttt{R} -- Right (derecha)
+		\item \texttt{E} -- Even pages (páginas pares)
+		\item \texttt{O} -- Odd pages (páginas impares)
+	\end{itemize}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\fancyhead[L]{Capítulo \thechapter}
+\fancyhead[C]{Título del Documento}
+\fancyhead[R]{\thepage}
+\fancyhead[LE,RO]{\thepage} % Izquierda par, derecha impar
+\fancyhead[LO,RE]{Autor}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Pies de Página (Footers)}
+
+\subsubsection*{\texttt{\textbackslash fancyfoot[posición]\{contenido\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el contenido del pie de página
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\fancyfoot[L]{Universidad XYZ}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\today}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,RE]{\leftmark}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Líneas Decorativas}
+
+\subsubsection*{\texttt{\textbackslash renewcommand\{\textbackslash headrulewidth\}\{grosor\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el grosor de la línea del encabezado
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\headrulewidth}{0.4pt} % Línea visible
+\renewcommand{\headrulewidth}{0pt}   % Sin línea
+\renewcommand{\headrulewidth}{2pt}   % Línea gruesa
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash renewcommand\{\textbackslash footrulewidth\}\{grosor\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el grosor de la línea del pie de página
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\footrulewidth}{0.4pt} % Línea visible
+\renewcommand{\footrulewidth}{0pt}   % Sin línea
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Variables Útiles}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Variables predefinidas para usar en encabezados/pies:}
+	\begin{itemize}[nosep]
+		\item \texttt{\textbackslash thepage} -- Número de página actual
+		\item \texttt{\textbackslash thechapter} -- Número de capítulo actual
+		\item \texttt{\textbackslash thesection} -- Número de sección actual
+		\item \texttt{\textbackslash leftmark} -- Marca izquierda (capítulo)
+		\item \texttt{\textbackslash rightmark} -- Marca derecha (sección)
+		\item \texttt{\textbackslash today} -- Fecha actual
+		\item \texttt{\textbackslash chaptername} -- Nombre "Capítulo"
+		\item \texttt{\textbackslash sectionname} -- Nombre "Sección"
+	\end{itemize}
+\end{tcolorbox}
+
+\subsection{Ejemplos Completos de fancyhdr}
+
+\subsubsection*{Ejemplo 1: Estilo Simple}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 2: Estilo Doble Cara (twoside)}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\fancyfoot[C]{Mi Documento}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 3: Estilo Personalizado Avanzado}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% Encabezado con logo
+\fancyhead[L]{\includegraphics[height=1cm]{logo.png}}
+\fancyhead[C]{\textbf{Título del Documento}}
+\fancyhead[R]{Página \thepage}
+
+% Pie de página
+\fancyfoot[L]{Autor: Juan Pérez}
+\fancyfoot[C]{\today}
+\fancyfoot[R]{Versión 1.0}
+
+% Líneas decorativas
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Personalización de Marcas}
+
+\subsubsection*{\texttt{\textbackslash markboth\{izquierda\}\{derecha\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Establece manualmente las marcas izquierda y derecha
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\markboth{Capítulo 1: Introducción}{1.1 Conceptos Básicos}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash markright\{derecha\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Establece solo la marca derecha
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\markright{Sección Actual}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ancho de Encabezado/Pie}
+
+\subsubsection*{\texttt{\textbackslash fancyhfoffset[posición]\{offset\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ajusta el desplazamiento horizontal del encabezado/pie
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\fancyhfoffset[L]{1cm} % Extiende 1cm a la izquierda
+\fancyhfoffset[R]{2cm} % Extiende 2cm a la derecha
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Paquete fancybox}
+
+\subsection{Introducción a fancybox}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El paquete \texttt{fancybox} proporciona cajas decorativas con diversos estilos (sombra, doble borde, ovaladas, etc.)
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancybox}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Cajas con Estilo}
+
+\subsubsection*{\texttt{\textbackslash shadowbox\{texto\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Caja con sombra
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\shadowbox{Texto con sombra}
+	\end{lstlisting}
+
+	\textbf{Resultado:} \shadowbox{Texto con sombra}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash doublebox\{texto\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Caja con doble borde
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\doublebox{Texto con doble borde}
+	\end{lstlisting}
+
+	\textbf{Resultado:} \doublebox{Texto con doble borde}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash ovalbox\{texto\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Caja con bordes redondeados
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\ovalbox{Texto con bordes ovalados}
+	\end{lstlisting}
+
+	\textbf{Resultado:} \ovalbox{Texto con bordes ovalados}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash Ovalbox\{texto\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Caja oval con borde más grueso
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\Ovalbox{Texto con bordes ovalados gruesos}
+	\end{lstlisting}
+
+	\textbf{Resultado:} \Ovalbox{Texto con bordes ovalados gruesos}
+\end{tcolorbox}
+
+\subsection{Parámetros de Personalización}
+
+\subsubsection*{\texttt{\textbackslash setlength\{\textbackslash fboxrule\}\{grosor\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el grosor del borde de las cajas
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\setlength{\fboxrule}{2pt}
+\ovalbox{Borde grueso}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash setlength\{\textbackslash fboxsep\}\{separación\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define la separación entre el texto y el borde
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\setlength{\fboxsep}{5pt}
+\shadowbox{Más espacio interno}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash setlength\{\textbackslash shadowsize\}\{tamaño\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el tamaño de la sombra en shadowbox
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\setlength{\shadowsize}{5pt}
+\shadowbox{Sombra más grande}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Entornos de fancybox}
+
+\subsubsection*{Entorno \texttt{Sbox}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Guarda contenido en una caja para luego aplicarle estilo
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\newsavebox{\mybox}
+\begin{Sbox}
+  \begin{minipage}{0.5\textwidth}
+    Contenido de la caja con texto más largo
+    que puede ocupar varias líneas.
+  \end{minipage}
+\end{Sbox}
+\shadowbox{\TheSbox}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ejemplos Combinados}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Ejemplo Avanzado]
+	\begin{lstlisting}[language=TeX]
+% Ajustar parámetros
+\setlength{\fboxrule}{3pt}
+\setlength{\fboxsep}{10pt}
+\setlength{\shadowsize}{6pt}
+
+% Crear cajas personalizadas
+\shadowbox{\textbf{Importante:} Este es un aviso con sombra}
+
+\doublebox{\textcolor{red}{¡Atención!} Texto destacado}
+
+\Ovalbox{\large Texto grande en caja oval}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Paquete fancyvrb}
+
+\subsection{Introducción a fancyvrb}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El paquete \texttt{fancyvrb} extiende el entorno \texttt{verbatim} estándar con opciones avanzadas de formateo, numeración de líneas, colores, marcos y más.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyvrb}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Entorno Verbatim Mejorado}
+
+\subsubsection*{\texttt{Verbatim}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Entorno verbatim mejorado con opciones
+
+	\textbf{Ejemplo básico:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}
+Código fuente sin formato
+  con indentación preservada
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de Formato}
+
+\subsubsection*{frame -- Marco alrededor del código}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones:} \texttt{none}, \texttt{single}, \texttt{lines}, \texttt{topline}, \texttt{bottomline}, \texttt{leftline}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[frame=single]
+def hello():
+    print("Hello, World!")
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{numbers -- Numeración de líneas}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones:} \texttt{none}, \texttt{left}, \texttt{right}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[numbers=left]
+Línea 1
+Línea 2
+Línea 3
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{numbersep -- Separación de números}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Distancia entre números de línea y texto
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[numbers=left,numbersep=5pt]
+Código con números
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{firstnumber -- Número inicial}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el número de la primera línea
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[numbers=left,firstnumber=100]
+Línea 100
+Línea 101
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{stepnumber -- Paso de numeración}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Numera cada N líneas
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[numbers=left,stepnumber=5]
+Solo cada 5 líneas tendrá número
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de Tamaño y Fuente}
+
+\subsubsection*{fontsize -- Tamaño de fuente}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[fontsize=\small]
+Código en tamaño pequeño
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\large]
+Código en tamaño grande
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{fontfamily -- Familia de fuente}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[fontfamily=courier]
+Código en Courier
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de Color}
+
+\subsubsection*{formatcom -- Formato personalizado}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[formatcom=\color{blue}]
+Código en color azul
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de Espaciado}
+
+\subsubsection*{xleftmargin -- Margen izquierdo}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[xleftmargin=2cm]
+Código con margen izquierdo
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{xrightmargin -- Margen derecho}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[xrightmargin=1cm]
+Código con margen derecho
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Otras Opciones Útiles}
+
+\subsubsection*{label -- Etiqueta personalizada}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[frame=single,label=Código Python]
+def ejemplo():
+    pass
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{labelposition -- Posición de etiqueta}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones:} \texttt{none}, \texttt{topline}, \texttt{bottomline}, \texttt{all}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[frame=single,label=Ejemplo,labelposition=topline]
+Código con etiqueta arriba
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{samepage -- Evitar salto de página}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[samepage=true]
+Este código no se dividirá entre páginas
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comando Inline}
+
+\subsubsection*{\texttt{\textbackslash Verb}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Versión inline de Verbatim
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+El comando \Verb|printf("Hello")| imprime un mensaje.
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Definir Estilos Personalizados}
+
+\subsubsection*{\texttt{\textbackslash DefineVerbatimEnvironment}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define un nuevo entorno verbatim personalizado
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\DefineVerbatimEnvironment{MyCode}{Verbatim}{
+  frame=single,
+  numbers=left,
+  numbersep=3pt,
+  fontsize=\small,
+  formatcom=\color{blue}
+}
+
+\begin{MyCode}
+// Mi código personalizado
+int x = 10;
+\end{MyCode}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Guardar y Reutilizar Código}
+
+\subsubsection*{\texttt{\textbackslash SaveVerb}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Guarda código verbatim para reutilizarlo
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\SaveVerb{micodigo}|printf("Hola")|
+Luego puedes usar: \UseVerb{micodigo}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ejemplo Completo de fancyvrb}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Ejemplo Avanzado]
+	\begin{lstlisting}[language=TeX]
+% Definir estilo personalizado
+\DefineVerbatimEnvironment{PythonCode}{Verbatim}{
+  frame=lines,
+  numbers=left,
+  numbersep=5pt,
+  fontsize=\small,
+  formatcom=\color{blue!50!black},
+  label=Código Python,
+  labelposition=topline,
+  xleftmargin=1cm
+}
+
+% Usar el estilo
+\begin{PythonCode}
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+print(factorial(5))
+\end{PythonCode}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Paquete fancychap (No disponible en distribuciones modernas)}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faExclamationTriangle\ Nota Importante]
+El paquete \texttt{fancychap} está obsoleto y no está disponible en distribuciones modernas de \LaTeX{}. Para capítulos decorativos, se recomienda usar alternativas modernas como:
+\begin{itemize}
+	\item \texttt{titlesec} -- Personalización completa de títulos
+	\item \texttt{memoir} -- Clase de documento con estilos integrados
+	\item \texttt{KOMA-Script} -- Clases alternativas con opciones avanzadas
+\end{itemize}
+\end{tcolorbox}
+
+\section{Alternativa: Paquete titlesec}
+
+\subsection{Introducción a titlesec}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{titlesec} permite personalizar completamente el formato de capítulos, secciones y subsecciones.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{titlesec}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Personalizar Capítulos}
+
+\subsubsection*{\texttt{\textbackslash titleformat}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el formato de un título
+
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\titleformat{comando}[forma]{formato}{etiqueta}{sep}{antes}[después]
+	\end{lstlisting}
+
+	\textbf{Ejemplo - Capítulo decorativo:}
+	\begin{lstlisting}[language=TeX]
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo - Capítulo con línea decorativa}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue}}
+  {\filright\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {1ex}
+  {\titlerule\vspace{1ex}\filleft}
+  [\vspace{1ex}\titlerule]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Personalizar Secciones}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Ejemplo]
+	\begin{lstlisting}[language=TeX]
+% Sección con caja de color
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{white}}
+  {\colorbox{blue}{\parbox{1cm}{\centering\thesection}}}
+  {1em}
+  {\colorbox{blue!20}{\parbox{\dimexpr\textwidth-2cm}{\raggedright #1}}}
+
+% Subsección con línea
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}
+  {1em}
+  {#1\\\titlerule}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Espaciado de Títulos}
+
+\subsubsection*{\texttt{\textbackslash titlespacing}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ajusta el espacio antes y después de títulos
+
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\titlespacing{comando}{izquierda}{antes}{después}[derecha]
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\titlespacing{\chapter}{0pt}{50pt}{40pt}
+\titlespacing{\section}{0pt}{20pt}{10pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Otros Paquetes Fancy Útiles}
+
+\subsection{fancyref -- Referencias Mejoradas}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Crea referencias automáticas con formato inteligente
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancyref}
+	\end{lstlisting}
+
+	\textbf{Uso:}
+	\begin{lstlisting}[language=TeX]
+\fref{eq:example}  % Genera "Ecuación 1.2"
+\Fref{fig:graph}   % Genera "Figura 2.3"
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{fancypar -- Párrafos Decorativos}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Crea párrafos con letras capitales decorativas y otros efectos
+
+	\textbf{Nota:} Paquete no muy común, considerar alternativas como \texttt{lettrine}
+\end{tcolorbox}
+
+\subsection{lettrine -- Letra Capital (Alternativa)}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Crea letras capitales decorativas al inicio de párrafos
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{lettrine}
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\lettrine{E}{rase} una vez en un lugar muy lejano...
+% La 'E' será grande y decorativa
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{fancytabs -- Pestañas Laterales}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Añade pestañas en los márgenes del documento
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancytabs}
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\fancytab{Capítulo 1}
+\fancytab[r]{Derecha}  % Pestaña a la derecha
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{fancytooltips -- Tooltips en PDF}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Crea tooltips interactivos en documentos PDF
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{fancytooltips}
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\tooltip{texto visible}{texto del tooltip}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Combinaciones Avanzadas}
+
+\subsection{Documento Completo con fancyhdr + fancybox}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Ejemplo Integrado]
+	\begin{lstlisting}[language=TeX]
+\documentclass{article}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{xcolor}
+
+% Configurar encabezados
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\shadowbox{\textbf{Mi Documento}}}
+\fancyhead[R]{\ovalbox{Página \thepage}}
+\fancyfoot[C]{\doublebox{\today}}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{2pt}
+
+\begin{document}
+
+\section{Introducción}
+
+\shadowbox{\parbox{0.9\textwidth}{
+  Este es un párrafo dentro de una caja con sombra.
+  Combina múltiples paquetes fancy para crear
+  documentos con estilo profesional.
+}}
+
+\end{document}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Plantilla de Reporte con Fancy}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Plantilla Profesional]
+	\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper]{report}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Header personalizado
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyfoot[C]{\shadowbox{\small Reporte Técnico 2024}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Estilo verbatim personalizado
+\DefineVerbatimEnvironment{Code}{Verbatim}{
+  frame=single,
+  numbers=left,
+  fontsize=\small,
+  formatcom=\color{blue!60!black}
+}
+
+\begin{document}
+
+\chapter{Análisis}
+
+\shadowbox{\parbox{\textwidth}{
+  \textbf{Resumen Ejecutivo:}
+  Este capítulo presenta los hallazgos principales...
+}}
+
+\section{Metodología}
+
+\begin{Code}
+# Código de ejemplo
+def proceso():
+    return resultado
+\end{Code}
+
+\end{document}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section*{\faLightbulb\ Tips y Mejores Prácticas}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+	\textbf{Recomendaciones para usar paquetes Fancy:}
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{fancyhdr:} Siempre usa \texttt{\textbackslash fancyhf\{\}} antes de configurar para limpiar configuraciones previas
+		\item \textbf{fancyhdr:} Para documentos twoside, usa posiciones \texttt{LE,RO} y \texttt{LO,RE} para alternar
+		\item \textbf{fancybox:} Ajusta \texttt{\textbackslash fboxsep} y \texttt{\textbackslash fboxrule} antes de usar las cajas
+		\item \textbf{fancyvrb:} Define estilos personalizados con \texttt{\textbackslash DefineVerbatimEnvironment} para consistencia
+		\item \textbf{fancyvrb:} Usa \texttt{fontsize=\textbackslash small} para código largo que debe caber en la página
+		\item \textbf{Combinaciones:} Los paquetes fancy se complementan bien entre sí
+		\item \textbf{Compilación:} Algunos efectos requieren dos compilaciones para verse correctamente
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faExclamationTriangle\ Errores Comunes}
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black]
+	\textbf{Problemas frecuentes y soluciones:}
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{Headers no aparecen:} Asegúrate de usar \texttt{\textbackslash pagestyle\{fancy\}}
+		\item \textbf{Conflicto con otros paquetes:} Carga fancyhdr después de geometry
+		\item \textbf{Líneas muy gruesas:} Reduce \texttt{\textbackslash headrulewidth} a 0.4pt o menos
+		\item \textbf{Texto se sale de la caja:} Usa \texttt{parbox} o \texttt{minipage} dentro de las cajas fancy
+		\item \textbf{Verbatim no funciona en notas al pie:} Usa \texttt{\textbackslash SaveVerb} primero
+		\item \textbf{Capítulos sin estilo:} Verifica que estés usando clase \texttt{book} o \texttt{report}
+		\item \textbf{Páginas especiales sin fancy:} Usa \texttt{\textbackslash thispagestyle\{fancy\}} después de \texttt{\textbackslash maketitle}
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faBook\ Recursos Adicionales}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black]
+	\textbf{Documentación oficial:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{texdoc fancyhdr} -- Manual completo de fancyhdr
+		\item \texttt{texdoc fancybox} -- Documentación de fancybox
+		\item \texttt{texdoc fancyvrb} -- Guía de fancyvrb
+		\item \texttt{texdoc titlesec} -- Para personalizar títulos (alternativa a fancychap)
+	\end{itemize}
+
+	\textbf{Paquetes complementarios:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{geometry} -- Ajustar márgenes y tamaño de página
+		\item \texttt{xcolor} -- Añadir colores a encabezados y cajas
+		\item \texttt{graphicx} -- Incluir imágenes en headers
+		\item \texttt{tcolorbox} -- Cajas avanzadas (alternativa moderna a fancybox)
+		\item \texttt{listings} -- Alternativa a fancyvrb para resaltado de sintaxis
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faKeyboard\ Plantillas Rápidas}
+
+\subsection*{Header Simple}
+\begin{tcolorbox}[colback=teal!10,colframe=teal!75!black]
+	\begin{lstlisting}[language=TeX]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Header Doble Cara}
+\begin{tcolorbox}[colback=teal!10,colframe=teal!75!black]
+	\begin{lstlisting}[language=TeX]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Caja de Advertencia}
+\begin{tcolorbox}[colback=teal!10,colframe=teal!75!black]
+	\begin{lstlisting}[language=TeX]
+\setlength{\fboxrule}{2pt}
+\doublebox{\textbf{¡Atención!} Mensaje importante}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Código con Numeración}
+\begin{tcolorbox}[colback=teal!10,colframe=teal!75!black]
+	\begin{lstlisting}[language=TeX]
+\begin{Verbatim}[frame=single,numbers=left,fontsize=\small]
+// Tu código aquí
+\end{Verbatim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\vspace{2cm}
+
+\begin{center}
+	\shadowbox{\parbox{0.8\textwidth}{\centering
+		\large\textbf{Documento generado con \LaTeX{}}\\[0.5em]
+		\normalsize\textit{Guía completa de paquetes Fancy}\\[0.5em]
+		\small\today
+	}}
+
+	\vspace{1cm}
+
+	\textit{Esta guía cubre los principales paquetes fancy disponibles en \LaTeX{}.}\\
+	\textit{Para más información, consulta la documentación oficial de cada paquete.}
+\end{center}
+
+\end{document}

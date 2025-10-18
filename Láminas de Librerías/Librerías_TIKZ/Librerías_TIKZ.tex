@@ -1,0 +1,211 @@
+% !TEX TS-program = pdflatex
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{
+	arrows.meta,
+	positioning,
+	calc,
+	shapes.geometric,shapes.misc, shapes.symbols,
+	patterns,patterns.meta,
+	backgrounds,
+	fit,
+	matrix,
+	graphs,
+	trees,
+	decorations.pathmorphing,
+	decorations.markings,
+	decorations.text,
+	angles,quotes,
+	intersections,
+	through,
+	shadows.blur,
+	spy,
+	fadings,
+	babel
+}
+
+\pagestyle{empty}
+
+\newcommand{\captiontikz}[1]{\par\smallskip\noindent\textit{#1}\par\medskip}
+
+\begin{document}
+	
+	\section*{Lámina 1 — \texttt{arrows.meta}}
+	\begin{tikzpicture}[>={Latex}, line width=1pt]
+		\draw[-{Stealth[length=3mm]}] (0,0) -- (4,0);
+		\draw[-{Latex[length=3mm]}]   (0,0) -- (0,2);
+		\draw[-{Triangle[length=3mm]}] (0,0) -- (3,1.5);
+	\end{tikzpicture}
+	\captiontikz{Punteras modernas: \texttt{-\{Stealth\}}, \texttt{-\{Latex\}}, \texttt{-\{Triangle\}}. Aplicación: flechas en diagramas y anotaciones.}
+	
+	\section*{Lámina 2 — \texttt{positioning}}
+	\begin{tikzpicture}[node distance=12mm, every node/.style={draw,rounded corners,inner sep=2pt}]
+		\node (A) {A};
+		\node (B) [right=of A] {B};
+		\node (C) [below=of A] {C};
+		\node (D) [below right=of B] {D};
+		\draw[->] (A) -- (B);
+		\draw[->] (A) -- (C);
+		\draw[->] (B) -- (D);
+	\end{tikzpicture}
+	\captiontikz{Posiciona nodos relativo a otros: \texttt{right=of}, \texttt{below=of}, \texttt{node distance}.}
+	
+	\section*{Lámina 3 — \texttt{calc}}
+	\begin{tikzpicture}[scale=1, every node/.style={circle,fill=black,inner sep=1.2pt}]
+		\coordinate (A) at (0,0);
+		\coordinate (B) at (4,0);
+		\coordinate (M) at ($(A)!0.5!(B)$); % punto medio
+		\draw[thick] (A) -- (B) -- ($(B)+(0,2)$) -- cycle;
+		\node at (A) [label=below:A] {};
+		\node at (B) [label=below:B] {};
+		\node at (M) [label=below:medio] {};
+	\end{tikzpicture}
+	\captiontikz{Cálculo de coordenadas: \texttt{\$(A)!t!(B)\$}, desplazamientos \texttt{\$(C)+(dx,dy)\$}.}
+	
+	\section*{Lámina 4 — \texttt{shapes.geometric, shapes.misc}}
+	\begin{tikzpicture}[every node/.style={draw,minimum width=16mm,minimum height=8mm}]
+		\node[rectangle,rounded corners=2mm] at (0,0) {Rect};
+		\node[diamond,aspect=2]               at (3,0) {Decisión};
+		\node[cloud,cloud puffs=12,cloud ignores aspect,minimum width=20mm] at (6,0) {Nube};
+	\end{tikzpicture}
+	\captiontikz{Formas de nodo para diagramas de flujo y etiquetas.}
+	
+	\section*{Lámina 5 — \texttt{patterns \& patterns.meta}}
+	\begin{tikzpicture}
+		\path[pattern=bricks, pattern color=red, draw=black]
+		(0,0) rectangle (3,1.5);
+		\path[pattern=north east lines, pattern color=blue, draw=black]
+		(3.5,0) rectangle (6.5,1.5);
+	\end{tikzpicture}
+	\captiontikz{Rellenos con patrón y color de fondo: \texttt{pattern background color}.}
+	
+	\section*{Lámina 6 — \texttt{backgrounds}}
+	\begin{tikzpicture}
+		\begin{scope}[on background layer]
+			\fill[yellow!20] (-.5,-.5) rectangle (4.5,2);
+		\end{scope}
+		\draw[thick,rounded corners] (0,0) rectangle (4,1.5);
+		\node at (2,.75) {Caja con fondo};
+	\end{tikzpicture}
+	\captiontikz{Capa de fondo: \texttt{on background layer} para colorear detrás.}
+	
+	\section*{Lámina 7 — \texttt{fit}}
+	\begin{tikzpicture}[every node/.style={draw,rounded corners,inner sep=2pt}]
+		\node (n1) at (0,0) {A};
+		\node (n2) at (1.5,1) {B};
+		\node (grp) [fit=(n1)(n2), draw, dashed, inner sep=6pt, label=above:{Grupo}] {};
+	\end{tikzpicture}
+	\captiontikz{Nodo contenedor que “abraza” otros: \texttt{fit=(...)}.}
+	
+	\section*{Lámina 8 — \texttt{matrix}}
+	\begin{tikzpicture}
+		\matrix[matrix of nodes, nodes={draw,minimum width=7mm,minimum height=6mm}, row sep=2mm, column sep=2mm]{
+			a & b & c \\
+			d & e & f \\
+		};
+	\end{tikzpicture}
+	\captiontikz{Matrices ligeras de nodos para cuadricular etiquetas o mini-tablas.}
+	
+	\section*{Lámina 9 — \texttt{graphs} (sin auto-dibujo)}
+	\begin{tikzpicture}[nodes={draw,circle,inner sep=1.2pt}, node distance=12mm]
+		\node (a) {a}; \node (b) [right=of a] {b}; \node (c) [below=of a] {c}; \node (d) [right=of c] {d};
+		\graph { (a)--(b)--(d)--(c)--(a), (a)--(d) };
+	\end{tikzpicture}
+	\captiontikz{Sintaxis declarativa de aristas con \texttt{\textbackslash graph}. (Para auto-layout usar \texttt{graphdrawing} con LuaLaTeX).}
+	
+	\section*{Lámina 10 — \texttt{trees}}
+	\begin{tikzpicture}[level distance=10mm, every node/.style={draw,rounded corners,inner sep=1pt}, sibling distance=16mm]
+		\node {Raíz}
+		child { node {A} }
+		child { node {B}
+			child { node {B1} }
+			child { node {B2} }
+		};
+	\end{tikzpicture}
+	\captiontikz{Árboles declarativos con \texttt{child}, \texttt{level distance}, \texttt{sibling distance}.}
+	
+	\section*{Lámina 11 — \texttt{decorations.pathmorphing}}
+	\begin{tikzpicture}
+		\draw[decorate, decoration={snake,amplitude=1mm,segment length=5mm}, thick] (0,0) -- (6,0);
+	\end{tikzpicture}
+	\captiontikz{Deformaciones: \texttt{snake}, \texttt{zigzag}, \texttt{random steps}.}
+	
+	\section*{Lámina 12 — \texttt{decorations.markings}}
+	\begin{tikzpicture}
+		\draw[postaction={decorate}, decoration={markings, mark=at position .5 with {\arrow{Stealth}}}, thick]
+		(0,0) .. controls (2,1) and (4,-1) .. (6,0);
+	\end{tikzpicture}
+	\captiontikz{Marcas sobre el camino: flecha en la mitad (\texttt{mark=at position .5}).}
+	
+	\section*{Lámina 13 — \texttt{decorations.text}}
+	\begin{tikzpicture}
+		\draw[decorate, decoration={text along path, text={Texto siguiendo la curva}, text align=center}] 
+		(0,0) .. controls (2,1.5) and (4,-1) .. (6,0);
+	\end{tikzpicture}
+	\captiontikz{Texto fluyendo sobre una curva con \texttt{text along path}.}
+	
+	\section*{Lámina 14 — \texttt{angles, quotes}}
+	\begin{tikzpicture}[scale=1.1]
+		\coordinate (A) at (0,0);
+		\coordinate (B) at (4,0);
+		\coordinate (C) at (1.2,2);
+		\draw (A)--(B)--(C)--cycle;
+		\pic [draw, "$\alpha$", angle eccentricity=1.2] {angle = C--A--B};
+	\end{tikzpicture}
+	\captiontikz{Ángulos con \texttt{\textbackslash pic \{angle=\dots\}} y rótulo con \texttt{quotes}.}
+	
+	\section*{Lámina 15 — \texttt{intersections}}
+	\begin{tikzpicture}
+		\path[name path=A] (0,0) to[out=10,in=180] (4,1);
+		\path[name path=B] (0,1) -- (4,0);
+		\path[name intersections={of=A and B, by={X}}];
+		\draw[blue,thick] (0,0) to[out=10,in=180] (4,1);
+		\draw[red,thick]  (0,1) -- (4,0);
+		\fill[black] (X) circle (1.2pt) node[above right]{X};
+	\end{tikzpicture}
+	\captiontikz{Corte de caminos con \texttt{name path} y \texttt{name intersections}.}
+	
+\section*{Lámina 16 — \texttt{through}}
+\begin{tikzpicture}
+	\coordinate (C) at (0,0);
+	\coordinate (P) at (2,1);
+	\draw[help lines] (-1,-1) grid (3,2);
+	\fill[magenta] (C) circle (1.5pt) node[below]{C};
+	\fill[blue] (P) circle (1.5pt) node[above]{P};
+	% Círculo que pasa por el punto P (calculando el radio)
+	\draw[magenta,thick] let \p1 = ($(P)-(C)$) in
+	(C) circle ({veclen(\x1,\y1)});
+\end{tikzpicture}
+
+\captiontikz{Círculo que pasa por un punto usando \texttt{calc}: calcula distancia \texttt{veclen} entre C y P, luego dibuja \texttt{circle} con ese radio.}
+	
+	\section*{Lámina 17 — \texttt{shadows.blur}}
+	\begin{tikzpicture}
+		\node[draw,fill=orange!40,blur shadow,minimum width=28mm,minimum height=10mm,rounded corners]
+		{Sombra difuminada};
+	\end{tikzpicture}
+	\captiontikz{Sombras suaves con \texttt{blur shadow}.}
+	
+	\section*{Lámina 18 — \texttt{spy}}
+	\begin{tikzpicture}[spy using outlines={circle, magnification=3, size=2cm, connect spies}]
+		\draw[step=.5,help lines] (0,0) grid (3,2);
+		\draw[thick,blue] plot[smooth] coordinates {(0,0) (0.5,1.2) (1,0.8) (1.5,1.5) (2,1.1) (2.5,1.6) (3,1.2)};
+		\spy on (2,1.1) in node at (4,1.2);
+	\end{tikzpicture}
+	\captiontikz{“Lupa” sobre una zona: \texttt{spy on (p) in node at (q)}.}
+	
+	\section*{Lámina 19 — \texttt{fadings}}
+	\begin{tikzpicture}
+		\fill[blue!70, path fading=circle with fuzzy edge 20 percent] (0,0) circle (1.5cm);
+	\end{tikzpicture}
+	\captiontikz{Desvanecimiento en el borde con \texttt{path fading=fade out}.}
+	
+	\bigskip
+	\noindent\textbf{Consejo general (cuándo \emph{no} usar):}
+	si solo buscas alineación básica o flechas simples, evita cargar librerías pesadas como \texttt{graphs} o \texttt{fadings}. Carga únicamente lo que uses.
+	
+\end{document}

@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noquoting]{babel}
+\usepackage{dirtree}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+	\dirtree{%
+		.1 PGFPlots — Librerías y opciones/.
+		.2 groupplots/.
+		.3 Claves: {group style=\{group size=<c> by <r>, horizontal sep=<d>, vertical sep=<d>\}}.
+		.3 Extras: {xticklabels at=edge bottom}, {yticklabels at=edge left}, {shared axis}.
+		.3 Uso: paneles de subgráficas alineadas (comparativas).
+		.2 fillbetween/.
+		.3 Claves: {name path=<A/B>}, {fill between[of=A and B]}, {soft clip=\{domain=a:b\}}.
+		.3 Variantes: {split}, {intersection segments}.
+		.3 Uso: rellenar área entre dos curvas o en subintervalos.
+		.2 statistics/.
+		.3 Histograma: {ybar interval}, {hist=\{bins=<n>, density, data min=<v>, data max=<v>\}}.
+		.3 Boxplot: {boxplot}, {boxplot/draw direction=y}, {table}.
+		.3 Otros: {scatter src}, {error bars/.cd, y dir=both, y explicit}.
+		.3 Uso: distribuciones, resúmenes estadísticos y datos con barras de error.
+		.2 dateplot/.
+		.3 Claves: {date coordinates in=x} (o y), {xticklabel=\textbackslash year-\textbackslash month-\textbackslash day}.
+		.3 Filtros: {x filter/.code=\{...\}} para transformar fechas/formatos.
+		.3 Uso: series temporales con eje de fechas.
+		.2 colormaps/.
+		.3 Claves: {colormap name=viridis} (hot, jet, plasma, magma, turbo...).
+		.3 Meta: {point meta=...}, {mesh/cols=<n>, mesh/rows=<n>}.
+		.3 Uso: superficies, mapas de calor con escalas perceptuales.
+		.2 colorbrewer/.
+		.3 Claves: {cycle list/Set2}, {cycle list/Paired}, {cycle list name=<paleta>}.
+		.3 Uso: colores consistentes para múltiples series (categorías).
+		.2 polar/.
+		.3 Entorno: {polaraxis}.
+		.3 Claves: {xtick=\{0,30,...,330\}}, {ytick distance=<d>}, {grid=both}.
+		.3 Uso: gráficos en coordenadas polares (rosas, radar básico).
+		.2 patchplots/.
+		.3 Claves: {patch}, {patch type=triangle|rectangle}, {patch refines=<n>}.
+		.3 Datos: mallas no regulares (FEM/CFD), {mesh/ordering=rowwise|colwise}.
+		.3 Uso: superficies por parches triangulares/cuadriláteros.
+		.2 ternary/.
+		.3 Entorno: {ternaryaxis}.
+		.3 Claves: {ternary limits relative}, {xlabel=\{\$A\$\}}, {ylabel=\{\$B\$\}}, {zlabel=\{\$C\$\}}.
+		.3 Uso: composiciones que suman 1 o 100\% (geología/química).
+		.2 smithchart/.
+		.3 Entorno: {smithchart}.
+		.3 Claves: {grid=both}, estilos de curvas de impedancia/reflexión, ticks especializados.
+		.3 Uso: ingeniería RF (diagramas de Smith).
+		.2 units/.
+		.3 Integración: etiquetas con unidades (opcional siunitx).
+		.3 Claves: {unit x label=<unidad>}, {unit y label=<unidad>}, {x SI prefix kilo}.
+		.3 Uso: ejes con unidades y prefijos automáticos.
+	}
+\end{document}

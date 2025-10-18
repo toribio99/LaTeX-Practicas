@@ -1,0 +1,969 @@
+\documentclass[11pt,a4paper]{article}
+
+% =====================================================
+% PREÁMBULO: PAQUETES NECESARIOS
+% =====================================================
+
+% Detección de motor de compilación
+\usepackage{iftex}
+
+% Configuración según motor
+\ifluatex
+  % Si compila con LuaLaTeX
+  \usepackage{fontspec}
+  \usepackage{polyglossia}
+  \setdefaultlanguage[variant=mexican]{spanish}
+\else
+  \ifxetex
+    % Si compila con XeLaTeX
+    \usepackage{fontspec}
+    \usepackage{polyglossia}
+    \setdefaultlanguage[variant=mexican]{spanish}
+  \else
+    % Si compila con pdfLaTeX
+    \usepackage[T1]{fontenc}
+    \usepackage[spanish,es-tabla]{babel}
+  \fi
+\fi
+
+% Paquetes comunes
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+
+% Definición de colores
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{azulclaro}{RGB}{230,240,250}
+\definecolor{verdeoscuro}{RGB}{0,100,0}
+\definecolor{verdeclaro}{RGB}{230,255,230}
+\definecolor{rojoclaro}{RGB}{255,230,230}
+\definecolor{amarilloclaro}{RGB}{255,255,200}
+\definecolor{grisclaro}{RGB}{240,240,240}
+\definecolor{naranjaoscuro}{RGB}{230,115,0}
+
+% Configuración de listings
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    columns=flexible,
+    showstringspaces=false,
+    frame=single,
+    backgroundcolor=\color{grisclaro},
+    xleftmargin=5pt,
+    xrightmargin=5pt
+}
+
+% Hyperref al final
+\usepackage[
+    colorlinks=true,
+    linkcolor=azuloscuro,
+    urlcolor=blue,
+    citecolor=verdeoscuro,
+    pdftitle={Guía: pdfLaTeX vs LuaLaTeX vs XeLaTeX},
+    pdfauthor={Documentación LaTeX},
+    bookmarks=true,
+    unicode=true,
+    breaklinks=true
+]{hyperref}
+
+% =====================================================
+% TÍTULO
+% =====================================================
+\title{\textbf{\Huge Guía Completa:}\\[0.5cm]
+\Large pdfLaTeX vs XeLaTeX vs LuaLaTeX\\[0.3cm]
+\large Codificación, Fuentes y Modernización de Documentos}
+\author{Documentación técnica de LaTeX}
+\date{\today}
+
+% =====================================================
+% INICIO DEL DOCUMENTO
+% =====================================================
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =====================================================
+% SECCIÓN 1: INTRODUCCIÓN E HISTORIA
+% =====================================================
+\section{Introducción: La evolución de LaTeX}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Contexto histórico}]
+LaTeX fue creado en los años 80, cuando la codificación ASCII (solo caracteres en inglés) era el estándar. Los caracteres acentuados como \textbf{á, é, í, ñ} no existían nativamente en el sistema, lo que creó la necesidad de paquetes especiales para manejar diferentes idiomas.
+\end{tcolorbox}
+
+\subsection{Línea de tiempo}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{1984:} Donald Knuth crea TeX (solo ASCII)
+    \item \textbf{1985:} Leslie Lamport crea LaTeX sobre TeX
+    \item \textbf{1990s:} Aparecen \texttt{inputenc} y \texttt{fontenc} para manejar caracteres especiales
+    \item \textbf{2000s:} Surgen XeTeX y LuaTeX como motores modernos
+    \item \textbf{2004:} Aparece \texttt{fontspec} para fuentes OpenType/TrueType
+    \item \textbf{2018:} \textbf{LaTeX hace UTF-8 el estándar por defecto}
+    \item \textbf{2020-2025:} LuaLaTeX se consolida como motor moderno recomendado
+\end{itemize}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Punto clave de 2018}]
+\textbf{Cambio fundamental:} Desde LaTeX 2018, UTF-8 es la codificación por defecto. Esto significa que \texttt{\textbackslash usepackage[utf8]\{inputenc\}} ya no es necesario en versiones modernas de LaTeX.
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 2: LOS TRES MOTORES
+% =====================================================
+\section{Los tres motores de compilación}
+
+\subsection{¿Qué es un motor de compilación?}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro]
+Un \textbf{motor de compilación} (o \textit{engine}) es el programa que convierte tu código LaTeX (.tex) en un documento PDF. Cada motor tiene diferentes capacidades y limitaciones.
+\end{tcolorbox}
+
+\subsection{pdfLaTeX: El motor tradicional}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{pdfLaTeX},breakable]
+\textbf{Año de aparición:} 1996-2000
+
+\textbf{Características:}
+\begin{itemize}
+    \item Motor tradicional más antiguo y estable
+    \item Genera PDFs directamente (antes se generaba DVI primero)
+    \item Usa fuentes Type 1 (formatos antiguos)
+    \item Requería \texttt{inputenc} para UTF-8 (hasta 2018)
+    \item Requiere \texttt{fontenc} para salida correcta de acentos
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Más rápido en compilación
+    \item Compatible con todo el código LaTeX histórico
+    \item Ampliamente documentado
+    \item Consume menos memoria
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item No puede usar fuentes del sistema directamente
+    \item Soporte limitado para Unicode avanzado
+    \item Requiere configuración adicional para idiomas no latinos
+    \item No puede usar fuentes OpenType/TrueType sin conversión
+\end{itemize}
+
+\textbf{Comando de compilación:}
+\begin{lstlisting}[language=bash]
+pdflatex documento.tex
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{XeLaTeX: El puente hacia la modernidad}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{XeLaTeX},breakable]
+\textbf{Año de aparición:} 2004
+
+\textbf{Características:}
+\begin{itemize}
+    \item Motor moderno basado en XeTeX
+    \item UTF-8 nativo (no necesita \texttt{inputenc})
+    \item Usa fuentes OpenType y TrueType directamente
+    \item Acceso a todas las fuentes del sistema operativo
+    \item No necesita \texttt{fontenc}
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item UTF-8 nativo desde el principio
+    \item Acceso directo a fuentes del sistema
+    \item Excelente soporte multilingüe
+    \item Manejo avanzado de tipografía
+    \item Usa \texttt{fontspec} para configuración de fuentes
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item Ligeramente más lento que pdfLaTeX
+    \item Algunos paquetes antiguos incompatibles
+    \item Menor optimización de microtipografía que LuaLaTeX
+\end{itemize}
+
+\textbf{Comando de compilación:}
+\begin{lstlisting}[language=bash]
+xelatex documento.tex
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{LuaLaTeX: El motor del futuro}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{LuaLaTeX (RECOMENDADO)},breakable]
+\textbf{Año de aparición:} 2007-2010 (estable desde ~2013)
+
+\textbf{Características:}
+\begin{itemize}
+    \item Motor más moderno basado en LuaTeX
+    \item UTF-8 nativo (no necesita \texttt{inputenc})
+    \item Integra lenguaje Lua para programación avanzada
+    \item Usa fuentes OpenType y TrueType directamente
+    \item No necesita \texttt{fontenc}
+    \item Mejor manejo de memoria que XeLaTeX
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item UTF-8 nativo completo
+    \item Todas las fuentes del sistema disponibles
+    \item Programable con Lua (automatizaciones complejas)
+    \item Mejor microtipografía que XeLaTeX
+    \item Desarrollo activo y comunidad creciente
+    \item Maneja mejor documentos grandes
+    \item Futuro oficial de LaTeX según el proyecto LaTeX3
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item Más lento que pdfLaTeX (pero más rápido que XeLaTeX)
+    \item Mayor consumo de memoria
+    \item Algunos paquetes muy antiguos incompatibles
+\end{itemize}
+
+\textbf{Comando de compilación:}
+\begin{lstlisting}[language=bash]
+lualatex documento.tex
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Recomendación oficial}]
+El proyecto LaTeX recomienda migrar gradualmente a \textbf{LuaLaTeX} para nuevos documentos. Es considerado el motor del futuro y recibirá las innovaciones más importantes.
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 3: TABLA COMPARATIVA
+% =====================================================
+\section{Tabla comparativa de motores}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|c|c|c|}
+\hline
+\textbf{Característica} & \textbf{pdfLaTeX} & \textbf{XeLaTeX} & \textbf{LuaLaTeX} \\
+\hline
+\hline
+Año de origen & 1996 & 2004 & 2007 \\
+\hline
+UTF-8 nativo & Solo desde 2018 & Sí (siempre) & Sí (siempre) \\
+\hline
+Necesita \texttt{inputenc} & No (desde 2018) & No & No \\
+\hline
+Necesita \texttt{fontenc} & Sí & No & No \\
+\hline
+Usa \texttt{fontspec} & No & Sí & Sí \\
+\hline
+Fuentes sistema & No & Sí & Sí \\
+\hline
+OpenType/TrueType & No directo & Sí & Sí \\
+\hline
+Velocidad & Rápido & Medio & Medio-Lento \\
+\hline
+Memoria & Baja & Media & Alta \\
+\hline
+Microtipografía & Buena & Buena & Excelente \\
+\hline
+Programable & No & No & Sí (Lua) \\
+\hline
+Futuro LaTeX3 & Mantenimiento & Mantenimiento & Principal \\
+\hline
+Multilingüe avanzado & Limitado & Excelente & Excelente \\
+\hline
+Recomendado para & Docs simples & Tipografía & Todo uso \\
+\hline
+\end{tabular}
+\caption{Comparación detallada de los tres motores principales}
+\end{table}
+
+% =====================================================
+% SECCIÓN 4: INPUTENC Y FONTENC EN PROFUNDIDAD
+% =====================================================
+\section{Los paquetes \texttt{inputenc} y \texttt{fontenc}}
+
+\subsection{¿Qué es \texttt{inputenc}?}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{inputenc: Codificación de entrada},breakable]
+\textbf{Propósito:} Le dice a LaTeX cómo interpretar los caracteres en tu archivo .tex
+
+\textbf{Historia:}
+\begin{itemize}
+    \item Antes de 2018, LaTeX asumía ASCII (solo inglés)
+    \item Para escribir "café", tenías que usar códigos especiales o declarar codificación
+    \item \texttt{\textbackslash usepackage[utf8]\{inputenc\}} permitía escribir "café" directamente
+\end{itemize}
+
+\textbf{Estado actual (2018+):}
+\begin{itemize}
+    \item UTF-8 es la codificación por defecto
+    \item Ya NO es necesario incluir \texttt{inputenc} en pdfLaTeX moderno
+    \item NO hacer nada es equivalente a \texttt{\textbackslash usepackage[utf8]\{inputenc\}}
+\end{itemize}
+
+\textbf{Cuándo aún es necesario:}
+\begin{itemize}
+    \item Archivos antiguos con codificación latin1 o iso-8859-1
+    \item Sistemas con LaTeX anterior a 2018 (muy raro hoy)
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{¿Qué es \texttt{fontenc}?}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{fontenc: Codificación de salida},breakable]
+\textbf{Propósito:} Le dice a LaTeX cómo representar los caracteres en el PDF final
+
+\textbf{Historia:}
+\begin{itemize}
+    \item Por defecto, pdfLaTeX usa codificación OT1 (Original TeX encoding)
+    \item OT1 tiene solo 128 caracteres (no incluye acentos directamente)
+    \item Con OT1, "café" se construye con acentos superpuestos (problemas en copiar/pegar)
+    \item T1 tiene 256 caracteres con acentos nativos
+\end{itemize}
+
+\textbf{Problema sin T1:}
+\begin{verbatim}
+% Sin fontenc o con OT1:
+café → "caf\'e" en el PDF (no se puede buscar o copiar bien)
+
+% Con T1:
+café → "café" en el PDF (carácter nativo, buscable)
+\end{verbatim}
+
+\textbf{Estado actual:}
+\begin{itemize}
+    \item \textbf{pdfLaTeX:} Todavía NECESITA \texttt{\textbackslash usepackage[T1]\{fontenc\}}
+    \item \textbf{XeLaTeX/LuaLaTeX:} NO necesitan \texttt{fontenc} (usan TU encoding automático)
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Diferencia entre entrada y salida}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Analogía conceptual}]
+\textbf{inputenc:} Cómo \textit{lees} el archivo (lo que escribiste en tu editor)
+
+\textbf{fontenc:} Cómo se \textit{imprime} en el PDF (lo que ve el lector)
+
+\textbf{Ejemplo:}
+\begin{itemize}
+    \item Escribes "ñ" en tu editor → \texttt{inputenc} interpreta ese carácter
+    \item LaTeX procesa el documento
+    \item \texttt{fontenc} decide cómo representar "ñ" en el PDF final
+\end{itemize}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 5: FONTSPEC
+% =====================================================
+\section{El paquete \texttt{fontspec}: La solución moderna}
+
+\subsection{¿Qué es \texttt{fontspec}?}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{fontspec},breakable]
+\textbf{Aparición:} 2004 (junto con XeTeX)
+
+\textbf{Propósito:} Reemplaza tanto \texttt{inputenc} como \texttt{fontenc} con un sistema moderno
+
+\textbf{Características:}
+\begin{itemize}
+    \item Solo funciona con XeLaTeX y LuaLaTeX
+    \item Acceso directo a fuentes del sistema (OpenType, TrueType)
+    \item No necesita conversión de fuentes
+    \item UTF-8 nativo total
+    \item Configuración avanzada de tipografía
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Usa las mismas fuentes que Word, Photoshop, etc.
+    \item Configuración intuitiva
+    \item Soporte completo para ligaduras, kerning avanzado
+    \item Números oldstyle, variantes estilísticas
+    \item Funciones OpenType completas
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Ejemplo básico de \texttt{fontspec}}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Código con fontspec}]
+\begin{lstlisting}[language=TeX]
+\documentclass{article}
+\usepackage{fontspec}
+
+% Seleccionar fuentes del sistema
+\setmainfont{Times New Roman}    % Fuente principal (serif)
+\setsansfont{Arial}               % Fuente sans-serif
+\setmonofont{Courier New}         % Fuente monoespaciada
+
+% O fuentes TeX modernas
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+\begin{document}
+Este texto usa Times New Roman.
+
+\textsf{Este texto usa Arial.}
+
+\texttt{Este texto usa Courier New.}
+\end{document}
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Configuración avanzada con \texttt{fontspec}}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Opciones avanzadas}]
+\begin{lstlisting}[language=TeX]
+\setmainfont{TeX Gyre Pagella}[
+    Ligatures=TeX,           % Ligaduras LaTeX (-- -> en-dash, etc.)
+    Numbers=OldStyle,        % Números oldstyle (1234 con descendentes)
+    Scale=1.0,               % Escala de la fuente
+    BoldFont={* Bold},       % Fuente negrita
+    ItalicFont={* Italic},   % Fuente cursiva
+]
+
+% Verificar si una fuente existe antes de usarla
+\IfFontExistsTF{TeX Gyre Pagella}{
+    \setmainfont{TeX Gyre Pagella}
+}{
+    \setmainfont{Latin Modern Roman}  % Fallback
+}
+\end{lstlisting}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 6: PREÁMBULOS RECOMENDADOS
+% =====================================================
+\section{Preámbulos recomendados según caso de uso}
+
+\subsection{Caso 1: Solo pdfLaTeX (simple y rápido)}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Preámbulo para pdfLaTeX},breakable]
+\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper]{article}
+
+% SOLO para pdfLaTeX
+\usepackage[T1]{fontenc}
+% inputenc ya no necesario en LaTeX 2018+
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+Contenido con acentos: áéíóú ñ
+\end{document}
+\end{lstlisting}
+
+\textbf{Cuándo usar:}
+\begin{itemize}
+    \item Documentos simples sin requisitos tipográficos especiales
+    \item Máxima velocidad de compilación
+    \item Compatibilidad con código LaTeX muy antiguo
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Caso 2: Solo LuaLaTeX (moderno recomendado)}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Preámbulo para LuaLaTeX},breakable]
+\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper]{article}
+
+% SOLO para LuaLaTeX/XeLaTeX
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=mexican]{spanish}
+
+% Fuentes modernas
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+Contenido con acentos: áéíóú ñ
+Caracteres especiales: € £ ¥ © ® ™
+\end{document}
+\end{lstlisting}
+
+\textbf{Cuándo usar:}
+\begin{itemize}
+    \item Documentos nuevos (2020+)
+    \item Necesitas fuentes del sistema
+    \item Documentos multilingües complejos
+    \item Quieres aprovechar tipografía moderna
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Caso 3: Compatibilidad universal (recomendado)}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Preámbulo universal (funciona con los 3 motores)},breakable]
+\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper]{article}
+
+% ============================================
+% DETECCIÓN AUTOMÁTICA DEL MOTOR
+% ============================================
+\usepackage{iftex}
+
+\ifluatex
+  % Configuración para LuaLaTeX
+  \usepackage{fontspec}
+  \usepackage{polyglossia}
+  \setdefaultlanguage[variant=mexican]{spanish}
+
+  % Fuentes con fallback
+  \IfFontExistsTF{TeX Gyre Pagella}{
+    \setmainfont{TeX Gyre Pagella}
+  }{
+    \setmainfont{Latin Modern Roman}
+  }
+\else
+  \ifxetex
+    % Configuración para XeLaTeX
+    \usepackage{fontspec}
+    \usepackage{polyglossia}
+    \setdefaultlanguage[variant=mexican]{spanish}
+    \setmainfont{Latin Modern Roman}
+  \else
+    % Configuración para pdfLaTeX
+    \usepackage[T1]{fontenc}
+    \usepackage[spanish]{babel}
+  \fi
+\fi
+
+% Paquetes comunes a todos los motores
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+Este documento compila con pdfLaTeX, XeLaTeX o LuaLaTeX.
+
+Acentos: áéíóú ñ ¿¡
+\end{document}
+\end{lstlisting}
+
+\textbf{Cuándo usar:}
+\begin{itemize}
+    \item Compartirás el documento con otros usuarios
+    \item No sabes qué motor usará el destinatario
+    \item Quieres flexibilidad máxima
+    \item Documentos colaborativos
+\end{itemize}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 7: MIGRACIÓN
+% =====================================================
+\section{Migración de documentos antiguos}
+
+\subsection{De pdfLaTeX a LuaLaTeX}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Pasos para migrar},breakable]
+\textbf{Paso 1: Cambiar el preámbulo}
+\begin{lstlisting}[language=TeX]
+% ANTES (pdfLaTeX):
+\usepackage[utf8]{inputenc}  % Eliminar
+\usepackage[T1]{fontenc}     % Eliminar
+\usepackage[spanish]{babel}
+
+% DESPUÉS (LuaLaTeX):
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=mexican]{spanish}
+\end{lstlisting}
+
+\textbf{Paso 2: Revisar paquetes incompatibles}
+\begin{itemize}
+    \item \texttt{libertine}, \texttt{mathpazo} (fuentes Type1) → Cambiar a \texttt{fontspec}
+    \item \texttt{ucs} → Ya no necesario
+    \item \texttt{ae}, \texttt{aecompl} → Ya no necesarios
+\end{itemize}
+
+\textbf{Paso 3: Cambiar comando de compilación}
+\begin{lstlisting}[language=bash]
+# ANTES:
+pdflatex documento.tex
+
+# DESPUÉS:
+lualatex documento.tex
+\end{lstlisting}
+
+\textbf{Paso 4: Probar compilación}
+\begin{itemize}
+    \item Compilar 2-3 veces para actualizar referencias
+    \item Verificar acentos y caracteres especiales
+    \item Revisar saltos de página (pueden cambiar ligeramente)
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Problemas comunes en la migración}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{5cm}|p{8cm}|}
+\hline
+\textbf{Problema} & \textbf{Solución} \\
+\hline
+\hline
+Error con \texttt{inputenc} & Eliminar \texttt{\textbackslash usepackage[utf8]\{inputenc\}} \\
+\hline
+Fuentes no encontradas & Usar fuentes TeX Gyre o Latin Modern en lugar de Type1 \\
+\hline
+\texttt{babel} no funciona & Cambiar a \texttt{polyglossia} \\
+\hline
+Compilación muy lenta & Normal en primera compilación; mejora después \\
+\hline
+Paquete \texttt{libertine} error & Cambiar a \texttt{\textbackslash setmainfont\{Linux Libertine O\}} \\
+\hline
+Errores con \texttt{microtype} & Actualizar \texttt{microtype} o usar versión reciente \\
+\hline
+\end{tabular}
+\caption{Problemas comunes al migrar a LuaLaTeX}
+\end{table}
+
+% =====================================================
+% SECCIÓN 8: CONFIGURACIÓN TEXSTUDIO
+% =====================================================
+\section{Configuración en TeXstudio}
+
+\subsection{Tu configuración actual}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Configuración actual de TeXstudio}]
+Según mencionaste, tienes configurado:
+\begin{center}
+\texttt{txs:///lualatex | txs:///pdflatex}
+\end{center}
+
+\textbf{Esto significa:}
+\begin{itemize}
+    \item \textbf{Primero intenta:} LuaLaTeX (moderno)
+    \item \textbf{Si falla:} pdfLaTeX (fallback)
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Priorizas el motor moderno
+    \item Tienes respaldo automático
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item Si usas \texttt{fontspec}, el fallback fallará también
+    \item Puede crear confusión sobre qué motor usó
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Opciones de configuración recomendadas}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Opción 1: Solo LuaLaTeX (recomendado)},breakable]
+\textbf{Configuración en TeXstudio:}
+\begin{center}
+\texttt{txs:///lualatex}
+\end{center}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Consistencia total
+    \item Puedes usar \texttt{fontspec} sin problemas
+    \item Siempre sabes qué motor se usó
+\end{itemize}
+
+\textbf{Para configurar:}
+\begin{enumerate}
+    \item Menú: Opciones → Configurar TeXstudio
+    \item Sección: Órdenes
+    \item Compilación por defecto: Seleccionar "LuaLaTeX"
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Opción 2: Selector manual},breakable]
+\textbf{Configuración:}
+\begin{itemize}
+    \item Mantener compilador por defecto como LuaLaTeX
+    \item En barra de herramientas, menú desplegable permite cambiar
+    \item Para documento específico, elegir pdfLaTeX si es necesario
+\end{itemize}
+
+\textbf{Cuándo usar cada uno:}
+\begin{itemize}
+    \item \textbf{LuaLaTeX:} Documentos nuevos, con fuentes personalizadas
+    \item \textbf{pdfLaTeX:} Documentos antiguos, máxima velocidad
+    \item \textbf{XeLaTeX:} Casos especiales con scripts no latinos
+\end{itemize}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 9: CASOS DE USO PRÁCTICOS
+% =====================================================
+\section{Casos de uso prácticos}
+
+\subsection{Caso: Documento académico simple}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Tesis o artículo académico}]
+\textbf{Requisitos:}
+\begin{itemize}
+    \item Texto principalmente en español
+    \item Ecuaciones matemáticas
+    \item Figuras y tablas
+    \item Sin requisitos tipográficos especiales
+\end{itemize}
+
+\textbf{Motor recomendado:} pdfLaTeX o LuaLaTeX
+
+\textbf{Razón:}
+\begin{itemize}
+    \item pdfLaTeX: Máxima velocidad, compatible con plantillas antiguas
+    \item LuaLaTeX: Moderno, mejor tipografía, futuro-compatible
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Caso: Libro con diseño tipográfico}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Libro o manual con diseño cuidado}]
+\textbf{Requisitos:}
+\begin{itemize}
+    \item Múltiples fuentes personalizadas
+    \item Diseño tipográfico profesional
+    \item Números oldstyle, ligaduras avanzadas
+    \item Varios idiomas
+\end{itemize}
+
+\textbf{Motor recomendado:} LuaLaTeX
+
+\textbf{Razón:}
+\begin{itemize}
+    \item Acceso completo a fuentes OpenType
+    \item Control tipográfico avanzado
+    \item Mejor microtipografía
+\end{itemize}
+
+\textbf{Ejemplo de preámbulo:}
+\begin{lstlisting}[language=TeX]
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainfont{EB Garamond}[
+    Ligatures={TeX,Common},
+    Numbers=OldStyle
+]
+\setsansfont{Fira Sans}
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Caso: Documento multilingüe}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Documento en español, inglés, árabe, chino}]
+\textbf{Requisitos:}
+\begin{itemize}
+    \item Múltiples idiomas con scripts diferentes
+    \item Escritura de derecha a izquierda (árabe)
+    \item Caracteres CJK (chino, japonés, coreano)
+\end{itemize}
+
+\textbf{Motor recomendado:} LuaLaTeX o XeLaTeX
+
+\textbf{Razón:}
+\begin{itemize}
+    \item UTF-8 nativo completo
+    \item Soporte para todos los scripts Unicode
+    \item pdfLaTeX tiene limitaciones severas para esto
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=TeX]
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setdefaultlanguage{spanish}
+\setotherlanguages{english,arabic}
+
+\newfontfamily\arabicfont{Amiri}[Script=Arabic]
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Caso: Documentos de física con TikZ}
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Tus ejercicios de física con gráficas}]
+\textbf{Requisitos:}
+\begin{itemize}
+    \item Ecuaciones matemáticas complejas
+    \item Gráficas TikZ/PGFPlots
+    \item Velocidad de compilación importante
+    \item Español con acentos
+\end{itemize}
+
+\textbf{Motor recomendado:} LuaLaTeX (lo que ya usas)
+
+\textbf{Razón:}
+\begin{itemize}
+    \item TikZ funciona bien con todos, pero LuaLaTeX tiene ventajas
+    \item Mejor manejo de memoria para gráficas complejas
+    \item UTF-8 nativo para comentarios y texto
+    \item Futuro-compatible
+\end{itemize}
+
+\textbf{Tu configuración actual es óptima para este caso.}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 10: RECOMENDACIONES FINALES
+% =====================================================
+\section{Recomendaciones finales}
+
+\subsection{Para proyectos nuevos (2025 en adelante)}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Recomendación general}]
+\textbf{Usa LuaLaTeX con este preámbulo:}
+\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=mexican]{spanish}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\end{lstlisting}
+
+\textbf{Razones:}
+\begin{itemize}
+    \item Es el futuro oficial de LaTeX
+    \item Desarrollo más activo
+    \item Mejor tipografía
+    \item No necesitas pensar en codificaciones
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Para proyectos existentes}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Migración gradual}]
+\textbf{No apresures la migración:}
+\begin{itemize}
+    \item Si tu documento pdfLaTeX funciona, déjalo así
+    \item Migra solo si necesitas funciones modernas
+    \item Prueba primero en copia del documento
+\end{itemize}
+
+\textbf{Actualiza el preámbulo pdfLaTeX a:}
+\begin{lstlisting}[language=TeX]
+\usepackage[T1]{fontenc}
+% inputenc ya no necesario
+\usepackage[spanish]{babel}
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Resumen de decisiones}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{5cm}|p{3cm}|p{5cm}|}
+\hline
+\textbf{Situación} & \textbf{Motor} & \textbf{Paquetes clave} \\
+\hline
+\hline
+Documento nuevo simple & LuaLaTeX & \texttt{fontspec}, \texttt{polyglossia} \\
+\hline
+Documento nuevo complejo & LuaLaTeX & \texttt{fontspec}, \texttt{polyglossia} \\
+\hline
+Máxima velocidad & pdfLaTeX & \texttt{fontenc}, \texttt{babel} \\
+\hline
+Documento antiguo & pdfLaTeX & Mantener original \\
+\hline
+Múltiples idiomas & LuaLaTeX & \texttt{fontspec}, \texttt{polyglossia} \\
+\hline
+Compartir con otros & Universal & \texttt{iftex} + condicionales \\
+\hline
+Tipografía avanzada & LuaLaTeX & \texttt{fontspec} \\
+\hline
+\end{tabular}
+\caption{Guía rápida de decisión}
+\end{table}
+
+% =====================================================
+% SECCIÓN 11: RECURSOS Y REFERENCIAS
+% =====================================================
+\section{Recursos adicionales}
+
+\subsection{Documentación oficial}
+
+\begin{itemize}
+    \item \textbf{fontspec:} \texttt{texdoc fontspec} (en terminal)
+    \item \textbf{polyglossia:} \texttt{texdoc polyglossia}
+    \item \textbf{iftex:} \texttt{texdoc iftex}
+    \item \textbf{LuaTeX:} \url{http://www.luatex.org/}
+    \item \textbf{LaTeX Project:} \url{https://www.latex-project.org/}
+\end{itemize}
+
+\subsection{Fuentes recomendadas}
+
+\subsubsection{Fuentes TeX Gyre (incluidas en TeX Live)}
+
+\begin{itemize}
+    \item \textbf{TeX Gyre Pagella} (basada en Palatino)
+    \item \textbf{TeX Gyre Termes} (basada en Times)
+    \item \textbf{TeX Gyre Heros} (basada en Helvetica)
+    \item \textbf{TeX Gyre Cursor} (basada en Courier)
+    \item \textbf{TeX Gyre Bonum} (basada en Bookman)
+\end{itemize}
+
+\subsubsection{Fuentes OpenType gratuitas recomendadas}
+
+\begin{itemize}
+    \item \textbf{Linux Libertine} (serif elegante)
+    \item \textbf{EB Garamond} (clásica para libros)
+    \item \textbf{Fira Sans} (sans-serif moderna)
+    \item \textbf{Source Serif Pro / Source Sans Pro} (Adobe)
+    \item \textbf{Crimson Text} (estilo Garamond)
+\end{itemize}
+
+% =====================================================
+% CONCLUSIÓN
+% =====================================================
+\section{Conclusión}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Conclusión}]
+\textbf{Lo más importante:}
+
+\begin{enumerate}
+    \item \textbf{inputenc ya no es necesario} en LaTeX moderno (2018+)
+    \item \textbf{fontenc todavía es necesario} para pdfLaTeX
+    \item \textbf{LuaLaTeX es el futuro} de LaTeX
+    \item \textbf{fontspec reemplaza ambos} en motores modernos
+    \item \textbf{Tu configuración actual es excelente}
+\end{enumerate}
+
+\textbf{Recomendación personal para ti:}
+
+Dado que ya usas \texttt{txs:///lualatex | txs:///pdflatex}, estás en el camino correcto. Para nuevos documentos, usa directamente:
+
+\begin{lstlisting}[language=TeX]
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=mexican]{spanish}
+\end{lstlisting}
+
+Y configura TeXstudio para usar solo LuaLaTeX sin fallback.
+\end{tcolorbox}
+
+% =====================================================
+% PIE DE PÁGINA
+% =====================================================
+\vfill
+\begin{center}
+\textit{Documento generado con \LaTeX{} -- \today}\\[0.2cm]
+\small Compilado con \ifluatex LuaLaTeX \else \ifxetex XeLaTeX \else pdfLaTeX \fi\fi
+\end{center}
+
+\end{document}

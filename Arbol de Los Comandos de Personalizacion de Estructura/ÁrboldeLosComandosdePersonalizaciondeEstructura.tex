@@ -1,0 +1,1173 @@
+\documentclass[11pt,a4paper]{book}
+
+% Paquetes básicos
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+% Paquetes para personalización de estructura
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{sectsty}
+
+% Paquetes para ejercicios
+\usepackage{amsthm}
+
+% Colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{codebackground}{RGB}{245,245,245}
+\definecolor{chaptercolor}{RGB}{70,130,180}
+
+% Configuración de listings con soporte para español
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	backgroundcolor=\color{codebackground},
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true,
+	frame=single,
+	rulecolor=\color{gray!30},
+	inputencoding=utf8,
+	extendedchars=true,
+	literate=
+		{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+		{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+		{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+		{ü}{{\"u}}1 {Ü}{{\"U}}1
+		{¿}{{?`}}1 {¡}{{!`}}1
+}
+
+% Título
+\title{\textbf{\Huge Personalización de Estructura en \LaTeX{}}\\\large Guía Completa de Capítulos, Secciones, Portadas, TOC y Ejercicios}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+Esta guía exhaustiva cubre todos los paquetes, comandos y entornos disponibles en \LaTeX{} para personalizar la estructura de documentos, incluyendo capítulos, secciones, portadas, tablas de contenido, y sistemas de ejercicios con respuestas.
+\end{tcolorbox}
+
+\tableofcontents
+
+\chapter{Personalización de Capítulos}
+
+\section{Paquete titlesec}
+
+\subsection{Introducción a titlesec}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El paquete \texttt{titlesec} permite personalizar completamente el formato de capítulos, secciones y subsecciones.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{titlesec}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comando titleformat}
+
+\subsubsection*{\texttt{\textbackslash titleformat}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define el formato de títulos (capítulos, secciones, etc.)
+
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\titleformat{comando}[forma]{formato}{etiqueta}{separación}{antes}[después]
+	\end{lstlisting}
+
+	\textbf{Parámetros:}
+	\begin{itemize}[nosep]
+		\item \texttt{comando} -- \textbackslash chapter, \textbackslash section, etc.
+		\item \texttt{forma} -- hang, block, display, runin, leftmargin, etc.
+		\item \texttt{formato} -- Formato del título completo
+		\item \texttt{etiqueta} -- Formato del número (ej: Capítulo 1)
+		\item \texttt{separación} -- Espacio entre etiqueta y título
+		\item \texttt{antes} -- Código antes del título
+		\item \texttt{después} -- Código después del título (opcional)
+	\end{itemize}
+\end{tcolorbox}
+
+\subsection{Ejemplos de Capítulos Personalizados}
+
+\subsubsection*{Ejemplo 1: Capítulo con línea decorativa}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 2: Capítulo con caja de color}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue}}
+  {\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}
+  {4ex}
+  {\titlerule\vspace{2ex}\filleft}
+  [\vspace{2ex}\titlerule]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 3: Capítulo con número grande}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\filright}
+  {\LARGE\thechapter}
+  {1ex}
+  {\titlerule[2pt]\vspace{2ex}\huge}
+  [\vspace{1ex}\titlerule]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 4: Capítulo estilo moderno}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{xcolor}
+
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {\colorbox{blue!80}{\parbox{3cm}{\centering\color{white}
+   \fontsize{60}{60}\selectfont\thechapter}}}
+  {10pt}
+  {\Huge\raggedright}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comando titlespacing}
+
+\subsubsection*{\texttt{\textbackslash titlespacing}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ajusta los espacios antes y después de títulos
+
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\titlespacing*{comando}{izquierda}{antes}{después}[derecha]
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{15pt}{8pt}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Personalización de Secciones}
+
+\subsection{Formato de Secciones con titlesec}
+
+\subsubsection*{Ejemplo 1: Sección con caja de color}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{white}}
+  {\colorbox{blue!80}{\parbox{1.5cm}{\centering\thesection}}}
+  {1em}
+  {\colorbox{blue!20}{\parbox{\dimexpr\textwidth-3cm\relax}{#1}}}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 2: Sección con línea inferior}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}
+  {1em}
+  {#1}
+  [\vspace{0.5ex}\titlerule]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Ejemplo 3: Subsección con círculo}
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{tikz}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\tikz[baseline=(char.base)]{
+    \node[circle,fill=blue!80,text=white,inner sep=2pt] (char)
+         {\thesubsection};}}
+  {1em}
+  {#1}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete sectsty}
+
+\subsection{Introducción a sectsty}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{sectsty} permite cambiar estilos de secciones de forma más simple que titlesec.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{sectsty}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comandos de sectsty}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Comandos disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{\textbackslash allsectionsfont\{formato\}} -- Todas las secciones
+		\item \texttt{\textbackslash chapterfont\{formato\}} -- Solo capítulos
+		\item \texttt{\textbackslash sectionfont\{formato\}} -- Solo secciones
+		\item \texttt{\textbackslash subsectionfont\{formato\}} -- Solo subsecciones
+		\item \texttt{\textbackslash subsubsectionfont\{formato\}} -- Subsubsecciones
+		\item \texttt{\textbackslash paragraphfont\{formato\}} -- Párrafos
+		\item \texttt{\textbackslash subparagraphfont\{formato\}} -- Subpárrafos
+	\end{itemize}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\allsectionsfont{\sffamily}  % Todas en sans-serif
+\chapterfont{\color{blue}\Huge}
+\sectionfont{\color{red}\Large}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\chapter{Tablas de Contenido (TOC)}
+
+\section{Paquete tocloft}
+
+\subsection{Introducción a tocloft}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{tocloft} permite control completo sobre el formato de la tabla de contenidos (TOC), lista de figuras (LOF) y lista de tablas (LOT).
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{tocloft}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Personalización del Título del TOC}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Comandos:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\contentsname}{Índice General}
+\renewcommand{\listfigurename}{Índice de Figuras}
+\renewcommand{\listtablename}{Índice de Tablas}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Formato de Entradas del TOC}
+
+\subsubsection*{Formato de capítulos en TOC}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Comandos disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{\textbackslash cftchapfont} -- Fuente del título de capítulo
+		\item \texttt{\textbackslash cftchappagefont} -- Fuente del número de página
+		\item \texttt{\textbackslash cftchappresnum} -- Texto antes del número
+		\item \texttt{\textbackslash cftchapaftersnum} -- Texto después del número
+		\item \texttt{\textbackslash cftchapnumwidth} -- Ancho del número
+		\item \texttt{\textbackslash cftbeforechapskip} -- Espacio antes del capítulo
+	\end{itemize}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\cftchapfont}{\bfseries\large}
+\renewcommand{\cftchappagefont}{\bfseries\large}
+\renewcommand{\cftchappresnum}{Capítulo }
+\renewcommand{\cftchapaftersnum}{:}
+\setlength{\cftchapnumwidth}{5em}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Formato de secciones en TOC}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Comandos similares para secciones:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\setlength{\cftsecindent}{2em}
+\setlength{\cftsecnumwidth}{3em}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Puntos Guía (Leaders)}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Personalizar los puntos entre título y número de página
+
+	\textbf{Comandos:}
+	\begin{lstlisting}[language=TeX]
+% Eliminar puntos guía
+\renewcommand{\cftchapdotsep}{\cftnodots}
+\renewcommand{\cftsecdotsep}{\cftnodots}
+
+% Cambiar separación de puntos
+\renewcommand{\cftchapdotsep}{1}  % Más denso
+\renewcommand{\cftsecdotsep}{4.5} % Por defecto
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Profundidad del TOC}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Controlar qué niveles aparecen en el TOC
+
+	\textbf{Comando:}
+	\begin{lstlisting}[language=TeX]
+\setcounter{tocdepth}{3}
+% 0 = solo capítulos
+% 1 = capítulos y secciones
+% 2 = hasta subsecciones
+% 3 = hasta subsubsecciones
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete titletoc}
+
+\subsection{Introducción a titletoc}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{titletoc} trabaja junto con \texttt{titlesec} para personalizar el TOC.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{titletoc}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Comando titlecontents}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\titlecontents{sección}[margen izq]{código antes}
+              {código numerado}{código sin número}
+              {código después}[código al final]
+	\end{lstlisting}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\titlecontents{chapter}[0em]
+  {\vspace{1em}\bfseries\large}
+  {\contentslabel{2em}}
+  {}
+  {\hfill\contentspage}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Mini Tablas de Contenido}
+
+\subsection{Paquete minitoc}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Crea mini TOC al inicio de cada capítulo
+
+	\textbf{Carga y uso:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{minitoc}
+\dominitoc    % En el preámbulo
+
+% En el documento
+\tableofcontents
+\chapter{Primer Capítulo}
+\minitoc      % Muestra mini-TOC del capítulo
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Ejemplo Completo de TOC Personalizado}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Ejemplo Integrado]
+	\begin{lstlisting}[language=TeX]
+\usepackage{tocloft}
+\usepackage{xcolor}
+
+% Título del TOC
+\renewcommand{\contentsname}{%
+  \begin{center}
+    \color{blue}\Huge\bfseries Tabla de Contenidos
+  \end{center}}
+
+% Capítulos en negrita y azul
+\renewcommand{\cftchapfont}{\bfseries\color{blue}}
+\renewcommand{\cftchappagefont}{\bfseries\color{blue}}
+\renewcommand{\cftchappresnum}{Cap. }
+\setlength{\cftchapnumwidth}{3.5em}
+
+% Secciones indentadas
+\setlength{\cftsecindent}{3.5em}
+\setlength{\cftsecnumwidth}{2.5em}
+
+% Sin puntos guía para capítulos
+\renewcommand{\cftchapdotsep}{\cftnodots}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\chapter{Creación de Portadas}
+
+\section{Entorno titlepage}
+
+\subsection{Uso Básico}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El entorno \texttt{titlepage} crea una página de título personalizada.
+
+	\textbf{Sintaxis:}
+	\begin{lstlisting}[language=TeX]
+\begin{titlepage}
+  % Contenido de la portada
+\end{titlepage}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ejemplo 1: Portada Simple}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  {\Huge\bfseries Título del Documento\par}
+  \vspace{1cm}
+  {\Large Subtítulo\par}
+  \vspace{2cm}
+  {\large Autor: Juan Pérez\par}
+  \vfill
+  {\large Universidad XYZ\par}
+  {\large \today\par}
+\end{titlepage}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ejemplo 2: Portada con Logo}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\begin{titlepage}
+  \centering
+  \includegraphics[width=0.3\textwidth]{logo.png}\par
+  \vspace{1cm}
+  {\scshape\LARGE Universidad XYZ \par}
+  \vspace{1.5cm}
+  {\huge\bfseries Título del Trabajo\par}
+  \vspace{2cm}
+  {\Large\itshape Juan Pérez\par}
+  \vfill
+  Presentado como requisito para\par
+  el título de Licenciado en Ciencias
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ejemplo 3: Portada con Color de Fondo}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Código]
+	\begin{lstlisting}[language=TeX]
+\usepackage{pagecolor}
+\usepackage{afterpage}
+
+\begin{titlepage}
+  \pagecolor{blue!10}
+  \centering
+  \vspace*{3cm}
+
+  \colorbox{blue!80}{%
+    \parbox{0.8\textwidth}{%
+      \centering
+      \color{white}
+      {\Huge\bfseries Título Principal\par}
+      \vspace{0.5cm}
+      {\Large Subtítulo del Documento\par}
+    }
+  }
+
+  \vspace{3cm}
+  {\LARGE Autor: María García\par}
+  \vfill
+  {\Large Institución\par}
+  {\large \today\par}
+\end{titlepage}
+\afterpage{\nopagecolor}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete pdfpages}
+
+\subsection{Inserción de PDFs Externos como Portada}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{pdfpages} permite insertar páginas de PDFs externos.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{pdfpages}
+	\end{lstlisting}
+
+	\textbf{Uso básico:}
+	\begin{lstlisting}[language=TeX]
+% Incluir una página
+\includepdf{portada.pdf}
+
+% Incluir varias páginas
+\includepdf[pages={1-3}]{documento.pdf}
+
+% Incluir todas las páginas
+\includepdf[pages=-]{documento.pdf}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de includepdf}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{pages=\{lista\}} -- Páginas a incluir
+		\item \texttt{nup=columnas x filas} -- Múltiples páginas por hoja
+		\item \texttt{landscape} -- Orientación horizontal
+		\item \texttt{angle=grados} -- Rotar páginas
+		\item \texttt{scale=factor} -- Escalar páginas
+		\item \texttt{frame=true} -- Añadir marco
+		\item \texttt{pagecommand=comando} -- Ejecutar comando en cada página
+	\end{itemize}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\includepdf[pages={1,3,5-7},nup=2x2,frame=true]{doc.pdf}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquetes para Fondos y Marcas de Agua}
+
+\subsection{Paquete background}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Añade fondos y marcas de agua a las páginas.
+
+	\textbf{Carga y configuración:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{background}
+
+\backgroundsetup{
+  scale=1,
+  angle=0,
+  opacity=0.1,
+  contents={%
+    \includegraphics[width=\paperwidth,height=\paperheight]{fondo.png}
+  }
+}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Paquete eso-pic}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Añade imágenes o texto en posiciones absolutas.
+
+	\textbf{Uso:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{eso-pic}
+
+% Añadir en todas las páginas
+\AddToShipoutPictureBG{%
+  \AtPageCenter{%
+    \makebox(0,0){\rotatebox{45}{\textcolor{gray!30}{%
+      \fontsize{5cm}{5cm}\selectfont BORRADOR}}}}
+}
+
+% Añadir solo en la página actual
+\AddToShipoutPictureBG*{contenido}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\chapter{Listas de Ejercicios y Respuestas}
+
+\section{Entornos Básicos con amsthm}
+
+\subsection{Configuración Inicial}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{amsthm}
+
+% Definir estilos
+\theoremstyle{definition}
+\newtheorem{ejercicio}{Ejercicio}[chapter]
+\newtheorem{problema}{Problema}[chapter]
+
+\theoremstyle{remark}
+\newtheorem*{solucion}{Solución}
+	\end{lstlisting}
+
+	\textbf{Uso:}
+	\begin{lstlisting}[language=TeX]
+\begin{ejercicio}
+  Calcular la derivada de $f(x) = x^2 + 3x$.
+\end{ejercicio}
+
+\begin{solucion}
+  $f'(x) = 2x + 3$
+\end{solucion}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete exercise}
+
+\subsection{Introducción a exercise}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Sistema completo para ejercicios con respuestas automáticas.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{exercise}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Entornos de exercise}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Entornos disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{Exercise} -- Ejercicio principal
+		\item \texttt{Answer} -- Respuesta al ejercicio
+		\item \texttt{ExerciseList} -- Lista de ejercicios
+	\end{itemize}
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{Exercise}[title={Derivadas}, label={ex:deriv}]
+  Calcular $\frac{d}{dx}(x^3)$.
+\end{Exercise}
+
+\begin{Answer}[ref={ex:deriv}]
+  $\frac{d}{dx}(x^3) = 3x^2$
+\end{Answer}
+
+% Mostrar todas las respuestas
+\shipoutAnswer
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Personalización de exercise}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones de Exercise:}
+	\begin{itemize}[nosep]
+		\item \texttt{title} -- Título del ejercicio
+		\item \texttt{label} -- Etiqueta para referencia
+		\item \texttt{difficulty} -- Nivel de dificultad
+		\item \texttt{counter} -- Contador personalizado
+	\end{itemize}
+
+	\textbf{Comandos de configuración:}
+	\begin{lstlisting}[language=TeX]
+\renewcommand{\ExerciseName}{Ejercicio}
+\renewcommand{\AnswerName}{Respuesta}
+\renewcommand{\ExerciseHeader}{\textbf{\ExerciseName\ \ExerciseHeaderNB}}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete exsheets}
+
+\subsection{Introducción a exsheets}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Sistema moderno y flexible para ejercicios y soluciones.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{exsheets}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Entornos de exsheets}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Entornos:}
+	\begin{itemize}[nosep]
+		\item \texttt{question} -- Pregunta/ejercicio
+		\item \texttt{solution} -- Solución
+	\end{itemize}
+
+	\textbf{Ejemplo básico:}
+	\begin{lstlisting}[language=TeX]
+\begin{question}
+  ¿Cuánto es $2 + 2$?
+\end{question}
+
+\begin{solution}
+  $2 + 2 = 4$
+\end{solution}
+
+% Imprimir todas las soluciones
+\printsolutions
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Opciones de question}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones disponibles:}
+	\begin{lstlisting}[language=TeX]
+\begin{question}[
+  name={Derivadas},
+  subtitle={Cálculo básico},
+  points={5},
+  topic={Cálculo}
+]
+  Contenido del ejercicio
+\end{question}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Configuración de exsheets}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Personalización:}
+	\begin{lstlisting}[language=TeX]
+% Configurar formato
+\SetupExSheets{
+  headings = block-subtitle,
+  counter-format = ch.qu,
+  counter-within = chapter
+}
+
+% Configurar soluciones
+\SetupExSheets{solution/print = true}  % Mostrar soluciones
+\SetupExSheets{solution/print = false} % Ocultar soluciones
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete answers}
+
+\subsection{Introducción a answers}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Gestiona ejercicios y respuestas en archivos separados.
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{answers}
+\Newassociation{sol}{Solution}{ans}
+
+% En el preámbulo
+\Opensolutionfile{ans}[respuestas]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Uso de answers}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+% Ejercicio con solución
+\begin{enumerate}
+\item ¿Cuánto es $5 \times 5$?
+\begin{sol}
+  $5 \times 5 = 25$
+\end{sol}
+
+\item Resolver $x^2 = 9$
+\begin{sol}
+  $x = \pm 3$
+\end{sol}
+\end{enumerate}
+
+% Cerrar archivo de soluciones
+\Closesolutionfile{ans}
+
+% Más adelante, mostrar todas las soluciones
+\section*{Soluciones}
+\input{respuestas}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Paquete xsim}
+
+\subsection{Introducción a xsim}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Sistema moderno y extensible para ejercicios (sucesor de exsheets).
+
+	\textbf{Carga:}
+	\begin{lstlisting}[language=TeX]
+\usepackage{xsim}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Entornos de xsim}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+\begin{exercise}[subtitle={Álgebra Básica}]
+  Resolver la ecuación $2x + 5 = 13$
+\end{exercise}
+
+\begin{solution}
+  \begin{align*}
+    2x + 5 &= 13 \\
+    2x &= 8 \\
+    x &= 4
+  \end{align*}
+\end{solution}
+
+% Imprimir soluciones
+\printsolutions[print=all]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Configuración de xsim}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones de configuración:}
+	\begin{lstlisting}[language=TeX]
+\xsimsetup{
+  exercise/template = default,
+  solution/template = default,
+  exercise/name = Ejercicio,
+  solution/name = Solución,
+  path = ejercicios  % Directorio para archivos
+}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Crear Lista de Ejercicios Personalizada}
+
+\subsection{Lista Manual}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Ejemplo]
+	\begin{lstlisting}[language=TeX]
+\newcounter{ejercicio}[chapter]
+\newenvironment{miEjercicio}[1][]{%
+  \refstepcounter{ejercicio}%
+  \par\medskip\noindent
+  \textbf{Ejercicio \theejercicio\ #1}\rmfamily
+}{%
+  \par\medskip
+}
+
+% Uso
+\begin{miEjercicio}[Derivadas]
+  Calcular la derivada de $f(x) = x^2$.
+\end{miEjercicio}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Ejemplo Completo Integrado}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Sistema Completo]
+	\begin{lstlisting}[language=TeX]
+\documentclass{book}
+\usepackage{xsim}
+\usepackage{tcolorbox}
+
+% Configuración
+\xsimsetup{
+  exercise/name = Ejercicio,
+  solution/name = Solución,
+  exercise/print = true,
+  solution/print = false
+}
+
+% Plantilla personalizada
+\DeclareExerciseEnvironmentTemplate{colorbox}{
+  \tcolorbox[colback=blue!5,colframe=blue!75!black,
+             title=\XSIMmixedcase{\GetExerciseName}~\GetExerciseProperty{counter}]
+}{
+  \endtcolorbox
+}
+
+\xsimsetup{exercise/template = colorbox}
+
+\begin{document}
+
+\chapter{Ejercicios de Cálculo}
+
+\begin{exercise}[subtitle={Límites}]
+  Calcular $\lim_{x \to 0} \frac{\sin x}{x}$
+\end{exercise}
+
+\begin{solution}
+  $\lim_{x \to 0} \frac{\sin x}{x} = 1$
+\end{solution}
+
+\begin{exercise}[subtitle={Derivadas}]
+  Derivar $f(x) = e^{2x}$
+\end{exercise}
+
+\begin{solution}
+  $f'(x) = 2e^{2x}$
+\end{solution}
+
+% Mostrar todas las soluciones al final
+\chapter*{Soluciones}
+\printsolutions
+
+\end{document}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\chapter{Ejemplos Completos y Plantillas}
+
+\section{Plantilla de Libro Académico}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Plantilla Completa]
+	\begin{lstlisting}[language=TeX]
+\documentclass[11pt,a4paper,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xsim}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Personalizar capítulos
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue!80}}
+  {\filleft\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {4ex}
+  {\titlerule\vspace{2ex}\filleft}
+  [\vspace{2ex}\titlerule]
+
+% Personalizar TOC
+\renewcommand{\cftchapfont}{\bfseries\color{blue!80}}
+\renewcommand{\cftchappagefont}{\bfseries\color{blue!80}}
+
+% Configurar ejercicios
+\xsimsetup{
+  exercise/name = Ejercicio,
+  solution/name = Solución
+}
+
+\title{Título del Libro}
+\author{Autor}
+\date{\today}
+
+\begin{document}
+
+% Portada personalizada
+\begin{titlepage}
+  \centering
+  \includegraphics[width=0.2\textwidth]{logo.png}\par
+  \vspace{1cm}
+  {\scshape\LARGE Universidad XYZ \par}
+  \vspace{1.5cm}
+  {\huge\bfseries Título del Libro\par}
+  \vspace{2cm}
+  {\Large\itshape Nombre del Autor\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Primer Capítulo}
+
+\section{Introducción}
+Contenido...
+
+\begin{exercise}
+  Ejercicio de ejemplo
+\end{exercise}
+
+\begin{solution}
+  Solución del ejercicio
+\end{solution}
+
+% Al final del libro
+\chapter*{Soluciones}
+\addcontentsline{toc}{chapter}{Soluciones}
+\printsolutions
+
+\end{document}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Plantilla de Reporte con Portada}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Reporte Profesional]
+	\begin{lstlisting}[language=TeX]
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Formato de capítulos
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}
+  {\colorbox{blue!80}{\color{white}\thechapter}}
+  {10pt}
+  {\huge}
+
+\begin{document}
+
+% Portada
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  \colorbox{blue!80}{%
+    \parbox{0.9\textwidth}{%
+      \centering\color{white}
+      \vspace{1cm}
+      {\Huge\bfseries REPORTE TÉCNICO\par}
+      \vspace{0.5cm}
+      {\Large Análisis de Resultados 2024\par}
+      \vspace{1cm}
+    }
+  }
+
+  \vspace{3cm}
+  {\LARGE Preparado por:\par}
+  {\Large Juan Pérez\par}
+  \vspace{2cm}
+  {\large Departamento de Ingeniería\par}
+  {\large Universidad XYZ\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Introducción}
+Contenido del reporte...
+
+\end{document}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\chapter{Tips y Mejores Prácticas}
+
+\section*{\faLightbulb\ Recomendaciones Generales}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+	\textbf{Para personalización de capítulos:}
+	\begin{itemize}[leftmargin=*]
+		\item Usa \texttt{titlesec} para control completo
+		\item Mantén consistencia en todo el documento
+		\item Prueba diferentes formas: display, block, hang
+		\item Combina con colores para mayor impacto visual
+	\end{itemize}
+
+	\textbf{Para tablas de contenido:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{tocloft} es más simple, \texttt{titletoc} más potente
+		\item Ajusta \texttt{tocdepth} según necesidad
+		\item Personaliza cada nivel independientemente
+		\item Considera mini-TOC para documentos largos
+	\end{itemize}
+
+	\textbf{Para portadas:}
+	\begin{itemize}[leftmargin=*]
+		\item Usa \texttt{titlepage} para portadas desde cero
+		\item \texttt{pdfpages} para portadas pre-diseñadas
+		\item Aprovecha \texttt{\textbackslash vfill} para espaciado vertical
+		\item Combina con \texttt{xcolor} para fondos atractivos
+	\end{itemize}
+
+	\textbf{Para ejercicios:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{xsim} es la opción más moderna
+		\item \texttt{exsheets} también es excelente
+		\item Usa \texttt{amsthm} para casos simples
+		\item Considera separar respuestas en sección aparte
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faExclamationTriangle\ Errores Comunes}
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black]
+	\textbf{Problemas frecuentes:}
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{titlesec y KOMA-Script:} No son compatibles, elige uno
+		\item \textbf{tocloft y memoir:} memoir tiene sus propios comandos
+		\item \textbf{Recompilar:} TOC requiere 2 compilaciones para actualizarse
+		\item \textbf{Numeración:} Verifica contadores antes de personalizarlos
+		\item \textbf{Portadas:} Usa \texttt{\textbackslash thispagestyle\{empty\}} para quitar número
+		\item \textbf{Ejercicios:} Cierra archivos de soluciones antes de imprimirlas
+		\item \textbf{Referencias:} Usa \texttt{\textbackslash label} para referenciar ejercicios
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faBook\ Recursos Adicionales}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black]
+	\textbf{Documentación oficial:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{texdoc titlesec} -- Manual de titlesec
+		\item \texttt{texdoc tocloft} -- Guía de tocloft
+		\item \texttt{texdoc xsim} -- Documentación de xsim
+		\item \texttt{texdoc pdfpages} -- Opciones de pdfpages
+		\item \texttt{texdoc memoir} -- Clase memoir (todo integrado)
+	\end{itemize}
+
+	\textbf{Alternativas y complementos:}
+	\begin{itemize}[leftmargin=*]
+		\item Clase \texttt{memoir} -- Incluye todo integrado
+		\item KOMA-Script (\texttt{scrbook}) -- Alternativa alemana potente
+		\item \texttt{fancyhdr} -- Para encabezados personalizados
+		\item \texttt{geometry} -- Control preciso de márgenes
+		\item \texttt{hyperref} -- TOC clickeable en PDF
+	\end{itemize}
+\end{tcolorbox}
+
+\vspace{2cm}
+
+\begin{center}
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,width=0.9\textwidth]
+		\centering
+		\large\textbf{Documento generado con \LaTeX{}}\\[0.5em]
+		\normalsize\textit{Guía Completa de Personalización de Estructura}\\[0.5em]
+		\small\today
+	\end{tcolorbox}
+
+	\vspace{1cm}
+
+	\textit{Esta guía cubre los principales paquetes para personalizar}\\
+	\textit{la estructura de documentos en \LaTeX{}.}\\[0.5em]
+	\textit{Para más información, consulta la documentación oficial de cada paquete.}
+\end{center}
+
+\end{document}

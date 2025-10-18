@@ -1,0 +1,1356 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+\usepackage{lipsum}
+\usepackage{tcolorbox}
+
+% Paquetes para columnas
+\usepackage{multicol}
+\usepackage{parallel}
+\usepackage{parcolumns}
+\usepackage{paracol}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{graphicx}
+
+% Configuración de títulos
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE\bfseries\color{blue!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries\color{green!60!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries\color{orange!70!black}}{\thesubsubsection}{1em}{}
+
+\title{\textbf{Aplicación Expandida de los 8 Métodos\\para Crear Columnas en LaTeX}}
+\author{Ejemplos Detallados con Lipsum}
+\date{\today}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+%=================================================================
+\section{Introducción}
+%=================================================================
+
+Este documento presenta aplicaciones expandidas y detalladas de los 8 métodos principales para crear columnas en LaTeX. Cada método incluye múltiples ejemplos con texto lipsum para demostrar el comportamiento real del flujo de texto y las diferentes opciones disponibles.
+
+\vspace{0.5cm}
+
+\subsection{Objetivos del Documento}
+
+\begin{itemize}
+    \item Demostrar cada método con ejemplos prácticos extensos
+    \item Explorar variantes de parámetros y opciones
+    \item Usar texto lipsum para visualizar el comportamiento real
+    \item Comparar ventajas y limitaciones de cada método
+\end{itemize}
+
+\newpage
+
+%=================================================================
+\section{Método 1: \texttt{minipage}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El entorno \texttt{minipage} es el método más básico y versátil para crear columnas en LaTeX. Cada minipage es esencialmente una caja independiente que puede contener cualquier elemento de LaTeX.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{minipage}[alineación]{ancho}
+    Contenido...
+\end{minipage}
+\end{Verbatim}
+
+\textbf{Opciones de alineación:} t (top), c (center), b (bottom)
+
+\subsubsection{Ejemplo 1: Dos columnas básicas con texto lipsum}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Columna Izquierda}
+
+    \lipsum[1]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Columna Derecha}
+
+    \lipsum[2]
+\end{minipage}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Tres columnas con anchos diferentes}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+    \textbf{30\% - Estrecha}
+
+    \lipsum[3][1-4]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+    \textbf{40\% - Media}
+
+    \lipsum[4][1-4]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.25\textwidth}
+    \textbf{25\% - Más estrecha}
+
+    \lipsum[5][1-4]
+\end{minipage}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Alineación vertical (top vs center vs bottom)}
+
+\noindent
+\fbox{\begin{minipage}[t]{0.30\textwidth}
+    \textbf{Alineación TOP [t]}
+
+    \lipsum[6][1-3]
+\end{minipage}}
+\hfill
+\fbox{\begin{minipage}[c]{0.30\textwidth}
+    \textbf{Alineación CENTER [c]}
+
+    Texto centrado.
+\end{minipage}}
+\hfill
+\fbox{\begin{minipage}[b]{0.30\textwidth}
+    \textbf{Alineación BOTTOM [b]}
+
+    Texto alineado abajo.
+\end{minipage}}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Con líneas separadoras verticales}
+
+\noindent
+\begin{minipage}[t]{0.32\textwidth}
+    \textbf{Primera Columna}
+
+    \lipsum[7][1-5]
+\end{minipage}
+\hfill
+\vrule width 1pt
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+    \textbf{Segunda Columna}
+
+    \lipsum[8][1-5]
+\end{minipage}
+\hfill
+\vrule width 1pt
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+    \textbf{Tercera Columna}
+
+    \lipsum[9][1-5]
+\end{minipage}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con colores de fondo}
+
+\noindent
+\colorbox{yellow!20}{\begin{minipage}{0.48\textwidth}
+    \textbf{Columna con fondo amarillo}
+
+    \lipsum[10][1-6]
+\end{minipage}}
+\hfill
+\colorbox{cyan!20}{\begin{minipage}{0.48\textwidth}
+    \textbf{Columna con fondo cyan}
+
+    \lipsum[11][1-6]
+\end{minipage}}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 6: Minipages anidadas}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Minipage Externa Izquierda}
+
+    \lipsum[12][1-3]
+
+    \vspace{0.3cm}
+
+    \noindent
+    \colorbox{green!10}{\begin{minipage}{0.9\textwidth}
+        \small\textbf{Minipage Anidada}
+
+        \lipsum[13][1-2]
+    \end{minipage}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Minipage Externa Derecha}
+
+    \lipsum[14][1-3]
+
+    \vspace{0.3cm}
+
+    \noindent
+    \colorbox{blue!10}{\begin{minipage}{0.9\textwidth}
+        \small\textbf{Minipage Anidada}
+
+        \lipsum[15][1-2]
+    \end{minipage}}
+\end{minipage}
+
+\newpage
+
+%=================================================================
+\section{Método 2: \texttt{multicol}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El paquete \texttt{multicol} permite crear múltiples columnas que se balancean automáticamente. El texto fluye de una columna a otra de forma continua.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{multicols}{número_de_columnas}
+    Contenido...
+\end{multicols}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Dos columnas balanceadas con texto largo}
+
+\begin{multicols}{2}
+    \textbf{Texto en dos columnas balanceadas:}
+
+    \lipsum[1-3]
+\end{multicols}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Tres columnas balanceadas}
+
+\begin{multicols}{3}
+    \textbf{Texto distribuido en tres columnas:}
+
+    \lipsum[4-5]
+\end{multicols}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Cuatro columnas (diseño tipo periódico)}
+
+\begin{multicols}{4}
+    \textbf{Cuatro columnas estrechas:}
+
+    \lipsum[6-7]
+\end{multicols}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Con línea separadora entre columnas}
+
+\setlength{\columnseprule}{0.4pt}
+\setlength{\columnsep}{1cm}
+\begin{multicols}{2}
+    \textbf{Columnas con línea divisoria y separación de 1cm:}
+
+    \lipsum[8-10]
+\end{multicols}
+\setlength{\columnseprule}{0pt}
+\setlength{\columnsep}{10pt}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con línea separadora gruesa y color}
+
+\setlength{\columnseprule}{2pt}
+\renewcommand{\columnseprulecolor}{\color{blue}}
+\setlength{\columnsep}{1.5cm}
+\begin{multicols}{2}
+    \textbf{Columnas con línea azul gruesa y separación amplia:}
+
+    \lipsum[11-12]
+\end{multicols}
+\setlength{\columnseprule}{0pt}
+\renewcommand{\columnseprulecolor}{\color{black}}
+\setlength{\columnsep}{10pt}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 6: Texto con listas en columnas}
+
+\begin{multicols}{2}
+    \textbf{Listas en múltiples columnas:}
+
+    \lipsum[13][1-3]
+
+    \begin{itemize}
+        \item Primer elemento de la lista
+        \item Segundo elemento
+        \item Tercer elemento con texto más largo
+        \item Cuarto elemento
+        \item Quinto elemento
+    \end{itemize}
+
+    \lipsum[14][1-3]
+
+    \begin{enumerate}
+        \item Primero
+        \item Segundo
+        \item Tercero
+        \item Cuarto
+    \end{enumerate}
+
+    \lipsum[15][1-2]
+\end{multicols}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 7: Con espaciado entre columnas variado}
+
+\setlength{\columnsep}{0.3cm}
+\begin{multicols}{3}
+    \textbf{Separación mínima (0.3cm):}
+
+    \lipsum[16-17]
+\end{multicols}
+
+\setlength{\columnsep}{2cm}
+\begin{multicols}{2}
+    \textbf{Separación amplia (2cm):}
+
+    \lipsum[18]
+\end{multicols}
+\setlength{\columnsep}{10pt}
+
+\newpage
+
+%=================================================================
+\section{Método 3: \texttt{parallel}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El paquete \texttt{parallel} permite crear contenido paralelo con control independiente de cada columna. Es ideal para comparaciones lado a lado.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{Parallel}{ancho_izq}{ancho_der}
+    \ParallelLText{Contenido izquierdo}
+    \ParallelRText{Contenido derecho}
+    \ParallelPar
+\end{Parallel}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Dos textos paralelos básicos}
+
+\begin{Parallel}{0.48\textwidth}{0.48\textwidth}
+    \ParallelLText{
+        \textbf{Texto Paralelo Izquierdo}
+
+        \lipsum[1][1-5]
+    }
+
+    \ParallelRText{
+        \textbf{Texto Paralelo Derecho}
+
+        \lipsum[2][1-5]
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Múltiples párrafos paralelos}
+
+\begin{Parallel}{0.48\textwidth}{0.48\textwidth}
+    \ParallelLText{
+        \textbf{Primer Párrafo Izquierdo}
+
+        \lipsum[3][1-3]
+    }
+
+    \ParallelRText{
+        \textbf{Primer Párrafo Derecho}
+
+        \lipsum[4][1-3]
+    }
+
+    \ParallelPar
+
+    \ParallelLText{
+        \textbf{Segundo Párrafo Izquierdo}
+
+        \lipsum[5][1-3]
+    }
+
+    \ParallelRText{
+        \textbf{Segundo Párrafo Derecho}
+
+        \lipsum[6][1-3]
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Anchos asimétricos}
+
+\begin{Parallel}{0.35\textwidth}{0.60\textwidth}
+    \ParallelLText{
+        \textbf{Columna Estrecha (35\%)}
+
+        \lipsum[7][1-4]
+    }
+
+    \ParallelRText{
+        \textbf{Columna Ancha (60\%)}
+
+        \lipsum[8][1-7]
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Comparación de versiones de texto}
+
+\begin{Parallel}{0.48\textwidth}{0.48\textwidth}
+    \ParallelLText{
+        \textbf{Versión Original}
+
+        \lipsum[9][1-6]
+    }
+
+    \ParallelRText{
+        \textbf{Versión Revisada}
+
+        \lipsum[10][1-6]
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con listas paralelas}
+
+\begin{Parallel}{0.48\textwidth}{0.48\textwidth}
+    \ParallelLText{
+        \textbf{Lista de Características}
+
+        \begin{itemize}
+            \item Característica A
+            \item Característica B
+            \item Característica C
+            \item Característica D
+        \end{itemize}
+
+        \lipsum[11][1-2]
+    }
+
+    \ParallelRText{
+        \textbf{Lista de Ventajas}
+
+        \begin{enumerate}
+            \item Ventaja 1
+            \item Ventaja 2
+            \item Ventaja 3
+            \item Ventaja 4
+        \end{enumerate}
+
+        \lipsum[12][1-2]
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+\newpage
+
+%=================================================================
+\section{Método 4: \texttt{parcolumns}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El paquete \texttt{parcolumns} permite crear columnas paralelas organizadas en chunks (fragmentos). Cada chunk se alinea verticalmente con su contraparte.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{parcolumns}[opciones]{número_columnas}
+    \colchunk{Contenido columna 1}
+    \colchunk{Contenido columna 2}
+\end{parcolumns}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Dos columnas con chunks básicos}
+
+\begin{parcolumns}[nofirstindent]{2}
+    \colchunk{
+        \textbf{Primera Columna - Chunk 1}
+
+        \lipsum[1][1-5]
+    }
+
+    \colchunk{
+        \textbf{Segunda Columna - Chunk 1}
+
+        \lipsum[2][1-5]
+    }
+\end{parcolumns}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Múltiples chunks consecutivos}
+
+\begin{parcolumns}[nofirstindent]{2}
+    \colchunk{
+        \textbf{Chunk 1 - Izquierda}
+
+        \lipsum[3][1-2]
+    }
+
+    \colchunk{
+        \textbf{Chunk 1 - Derecha}
+
+        \lipsum[4][1-2]
+    }
+
+    \colchunk{
+        \textbf{Chunk 2 - Izquierda}
+
+        \lipsum[5][1-2]
+    }
+
+    \colchunk{
+        \textbf{Chunk 2 - Derecha}
+
+        \lipsum[6][1-2]
+    }
+\end{parcolumns}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Tres columnas con chunks}
+
+\begin{parcolumns}[nofirstindent]{3}
+    \colchunk{
+        \textbf{Columna 1}
+
+        Texto breve para la primera columna.
+    }
+
+    \colchunk{
+        \textbf{Columna 2}
+
+        Texto breve para la segunda columna.
+    }
+
+    \colchunk{
+        \textbf{Columna 3}
+
+        Texto breve para la tercera columna.
+    }
+\end{parcolumns}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Con sangría en primera línea}
+
+\begin{parcolumns}{2}
+    \colchunk{
+        \textbf{Con sangría automática}
+
+        \lipsum[12][1-5]
+    }
+
+    \colchunk{
+        \textbf{También con sangría}
+
+        \lipsum[13][1-5]
+    }
+\end{parcolumns}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Chunks con listas}
+
+\begin{parcolumns}[nofirstindent]{2}
+    \colchunk{
+        \textbf{Lista Izquierda}
+
+        \begin{itemize}
+            \item Elemento A
+            \item Elemento B
+            \item Elemento C
+        \end{itemize}
+
+        \lipsum[14][1-2]
+    }
+
+    \colchunk{
+        \textbf{Lista Derecha}
+
+        \begin{enumerate}
+            \item Primero
+            \item Segundo
+            \item Tercero
+        \end{enumerate}
+
+        \lipsum[15][1-2]
+    }
+\end{parcolumns}
+
+\newpage
+
+%=================================================================
+\section{Método 5: \texttt{paracol}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El paquete \texttt{paracol} es uno de los más avanzados, permitiendo cambiar entre columnas explícitamente y con soporte para documentos largos que abarcan múltiples páginas.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{paracol}{número_columnas}
+    Contenido columna 1
+    \switchcolumn
+    Contenido columna 2
+\end{paracol}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Dos columnas básicas con switchcolumn}
+
+\begin{paracol}{2}
+    \textbf{Primera Columna}
+
+    \lipsum[1-2]
+
+    \switchcolumn
+
+    \textbf{Segunda Columna}
+
+    \lipsum[3-4]
+\end{paracol}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Con línea separadora}
+
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{0.4pt}
+
+\begin{paracol}{2}
+    \textbf{Columna con Línea Separadora}
+
+    \lipsum[5][1-8]
+
+    \switchcolumn
+
+    \textbf{Segunda Columna}
+
+    \lipsum[6][1-8]
+\end{paracol}
+
+\setlength{\columnsep}{10pt}
+\setlength{\columnseprule}{0pt}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Múltiples cambios de columna}
+
+\begin{paracol}{2}
+    \textbf{Parte 1 - Izquierda}
+
+    \lipsum[7][1-4]
+
+    \switchcolumn
+
+    \textbf{Parte 1 - Derecha}
+
+    \lipsum[8][1-4]
+
+    \switchcolumn
+
+    \textbf{Parte 2 - Izquierda}
+
+    \lipsum[9][1-4]
+
+    \switchcolumn
+
+    \textbf{Parte 2 - Derecha}
+
+    \lipsum[10][1-4]
+\end{paracol}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Tres columnas con paracol}
+
+\begin{paracol}{3}
+    \textbf{Columna 1}
+
+    \lipsum[11][1-5]
+
+    \switchcolumn
+
+    \textbf{Columna 2}
+
+    \lipsum[12][1-5]
+
+    \switchcolumn
+
+    \textbf{Columna 3}
+
+    \lipsum[13][1-5]
+\end{paracol}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con línea separadora gruesa y color}
+
+\setlength{\columnseprule}{2pt}
+\renewcommand{\columnseprulecolor}{\color{red!50}}
+
+\begin{paracol}{2}
+    \textbf{Línea Roja Gruesa}
+
+    \lipsum[14][1-6]
+
+    \switchcolumn
+
+    \textbf{Segunda Parte}
+
+    \lipsum[15][1-6]
+\end{paracol}
+
+\setlength{\columnseprule}{0pt}
+\renewcommand{\columnseprulecolor}{\color{black}}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 6: Con listas y enumeraciones}
+
+\begin{paracol}{2}
+    \textbf{Lista de Ventajas}
+
+    \begin{itemize}
+        \item Flexibilidad alta
+        \item Control preciso
+        \item Soporte multi-página
+        \item Líneas separadoras
+    \end{itemize}
+
+    \lipsum[16][1-3]
+
+    \switchcolumn
+
+    \textbf{Pasos de Uso}
+
+    \begin{enumerate}
+        \item Iniciar entorno paracol
+        \item Escribir contenido primera columna
+        \item Usar switchcolumn
+        \item Escribir contenido segunda columna
+        \item Cerrar entorno
+    \end{enumerate}
+
+    \lipsum[17][1-3]
+\end{paracol}
+
+\newpage
+
+%=================================================================
+\section{Método 6: \texttt{tabularx}}
+%=================================================================
+
+\subsection{Descripción General}
+
+Usar tablas sin bordes visibles es una forma simple y efectiva de crear columnas, especialmente para contenido estructurado y comparaciones.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{tabularx}{\textwidth}{XX}
+    Columna 1 & Columna 2 \\
+\end{tabularx}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Dos columnas sin bordes}
+
+\noindent
+\begin{tabularx}{\textwidth}{XX}
+    \textbf{Columna A} & \textbf{Columna B} \\[0.5em]
+    \lipsum[1][1-5] & \lipsum[2][1-5] \\[0.5em]
+    \lipsum[3][1-4] & \lipsum[4][1-4]
+\end{tabularx}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Con línea separadora vertical}
+
+\noindent
+\begin{tabularx}{\textwidth}{X|X}
+    \textbf{Parte Izquierda} & \textbf{Parte Derecha} \\[0.5em]
+    \hline
+    \lipsum[5][1-6] & \lipsum[6][1-6] \\[0.5em]
+    \lipsum[7][1-5] & \lipsum[8][1-5]
+\end{tabularx}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Tres columnas con separadores}
+
+\noindent
+\begin{tabularx}{\textwidth}{X|X|X}
+    \textbf{Columna 1} & \textbf{Columna 2} & \textbf{Columna 3} \\
+    \hline
+    \lipsum[9][1-4] & \lipsum[10][1-4] & \lipsum[11][1-4]
+\end{tabularx}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Anchos personalizados}
+
+\noindent
+\begin{tabularx}{\textwidth}{p{0.3\textwidth}|X}
+    \textbf{Columna Fija 30\%} & \textbf{Columna Flexible} \\
+    \hline
+    \lipsum[12][1-5] & \lipsum[13][1-8] \\[0.5em]
+    \lipsum[14][1-4] & \lipsum[15][1-7]
+\end{tabularx}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con colores de fondo}
+
+\noindent
+\begin{tabularx}{\textwidth}{XX}
+    \cellcolor{yellow!20}\textbf{Fondo Amarillo} & \cellcolor{cyan!20}\textbf{Fondo Cyan} \\[0.5em]
+    \cellcolor{yellow!10}\lipsum[16][1-5] & \cellcolor{cyan!10}\lipsum[17][1-5]
+\end{tabularx}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 6: Tabla comparativa}
+
+\noindent
+\begin{tabularx}{\textwidth}{|X|X|}
+    \hline
+    \cellcolor{green!20}\textbf{Ventajas} & \cellcolor{red!20}\textbf{Desventajas} \\
+    \hline
+    \lipsum[18][1-4] & \lipsum[19][1-4] \\
+    \hline
+    \lipsum[20][1-4] & \lipsum[21][1-4] \\
+    \hline
+\end{tabularx}
+
+\newpage
+
+%=================================================================
+\section{Método 7: \texttt{\textbackslash twocolumn}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El comando \texttt{\textbackslash twocolumn} es nativo de LaTeX y cambia todo el documento (o una sección) a dos columnas. Es útil para documentos tipo artículo científico o periódico.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+% En el preámbulo:
+\documentclass[twocolumn]{article}
+
+% O dentro del documento:
+\twocolumn
+Contenido en dos columnas...
+\onecolumn  % Volver a una columna
+\end{Verbatim}
+
+\subsubsection{Ejemplo: Demostración con texto lipsum}
+
+\textbf{Nota:} Para evitar afectar todo el documento, aquí mostramos el código sin ejecutarlo. En su lugar, usamos \texttt{multicol} para simular el efecto:
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\twocolumn
+\section{Título de Sección}
+\lipsum[1-5]
+\onecolumn
+\end{Verbatim}
+
+\textbf{Simulación del resultado:}
+
+\begin{multicols}{2}
+    \subsection*{Título de Sección}
+
+    \lipsum[1-5]
+\end{multicols}
+
+\vspace{1cm}
+
+\subsubsection{Características de twocolumn}
+
+\begin{itemize}
+    \item Afecta todo el documento desde donde se invoca
+    \item Balancea automáticamente las columnas
+    \item Permite títulos que ocupen todo el ancho con \texttt{\textbackslash twocolumn[Título]}
+    \item Se puede configurar el espaciado con \texttt{\textbackslash columnsep}
+    \item Menos flexible que otros métodos
+\end{itemize}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo simulado: Artículo científico}
+
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    \subsection*{Abstract}
+
+    \lipsum[6][1-4]
+
+    \subsection*{Introduction}
+
+    \lipsum[7-9]
+
+    \subsection*{Methodology}
+
+    \lipsum[10-11]
+
+    \subsection*{Results}
+
+    \lipsum[12-13]
+\end{multicols}
+\setlength{\columnseprule}{0pt}
+
+\newpage
+
+%=================================================================
+\section{Método 8: \texttt{adjustbox}}
+%=================================================================
+
+\subsection{Descripción General}
+
+El paquete \texttt{adjustbox} mejora las capacidades de \texttt{minipage} añadiendo opciones avanzadas de alineación, marcos, fondos, rotación y escalado.
+
+\subsection{Sintaxis Básica}
+
+\begin{Verbatim}[frame=single,fontsize=\small]
+\begin{adjustbox}{minipage=ancho, opciones}
+    Contenido...
+\end{adjustbox}
+\end{Verbatim}
+
+\subsubsection{Ejemplo 1: Cajas básicas con marcos}
+
+\noindent
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame}
+    \textbf{Caja 1 con Marco}
+
+    \lipsum[1][1-5]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame}
+    \textbf{Caja 2 con Marco}
+
+    \lipsum[2][1-5]
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 2: Con fondos de colores}
+
+\noindent
+\begin{adjustbox}{minipage=0.32\textwidth, valign=t, bgcolor=yellow!20}
+    \textbf{Fondo Amarillo}
+
+    \lipsum[3][1-4]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.32\textwidth, valign=t, bgcolor=green!20}
+    \textbf{Fondo Verde}
+
+    \lipsum[4][1-4]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.32\textwidth, valign=t, bgcolor=blue!20}
+    \textbf{Fondo Azul}
+
+    \lipsum[5][1-4]
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 3: Marco y fondo combinados}
+
+\noindent
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, bgcolor=cyan!10}
+    \textbf{Marco + Fondo Cyan}
+
+    \lipsum[6][1-6]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, bgcolor=orange!10}
+    \textbf{Marco + Fondo Naranja}
+
+    \lipsum[7][1-6]
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 4: Diferentes alturas con alineación top}
+
+\noindent
+\begin{adjustbox}{minipage=0.23\textwidth, valign=t, frame, bgcolor=red!10}
+    \textbf{Corta}
+
+    \lipsum[8][1-2]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.23\textwidth, valign=t, frame, bgcolor=green!10}
+    \textbf{Media}
+
+    \lipsum[9][1-4]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.23\textwidth, valign=t, frame, bgcolor=blue!10}
+    \textbf{Larga}
+
+    \lipsum[10][1-6]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.23\textwidth, valign=t, frame, bgcolor=yellow!10}
+    \textbf{Muy Larga}
+
+    \lipsum[11][1-8]
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 5: Con margen interno (padding)}
+
+\noindent
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, margin=10pt, bgcolor=purple!10}
+    \textbf{Con Margen Interno 10pt}
+
+    \lipsum[12][1-5]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, margin=5pt, bgcolor=pink!20}
+    \textbf{Con Margen Interno 5pt}
+
+    \lipsum[13][1-5]
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 6: Cajas anidadas con adjustbox}
+
+\noindent
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame=2pt, bgcolor=cyan!5}
+    \textbf{Caja Externa Izquierda}
+
+    \lipsum[14][1-3]
+
+    \vspace{0.3cm}
+
+    \begin{adjustbox}{minipage=0.9\textwidth, frame, bgcolor=white}
+        \small\textbf{Caja Interna}
+
+        \lipsum[15][1-2]
+    \end{adjustbox}
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame=2pt, bgcolor=orange!5}
+    \textbf{Caja Externa Derecha}
+
+    \lipsum[16][1-3]
+
+    \vspace{0.3cm}
+
+    \begin{adjustbox}{minipage=0.9\textwidth, frame, bgcolor=white}
+        \small\textbf{Caja Interna}
+
+        \lipsum[17][1-2]
+    \end{adjustbox}
+\end{adjustbox}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo 7: Con listas y diferentes opciones}
+
+\noindent
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, bgcolor=green!10, margin=8pt}
+    \textbf{Lista con Marco Verde}
+
+    \begin{itemize}
+        \item Característica principal A
+        \item Característica principal B
+        \item Característica principal C
+    \end{itemize}
+
+    \lipsum[18][1-3]
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.48\textwidth, valign=t, frame, bgcolor=blue!10, margin=8pt}
+    \textbf{Enumeración con Marco Azul}
+
+    \begin{enumerate}
+        \item Primer punto importante
+        \item Segundo punto importante
+        \item Tercer punto importante
+    \end{enumerate}
+
+    \lipsum[19][1-3]
+\end{adjustbox}
+
+\newpage
+
+%=================================================================
+\section{Comparación Detallada de los 8 Métodos}
+%=================================================================
+
+\subsection{Tabla Comparativa Completa}
+
+\begin{center}
+\small
+\begin{tabular}{|l|c|c|c|p{3.5cm}|}
+\hline
+\textbf{Método} & \textbf{Facilidad} & \textbf{Flexibilidad} & \textbf{Balance Auto} & \textbf{Mejor Uso} \\
+\hline
+minipage & ★★★★★ & ★★★★★ & No & Control total, cajas independientes \\
+\hline
+multicol & ★★★★★ & ★★★☆☆ & Sí & Texto continuo, artículos \\
+\hline
+parallel & ★★★☆☆ & ★★★★☆ & No & Comparaciones, traducciones \\
+\hline
+parcolumns & ★★★☆☆ & ★★★☆☆ & No & Contenido estructurado en chunks \\
+\hline
+paracol & ★★★☆☆ & ★★★★★ & No & Docs largos, control fino \\
+\hline
+tabularx & ★★★★★ & ★★☆☆☆ & No & Comparaciones simples \\
+\hline
+twocolumn & ★★☆☆☆ & ★☆☆☆☆ & Sí & Documento completo \\
+\hline
+adjustbox & ★★★★☆ & ★★★★★ & No & Efectos visuales, marcos \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsection{Criterios de Selección}
+
+\begin{multicols}{2}
+\subsubsection*{Usa minipage si...}
+\begin{itemize}
+    \item Necesitas control total sobre cada columna
+    \item Quieres contenido completamente independiente
+    \item Necesitas alineación precisa
+\end{itemize}
+
+\subsubsection*{Usa multicol si...}
+\begin{itemize}
+    \item Tienes texto continuo largo
+    \item Quieres balance automático
+    \item Necesitas 2 o más columnas uniformes
+\end{itemize}
+
+\subsubsection*{Usa parallel si...}
+\begin{itemize}
+    \item Comparas dos versiones de texto
+    \item Haces traducciones paralelas
+    \item Necesitas sincronización por párrafos
+\end{itemize}
+
+\subsubsection*{Usa parcolumns si...}
+\begin{itemize}
+    \item Trabajas con fragmentos estructurados
+    \item Necesitas alineación vertical entre chunks
+    \item El contenido está organizado en bloques
+\end{itemize}
+
+\subsubsection*{Usa paracol si...}
+\begin{itemize}
+    \item Tu documento es largo y multi-página
+    \item Necesitas líneas separadoras personalizadas
+    \item Quieres control explícito de cambios
+\end{itemize}
+
+\subsubsection*{Usa tabularx si...}
+\begin{itemize}
+    \item Haces comparaciones simples
+    \item No necesitas mucha complejidad
+    \item Prefieres sintaxis de tabla
+\end{itemize}
+
+\subsubsection*{Usa twocolumn si...}
+\begin{itemize}
+    \item Todo el documento será en columnas
+    \item Escribes artículos científicos
+    \item No necesitas cambiar frecuentemente
+\end{itemize}
+
+\subsubsection*{Usa adjustbox si...}
+\begin{itemize}
+    \item Necesitas efectos visuales (marcos, fondos)
+    \item Quieres más opciones que minipage
+    \item Trabajas con diseños complejos
+\end{itemize}
+\end{multicols}
+
+\newpage
+
+%=================================================================
+\section{Ejemplos Combinados}
+%=================================================================
+
+\subsection{Combinando Varios Métodos}
+
+Es posible combinar diferentes métodos para crear diseños complejos.
+
+\subsubsection{Ejemplo: minipage + adjustbox}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Minipage Normal}
+
+    \lipsum[1][1-4]
+
+    \vspace{0.3cm}
+
+    \begin{adjustbox}{minipage=0.9\textwidth, frame, bgcolor=yellow!20}
+        \small Adjustbox dentro de minipage
+
+        \lipsum[2][1-2]
+    \end{adjustbox}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Otra Minipage}
+
+    \lipsum[3][1-4]
+
+    \vspace{0.3cm}
+
+    \begin{adjustbox}{minipage=0.9\textwidth, frame, bgcolor=cyan!20}
+        \small Otro adjustbox anidado
+
+        \lipsum[4][1-2]
+    \end{adjustbox}
+\end{minipage}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo: multicol dentro de minipage}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Minipage con Multicol Interno}
+
+    \begin{multicols}{2}
+        \lipsum[5][1-6]
+    \end{multicols}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Otra Minipage Normal}
+
+    \lipsum[6][1-8]
+\end{minipage}
+
+\vspace{1cm}
+
+\subsubsection{Ejemplo: tabularx con adjustbox}
+
+\noindent
+\begin{tabularx}{\textwidth}{XX}
+    \begin{adjustbox}{minipage=\linewidth, frame, bgcolor=green!10}
+        \textbf{Adjustbox en Celda 1}
+
+        \lipsum[7][1-4]
+    \end{adjustbox}
+    &
+    \begin{adjustbox}{minipage=\linewidth, frame, bgcolor=blue!10}
+        \textbf{Adjustbox en Celda 2}
+
+        \lipsum[8][1-4]
+    \end{adjustbox}
+\end{tabularx}
+
+\newpage
+
+%=================================================================
+\section{Conclusiones y Recomendaciones Finales}
+%=================================================================
+
+\subsection{Resumen de Aplicaciones}
+
+A lo largo de este documento hemos explorado en detalle los 8 métodos principales para crear columnas en LaTeX. Cada método tiene su propósito específico:
+
+\begin{multicols}{2}
+\begin{enumerate}
+    \item \textbf{minipage}: El más versátil y fundamental
+    \item \textbf{multicol}: Ideal para texto fluido
+    \item \textbf{parallel}: Perfecto para comparaciones
+    \item \textbf{parcolumns}: Bueno para estructuras por bloques
+    \item \textbf{paracol}: El más potente para documentos largos
+    \item \textbf{tabularx}: Simple para comparaciones básicas
+    \item \textbf{twocolumn}: Para documentos completos
+    \item \textbf{adjustbox}: El más visual y decorativo
+\end{enumerate}
+\end{multicols}
+
+\subsection{Consejos Prácticos}
+
+\begin{itemize}
+    \item \textbf{Experimenta}: Prueba diferentes métodos para el mismo contenido
+    \item \textbf{Combina}: No temas combinar métodos cuando sea necesario
+    \item \textbf{Mantén simplicidad}: Usa el método más simple que cumpla tus necesidades
+    \item \textbf{Considera el mantenimiento}: Elige métodos que sean fáciles de mantener
+    \item \textbf{Piensa en el flujo}: Para texto continuo, usa multicol o paracol
+    \item \textbf{Control fino}: Para diseños precisos, usa minipage o adjustbox
+\end{itemize}
+
+\subsection{Recursos Adicionales}
+
+Para profundizar en cada método, consulta:
+\begin{itemize}
+    \item Documentación oficial de cada paquete en CTAN
+    \item TeX StackExchange para casos de uso específicos
+    \item Ejemplos en Overleaf Learn
+\end{itemize}
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tcolorbox}[colback=blue!5,colframe=blue!70,width=0.8\textwidth,arc=3mm]
+\centering
+\Large\textbf{¡Practica con cada método!}
+
+\vspace{0.3cm}
+
+\normalsize
+La mejor manera de dominar estos métodos es experimentando con ellos en tus propios documentos.
+\end{tcolorbox}
+\end{center}
+
+\end{document}

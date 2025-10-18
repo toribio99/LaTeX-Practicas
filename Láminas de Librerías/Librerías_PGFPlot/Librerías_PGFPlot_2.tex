@@ -1,0 +1,166 @@
+% !TEX TS-program = pdflatex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{margin=1.8cm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots,fillbetween,statistics,dateplot,colormaps,colorbrewer,polar,patchplots,ternary,smithchart,units}
+
+
+\pagestyle{empty}
+
+\begin{document}
+	
+	% ===================== groupplots =====================
+	\section*{Librería: groupplots}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{groupplot}[group style={group size=2 by 1, horizontal sep=2cm},
+				width=5cm, height=4cm, grid=both]
+				\nextgroupplot[title={$x^2$}]
+				\addplot[blue, thick, domain=-2:2]{x^2};
+				\nextgroupplot[title={$e^{-x}$}]
+				\addplot[red, thick, domain=0:4]{exp(-x)};
+			\end{groupplot}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== fillbetween =====================
+	\section*{Librería: fillbetween}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[grid=both, xmin=0, xmax=2]
+				\addplot[name path=A, domain=0:2]{x^2};
+				\addplot[name path=B, domain=0:2]{2*x};
+				\addplot[blue!20] fill between[of=A and B];
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== statistics =====================
+%	\section*{Librería: statistics (histograma y boxplot)}
+%	\begin{center}
+%		\begin{tikzpicture}
+%			\begin{axis}[ybar interval, width=5cm, height=4cm, grid=both]
+%				\addplot+[
+%				hist={bins=10, data min=0, data max=1}
+%				] table[row sep=\\, y index=0] {
+%					0.1\\0.2\\0.15\\0.4\\0.45\\0.6\\0.65\\0.7\\0.8\\0.9\\
+%				};
+%			\end{axis}
+%		\end{tikzpicture}
+%		\quad
+%		\begin{tikzpicture}
+%			\begin{axis}[boxplot/draw direction=y, width=5cm, height=4cm]
+%				\addplot+[
+%				boxplot
+%				] table[row sep=\\, y index=0] {
+%					10\\12\\13\\14\\15\\15\\16\\17\\18\\19\\20
+%				};
+%			\end{axis}
+%		\end{tikzpicture}
+%	\end{center}
+	
+	% ===================== dateplot =====================
+%	\section*{Librería: dateplot}
+%	\begin{center}
+%		\begin{tikzpicture}
+%			\begin{axis}[date coordinates in=x, xticklabel=\year-\month, width=10cm, height=4cm, grid=both]
+%				\addplot table[row sep=\\, x=date, y=value] {
+%					date value\\
+%					2025-01-01 2\\
+%					2025-02-01 3\\
+%					2025-03-01 1.5\\
+%					2025-04-01 4\\
+%				};
+%			\end{axis}
+%		\end{tikzpicture}
+%	\end{center}
+	
+	% ===================== colormaps =====================
+%	\section*{Librería: colormaps}
+%	\begin{center}
+%		\begin{tikzpicture}
+%			\begin{axis}[view={55}{30}, colorbar, colormap name=viridis, grid=both]
+%				\addplot3[surf, domain=-2:2, y domain=-2:2] {exp(-(x^2+y^2))};
+%			\end{axis}
+%		\end{tikzpicture}
+%	\end{center}
+	
+	% ===================== colorbrewer =====================
+	\section*{Librería: colorbrewer}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[cycle list/Set2, grid=both, legend pos=north west]
+				\addplot {x};
+				\addplot {x^2};
+				\addplot {x^3};
+				\legend{$x$, $x^2$, $x^3$}
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== polar =====================
+	\section*{Librería: polar}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{polaraxis}[grid=both, xtick={0,45,...,315}]
+				\addplot+[domain=0:360, samples=300] {1+0.3*cos(x)};
+			\end{polaraxis}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== patchplots =====================
+	\section*{Librería: patchplots}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[view={60}{30}, grid=both]
+				\addplot3[
+				patch,
+				patch type=triangle,
+				shader=interp,
+				point meta=\thisrow{c}
+				] table {
+					x y z c
+					0 0 0 0
+					1 0 0 1
+					0 1 0 2
+				};
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== ternary =====================
+	\section*{Librería: ternary}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{ternaryaxis}[xlabel={$A$}, ylabel={$B$}, zlabel={$C$}]
+				\addplot3 coordinates {(0.2,0.5,0.3) (0.4,0.4,0.2)};
+			\end{ternaryaxis}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== smithchart =====================
+	\section*{Librería: smithchart}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{smithchart}
+				\addplot coordinates {(0.1,0.2) (0.3,0.4)};
+			\end{smithchart}
+		\end{tikzpicture}
+	\end{center}
+	
+	% ===================== units =====================
+	\section*{Librería: units}
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[unit x label=\si{\second}, unit y label=\si{\volt}, grid=both]
+				\addplot coordinates {(0,0) (1,2) (2,3)};
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+%	
+\end{document}

@@ -1,0 +1,361 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{trees,arrows.meta,positioning,shadows}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{fontawesome5}
+\usepackage{listings}
+
+% Colores personalizados
+\definecolor{categorycolor}{RGB}{41,128,185}
+\definecolor{classcolor}{RGB}{39,174,96}
+\definecolor{optioncolor}{RGB}{149,165,166}
+\definecolor{desccolor}{RGB}{52,73,94}
+
+% Configuración del título
+\title{\textbf{\Huge Clases de Documento en \LaTeX{}}\\\large Guía Jerárquica Completa}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		Este documento presenta una clasificación jerárquica de las clases de documento disponibles en \LaTeX{}, organizadas por categoría y con sus opciones principales.
+	\end{tcolorbox}
+	
+	\section*{Clases Estándar}
+	
+	Estas son las clases básicas que vienen incluidas por defecto en cualquier distribución de \LaTeX{}.
+	
+	\subsection*{\texttt{\textcolor{classcolor}{article}} -- Artículos y documentos cortos}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{onecolumn, twocolumn} -- Una o dos columnas
+			\item \texttt{draft, final} -- Modo borrador o final
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{report}} -- Reportes con capítulos}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{openright, openany} -- Capítulos en página derecha o cualquiera
+			\item \texttt{draft, final} -- Modo borrador o final
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{book}} -- Libros (impresión a dos caras)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{openright, openany} -- Capítulos en página derecha o cualquiera
+			\item \texttt{draft, final} -- Modo borrador o final
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{letter}} -- Cartas formales}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+		\end{itemize}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faDesktop\ Presentaciones}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{beamer}} -- Presentaciones profesionales}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{aspectratio=169, aspectratio=43} -- Relación de aspecto 16:9 o 4:3
+			\item \texttt{handout} -- Versión para imprimir
+			\item \texttt{trans} -- Efectos de transición
+			\item \texttt{t, c, b} -- Alineación superior, centrada o inferior
+			\item \texttt{draft, final} -- Modo borrador o final
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{powerdot}} -- Presentaciones estilo PowerPoint}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{style=default, simple, etc} -- Estilo de diseño
+			\item \texttt{nopagebreak} -- Sin saltos de página automáticos
+			\item \texttt{display=slides, slidesnotes} -- Mostrar solo slides o con notas
+			\item \texttt{paper=screen, a4paper} -- Tamaño de papel
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faBook\ KOMA-Script (Clases Modernas)}
+	
+	Alternativas modernas y más flexibles a las clases estándar.
+	
+	\subsection*{\texttt{\textcolor{classcolor}{scrartcl}} -- Artículo moderno (reemplazo de article)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{fontsize=10pt-12pt} -- Tamaño de fuente flexible
+			\item \texttt{paper=a4, letter} -- Tamaño de papel
+			\item \texttt{parskip=half, full} -- Espaciado entre párrafos
+			\item \texttt{twoside, oneside} -- Impresión a una o dos caras
+			\item \texttt{headings=small, normal, big} -- Tamaño de encabezados
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{scrreprt}} -- Reporte moderno (reemplazo de report)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{fontsize=10pt-12pt} -- Tamaño de fuente flexible
+			\item \texttt{paper=a4, letter} -- Tamaño de papel
+			\item \texttt{chapterprefix=true} -- Mostrar "Capítulo" antes del número
+			\item \texttt{twoside, oneside} -- Impresión a una o dos caras
+			\item \texttt{open=right, any} -- Capítulos en página derecha o cualquiera
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{scrbook}} -- Libro moderno (reemplazo de book)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{fontsize=10pt-12pt} -- Tamaño de fuente flexible
+			\item \texttt{paper=a4, letter} -- Tamaño de papel
+			\item \texttt{twoside, oneside} -- Impresión a una o dos caras
+			\item \texttt{open=right, any} -- Capítulos en página derecha o cualquiera
+			\item \texttt{BCOR=valor} -- Corrección de encuadernación
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{scrlttr2}} -- Carta moderna}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{fontsize=10pt-12pt} -- Tamaño de fuente flexible
+			\item \texttt{paper=a4, letter} -- Tamaño de papel
+			\item \texttt{fromalign=left, center, right} -- Alineación del remitente
+			\item \texttt{foldmarks=true, false} -- Marcas de doblado
+		\end{itemize}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faGraduationCap\ Revistas Académicas}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{IEEEtran}} -- IEEE Transactions}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{conference, journal} -- Formato conferencia o revista
+			\item \texttt{9pt, 10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{onecolumn, twocolumn} -- Una o dos columnas
+			\item \texttt{compsoc, transmag} -- Estilos específicos IEEE
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{elsarticle}} -- Elsevier journals}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{preprint, review, 1p, 3p, 5p} -- Formato de diseño
+			\item \texttt{authoryear, number} -- Estilo de citas
+			\item \texttt{times, default} -- Fuente tipográfica
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{acmart}} -- ACM journals y conferencias}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{manuscript, acmsmall, acmlarge} -- Formato de revista
+			\item \texttt{sigconf, sigplan, sigchi} -- Formato de conferencia específica
+			\item \texttt{screen, nonacm} -- Versión digital o no-ACM
+			\item \texttt{anonymous, review} -- Revisión anónima
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{revtex4-2}} -- APS, AIP journals (física)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{aps, aip} -- American Physical Society o AIP
+			\item \texttt{prl, pra, prb, prc} -- Revistas específicas
+			\item \texttt{reprint, preprint} -- Formato de publicación
+			\item \texttt{twocolumn, onecolumn} -- Una o dos columnas
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{amsart}} -- American Mathematical Society}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{8pt, 9pt, 10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{draft, final} -- Modo borrador o final
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{centertags, tbtags} -- Alineación de etiquetas
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{amsbook}} -- AMS books}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{8pt, 9pt, 10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{draft, final} -- Modo borrador o final
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{openright, openany} -- Capítulos en página derecha o cualquiera
+		\end{itemize}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faBook\ Tesis y Documentos Largos}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{memoir}} -- Muy flexible, para libros y tesis}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt, 14pt, 17pt} -- Tamaño de fuente ampliado
+			\item \texttt{a4paper, letterpaper, b5paper} -- Tamaño de papel
+			\item \texttt{oneside, twoside} -- Impresión a una o dos caras
+			\item \texttt{article, ms} -- Estilo de diseño
+			\item \texttt{showtrims, draft, final} -- Mostrar marcas de corte, borrador o final
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faBriefcase\ Currículums}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{moderncv}} -- CV moderno y elegante}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{casual, classic, banking, oldstyle, fancy} -- Estilos disponibles
+			\item \texttt{blue, orange, green, red, purple, grey, black} -- Colores
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{europecv}} -- Formato Europass}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{narrow} -- Márgenes estrechos
+			\item \texttt{notitle} -- Sin título predeterminado
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faCode\ Propósitos Especiales}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{standalone}} -- Figuras/diagramas independientes}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{tikz, pstricks} -- Para usar con TikZ o PSTricks
+			\item \texttt{border=dimensión} -- Añadir borde alrededor
+			\item \texttt{preview} -- Modo vista previa
+			\item \texttt{crop, varwidth} -- Recortar o ancho variable
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{exam}} -- Exámenes y cuestionarios}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{answers} -- Mostrar respuestas
+			\item \texttt{addpoints} -- Suma automática de puntos
+			\item \texttt{nopointsinmargin} -- No mostrar puntos en margen
+			\item \texttt{cancelspace} -- Cancelar espacio para respuestas
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{tikzposter}} -- Pósters científicos}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{a0paper, a1paper, a2paper} -- Tamaño del póster
+			\item \texttt{portrait, landscape} -- Orientación
+			\item \texttt{12pt, 14pt, 17pt, 20pt, 25pt} -- Tamaño de fuente
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{tufte-book}} -- Estilo Edward Tufte (libro)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{a4paper, letterpaper} -- Tamaño de papel
+			\item \texttt{justified, raggedright} -- Texto justificado o alineado izquierda
+			\item \texttt{notoc, titlepage} -- Sin tabla de contenidos o con portada
+		\end{itemize}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faGlobe\ Idiomas Específicos}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{ctexart, ctexrep, ctexbook}} -- Documentos en chino}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{UTF8, GBK} -- Codificación de caracteres
+			\item \texttt{scheme=chinese, plain} -- Esquema de tipografía
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{jbook, jarticle}} -- Documentos en japonés}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{10pt, 11pt, 12pt} -- Tamaño de fuente
+			\item \texttt{a4paper, b5paper} -- Tamaño de papel
+			\item \texttt{tate} -- Escritura vertical
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{classcolor}{extarticle, extreport, extbook}} -- Con más tamaños de fuente}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black,fonttitle=\bfseries,title=Opciones principales:]
+		\begin{itemize}[leftmargin=*,noitemsep]
+			\item \texttt{8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt} -- Tamaños extendidos
+			\item Todas las opciones de \texttt{article/report/book} estándar
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\vspace{1cm}
+	
+	\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faLightbulb\ Ejemplo de uso]
+		\begin{lstlisting}[language=TeX,basicstyle=\ttfamily,breaklines=true]
+			\documentclass[12pt,a4paper,twoside]{article}
+			\usepackage[utf8]{inputenc}
+			\usepackage[spanish]{babel}
+			
+			\begin{document}
+				Tu contenido aquí...
+			\end{document}
+		\end{lstlisting}
+		
+		Donde \texttt{12pt,a4paper,twoside} son opciones opcionales separadas por comas que se pasan entre corchetes \texttt{[ ]}.
+	\end{tcolorbox}
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		\textit{Documento generado con \LaTeX{} -- \today}
+	\end{center}
+	
+\end{document}

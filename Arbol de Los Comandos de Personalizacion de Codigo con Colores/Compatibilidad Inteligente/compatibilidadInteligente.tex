@@ -1,0 +1,972 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{newunicodechar}
+\usepackage{amssymb}
+
+% Definir símbolos Unicode especiales
+\newunicodechar{✓}{\checkmark}
+\newunicodechar{✗}{\ensuremath{\times}}
+\newunicodechar{↪}{\ensuremath{\hookrightarrow}}
+\newunicodechar{❌}{\ensuremath{\times}}
+\newunicodechar{¡}{!`}
+
+% Colores personalizados
+\definecolor{codeblue}{RGB}{0,102,204}
+\definecolor{codepurple}{RGB}{153,0,153}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codebglight}{RGB}{245,245,245}
+\definecolor{framecolor}{RGB}{102,102,102}
+
+% Configuración de listings para LaTeX
+\lstset{
+    language=[LaTeX]TeX,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{codeblue}\bfseries,
+    commentstyle=\color{codegreen}\itshape,
+    stringstyle=\color{codepurple},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{framecolor},
+    backgroundcolor=\color{codebglight},
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    numbersep=8pt,
+    tabsize=2,
+    captionpos=b,
+    literate=%
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+        {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+        {¿}{{?`}}1 {¡}{{!`}}1
+}
+
+% ============================================================
+% INICIO DEL CÓDIGO DE COMPATIBILIDAD INTELIGENTE
+% ============================================================
+
+\IfFileExists{fvextra.sty}{%
+    \usepackage{fvextra} % (carga fancyvrb)
+    \DefineVerbatimEnvironment{codeblock}{Verbatim}{
+        breaklines, breakanywhere,
+        breaksymbol=\tiny\ensuremath{\hookrightarrow}\,,
+        breaksymbolindentleft=0pt,
+        fontsize=\small,
+        frame=single, framerule=0.4pt, rulecolor=\color{black!40},
+        tabsize=2
+    }
+    \DefineVerbatimEnvironment{codeplain}{Verbatim}{
+        breaklines, breakanywhere, fontsize=\small, frame=none, tabsize=2
+    }
+    \DefineVerbatimEnvironment{codefine}{Verbatim}{
+        breaklines, breakanywhere, fontsize=\small,
+        frame=single, framerule=0.2pt, rulecolor=\color{black!20}, tabsize=2
+    }
+    \DefineVerbatimEnvironment{codebg}{Verbatim}{
+        breaklines, breakanywhere, fontsize=\small,
+        frame=single, framerule=0.4pt, rulecolor=\color{black!30},
+        bgcolor=black!3, tabsize=2
+    }
+    \DefineVerbatimEnvironment{codelines}{Verbatim}{
+        breaklines, breakanywhere, fontsize=\small, numbers=left,
+        numberstyle=\tiny, numbersep=6pt,
+        frame=single, framerule=0.4pt, rulecolor=\color{black!40}, tabsize=2
+    }
+    \DefineVerbatimEnvironment{codenosymbol}{Verbatim}{
+        breaklines, breakanywhere, breaksymbol={}, fontsize=\small,
+        frame=single, framerule=0.4pt, rulecolor=\color{black!40}, tabsize=2
+    }
+    \DefineVerbatimEnvironment{codegobbletwo}{Verbatim}{
+        breaklines, breakanywhere, gobble=2,
+        fontsize=\small, frame=single, framerule=0.4pt, rulecolor=\color{black!40},
+        tabsize=2
+    }
+}{%
+    % --- Fallback sin fvextra: tragarse opciones [..] y usar 'verbatim' ---
+    \usepackage{verbatim}
+    \newenvironment{codeblock}[1][]   {\verbatim}{\endverbatim}
+    \newenvironment{codeplain}[1][]   {\verbatim}{\endverbatim}
+    \newenvironment{codefine}[1][]    {\verbatim}{\endverbatim}
+    \newenvironment{codebg}[1][]      {\verbatim}{\endverbatim}
+    \newenvironment{codelines}[1][]   {\verbatim}{\endverbatim}
+    \newenvironment{codenosymbol}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codegobbletwo}[1][]{\verbatim}{\endverbatim}
+}
+
+% ============================================================
+% FIN DEL CÓDIGO DE COMPATIBILIDAD INTELIGENTE
+% ============================================================
+
+% Título
+\title{\textbf{\Huge Sistema de Compatibilidad Inteligente} \\[3mm]
+\large Entornos Personalizados para Código en \LaTeX{}}
+\author{}
+\date{\today}
+
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Este documento explica en detalle un sistema de \textbf{compatibilidad inteligente} para mostrar código en documentos \LaTeX. El sistema detecta automáticamente las capacidades disponibles en la instalación de \LaTeX{} y se adapta en consecuencia.
+
+\subsection{¿Qué es la Compatibilidad Inteligente?}
+
+La compatibilidad inteligente es un patrón de diseño que permite a un documento \LaTeX{} funcionar correctamente en diferentes entornos, independientemente de los paquetes instalados.
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=Ventajas del Sistema]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Portabilidad}: El documento compila en cualquier instalación
+    \item \textbf{Degradación elegante}: Sin paquetes avanzados, funciona con características básicas
+    \item \textbf{Máxima calidad}: Con paquetes instalados, aprovecha todas las características
+    \item \textbf{Transparencia}: El usuario no necesita modificar el código fuente
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{El Problema que Resuelve}
+
+Cuando compartimos documentos \LaTeX, a menudo encontramos el problema de dependencias:
+
+\begin{tcolorbox}[colback=red!5,colframe=red!75!black,title=Escenario Problemático]
+\textbf{Usuario A} (con todos los paquetes): Crea un documento hermoso con \texttt{fvextra}
+
+\textbf{Usuario B} (sin fvextra): Intenta compilar → \textcolor{red}{\textbf{ERROR}}
+
+\textbf{Resultado}: Frustración, incompatibilidad, pérdida de tiempo
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!75!black,title=Solución con Compatibilidad Inteligente]
+\textbf{Usuario A}: Crea documento con el sistema inteligente
+
+\textbf{Usuario B}: Compila exitosamente (con características básicas)
+
+\textbf{Resultado}: \textcolor{green!60!black}{\textbf{¡Funciona en ambos casos!}}
+\end{tcolorbox}
+
+\section{Estructura del Sistema}
+
+\subsection{El Comando \textbackslash IfFileExists}
+
+La base del sistema es el comando \texttt{\textbackslash IfFileExists}, que verifica la existencia de un archivo.
+
+\begin{lstlisting}[caption={Sintaxis de \textbackslash IfFileExists}]
+\IfFileExists{archivo}{
+    % Código si el archivo EXISTE
+}{
+    % Código si el archivo NO existe (fallback)
+}
+\end{lstlisting}
+
+\subsubsection{Parámetros Explicados}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[\texttt{archivo}] Nombre del archivo a buscar (ej. \texttt{fvextra.sty})
+    \item[\texttt{bloque verdadero}] Código ejecutado si el archivo existe
+    \item[\texttt{bloque falso}] Código ejecutado si el archivo NO existe
+\end{description}
+
+\subsection{Aplicación en Nuestro Sistema}
+
+Nuestro sistema verifica la existencia de \texttt{fvextra.sty}:
+
+\begin{lstlisting}[caption={Estructura general del sistema}]
+\IfFileExists{fvextra.sty}{
+    % RAMA A: Con fvextra (características avanzadas)
+    \usepackage{fvextra}
+    \DefineVerbatimEnvironment{codeblock}{Verbatim}{...}
+    % ... más definiciones avanzadas
+}{
+    % RAMA B: Sin fvextra (fallback básico)
+    \usepackage{verbatim}
+    \newenvironment{codeblock}[1][]{\verbatim}{\endverbatim}
+    % ... más definiciones básicas
+}
+\end{lstlisting}
+
+\section{Rama A: Con fvextra (Características Avanzadas)}
+
+Cuando \texttt{fvextra.sty} está disponible, el sistema carga este paquete y define 7 entornos personalizados con capacidades avanzadas.
+
+\subsection{¿Qué es fvextra?}
+
+\texttt{fvextra} es una extensión del paquete \texttt{fancyvrb} (Fancy Verbatim) que añade:
+
+\begin{itemize}
+    \item \textbf{breaklines}: Romper líneas automáticamente
+    \item \textbf{breakanywhere}: Romper en cualquier posición (no solo espacios)
+    \item \textbf{breaksymbol}: Personalizar símbolo de continuación
+    \item \textbf{bgcolor}: Color de fondo
+    \item \textbf{frame}: Marcos alrededor del código
+    \item Y muchas más opciones avanzadas
+\end{itemize}
+
+\subsection{El Comando \textbackslash DefineVerbatimEnvironment}
+
+Este comando crea entornos personalizados basados en \texttt{Verbatim}:
+
+\begin{lstlisting}[caption={Sintaxis de \textbackslash DefineVerbatimEnvironment}]
+\DefineVerbatimEnvironment{nombre}{Verbatim}{
+    opcion1=valor1,
+    opcion2=valor2,
+    ...
+}
+\end{lstlisting}
+
+Después de definirlo, se puede usar:
+
+\begin{lstlisting}
+\begin{nombre}
+    código aquí
+\end{nombre}
+\end{lstlisting}
+
+\section{Los 7 Entornos Personalizados}
+
+\subsection{Entorno 1: codeblock}
+
+\textbf{Propósito}: Bloque de código estándar con marco y símbolo de continuación.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codeblock}]
+\DefineVerbatimEnvironment{codeblock}{Verbatim}{
+    breaklines,              % Rompe líneas largas
+    breakanywhere,           % Puede romper en cualquier lugar
+    breaksymbol=\tiny\ensuremath{\hookrightarrow}\,,
+    breaksymbolindentleft=0pt,
+    fontsize=\small,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{black!40},
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{Opciones Explicadas}
+
+\begin{description}[leftmargin=3.5cm,style=nextline]
+    \item[\texttt{breaklines}] Activa el rompimiento automático de líneas largas
+    \item[\texttt{breakanywhere}] Permite romper la línea en cualquier carácter, no solo en espacios
+    \item[\texttt{breaksymbol}] Define el símbolo mostrado cuando se rompe una línea: {\tiny\ensuremath{\hookrightarrow}}
+    \item[\texttt{breaksymbolindentleft}] Sangría del símbolo (0pt = sin sangría)
+    \item[\texttt{fontsize}] Tamaño de la fuente (\texttt{\textbackslash small})
+    \item[\texttt{frame}] Tipo de marco (\texttt{single} = línea simple)
+    \item[\texttt{framerule}] Grosor del marco (0.4 puntos)
+    \item[\texttt{rulecolor}] Color del marco (negro al 40\%)
+    \item[\texttt{tabsize}] Espacios por tabulación (2)
+\end{description}
+
+\subsubsection{Ejemplo de Uso}
+
+Código fuente:
+\begin{lstlisting}
+\begin{codeblock}
+def función_muy_larga(param1, param2, param3, param4):
+    return param1 + param2 + param3 + param4
+\end{codeblock}
+\end{lstlisting}
+
+Resultado visual:
+\begin{codeblock}
+def función_muy_larga(param1, param2, param3, param4):
+    return param1 + param2 + param3 + param4
+\end{codeblock}
+
+\subsection{Entorno 2: codeplain}
+
+\textbf{Propósito}: Código simple sin marco, para uso discreto.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codeplain}]
+\DefineVerbatimEnvironment{codeplain}{Verbatim}{
+    breaklines,
+    breakanywhere,
+    fontsize=\small,
+    frame=none,              % Sin marco
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{Diferencia Clave}
+
+La única diferencia importante con \texttt{codeblock} es \texttt{frame=none}, que elimina el marco alrededor del código.
+
+\subsubsection{Ejemplo de Uso}
+
+\begin{codeplain}
+print("Este código no tiene marco alrededor")
+for i in range(5):
+    print(f"Línea {i}")
+\end{codeplain}
+
+\subsection{Entorno 3: codefine}
+
+\textbf{Propósito}: Marco muy fino y sutil, para código que debe estar ligeramente delimitado.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codefine}]
+\DefineVerbatimEnvironment{codefine}{Verbatim}{
+    breaklines, breakanywhere,
+    fontsize=\small,
+    frame=single,
+    framerule=0.2pt,         % Marco más fino (0.2 vs 0.4)
+    rulecolor=\color{black!20}, % Color más claro (20% vs 40%)
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{Comparación de Marcos}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Entorno} & \textbf{Grosor (pt)} & \textbf{Color (\% negro)} \\
+\midrule
+codeblock & 0.4 & 40\% \\
+codefine & 0.2 & 20\% \\
+\bottomrule
+\end{tabular}
+\caption{Comparación de estilos de marco}
+\end{table}
+
+\subsubsection{Ejemplo de Uso}
+
+\begin{codefine}
+SELECT nombre, edad, ciudad
+FROM usuarios
+WHERE edad > 18;
+\end{codefine}
+
+\subsection{Entorno 4: codebg}
+
+\textbf{Propósito}: Código con fondo de color para máximo contraste visual.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codebg}]
+\DefineVerbatimEnvironment{codebg}{Verbatim}{
+    breaklines, breakanywhere,
+    fontsize=\small,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{black!30},
+    bgcolor=black!3,         % Fondo gris muy claro
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{La Opción bgcolor}
+
+\texttt{bgcolor=black!3} significa:
+\begin{itemize}
+    \item \textbf{black}: Color base (negro)
+    \item \textbf{!3}: Mezcla al 3\% (97\% blanco + 3\% negro)
+    \item \textbf{Resultado}: Gris muy claro, casi imperceptible
+\end{itemize}
+
+\subsubsection{Ejemplo de Uso}
+
+\begin{codebg}
+class Usuario:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        return f"Hola, soy {self.nombre}"
+\end{codebg}
+
+\subsection{Entorno 5: codelines}
+
+\textbf{Propósito}: Código con numeración de líneas, ideal para referencias.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codelines}]
+\DefineVerbatimEnvironment{codelines}{Verbatim}{
+    breaklines, breakanywhere,
+    fontsize=\small,
+    numbers=left,            % Números a la izquierda
+    numberstyle=\tiny,       % Estilo de números
+    numbersep=6pt,           % Separación números-código
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{black!40},
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{Opciones de Numeración}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[\texttt{numbers}] Posición de números (\texttt{left}, \texttt{right}, o \texttt{none})
+    \item[\texttt{numberstyle}] Estilo visual de los números (ej. \texttt{\textbackslash tiny})
+    \item[\texttt{numbersep}] Distancia entre números y código (en puntos)
+\end{description}
+
+\subsubsection{Ejemplo de Uso}
+
+\begin{codelines}
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n-1)
+
+resultado = factorial(5)
+print(f"5! = {resultado}")
+\end{codelines}
+
+\textbf{Uso práctico}: ``En la línea 4 del código anterior se ve la recursión...''
+
+\subsection{Entorno 6: codenosymbol}
+
+\textbf{Propósito}: Como \texttt{codeblock} pero sin símbolo de continuación.
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codenosymbol}]
+\DefineVerbatimEnvironment{codenosymbol}{Verbatim}{
+    breaklines, breakanywhere,
+    breaksymbol={},          % Símbolo vacío
+    fontsize=\small,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{black!40},
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{¿Cuándo usar codenosymbol?}
+
+\begin{itemize}
+    \item Cuando el símbolo ↪ puede confundir
+    \item En código donde la continuación debe ser invisible
+    \item Para imitar el estilo de algunos IDEs
+\end{itemize}
+
+\subsubsection{Comparación}
+
+\textbf{Con símbolo (codeblock):}
+\begin{codeblock}
+Esta es una línea extremadamente larga que definitivamente necesitará romperse en múltiples líneas para caber en el ancho de página
+\end{codeblock}
+
+\textbf{Sin símbolo (codenosymbol):}
+\begin{codenosymbol}
+Esta es una línea extremadamente larga que definitivamente necesitará romperse en múltiples líneas para caber en el ancho de página
+\end{codenosymbol}
+
+\subsection{Entorno 7: codegobbletwo}
+
+\textbf{Propósito}: Elimina los primeros 2 caracteres de cada línea (útil para código indentado).
+
+\subsubsection{Definición}
+
+\begin{lstlisting}[caption={Definición de codegobbletwo}]
+\DefineVerbatimEnvironment{codegobbletwo}{Verbatim}{
+    breaklines, breakanywhere,
+    gobble=2,                % Elimina 2 caracteres al inicio
+    fontsize=\small,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{black!40},
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsubsection{La Opción gobble}
+
+\texttt{gobble=n} elimina los primeros \texttt{n} caracteres de cada línea. Esto es útil cuando:
+
+\begin{itemize}
+    \item El código está indentado en el archivo .tex
+    \item Quieres que se vea sin esa indentación inicial
+    \item Necesitas alinear código con el texto circundante
+\end{itemize}
+
+\subsubsection{Ejemplo Sin gobble}
+
+Si escribimos:
+\begin{lstlisting}
+\begin{codeblock}
+  def hello():
+      print("Hi")
+\end{codeblock}
+\end{lstlisting}
+
+Resultado (nota los 2 espacios extra):
+\begin{codeblock}
+  def hello():
+      print("Hi")
+\end{codeblock}
+
+\subsubsection{Ejemplo Con gobble=2}
+
+Si escribimos:
+\begin{lstlisting}
+\begin{codegobbletwo}
+  def hello():
+      print("Hi")
+\end{codegobbletwo}
+\end{lstlisting}
+
+Resultado (espacios iniciales eliminados):
+\begin{codegobbletwo}
+  def hello():
+      print("Hi")
+\end{codegobbletwo}
+
+\section{Rama B: Sin fvextra (Fallback)}
+
+Cuando \texttt{fvextra} NO está disponible, el sistema usa una estrategia de degradación elegante.
+
+\subsection{Código del Fallback}
+
+\begin{lstlisting}[caption={Implementación del fallback}]
+}{%
+    % --- Fallback sin fvextra ---
+    \usepackage{verbatim}
+    \newenvironment{codeblock}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codeplain}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codefine}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codebg}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codelines}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codenosymbol}[1][]{\verbatim}{\endverbatim}
+    \newenvironment{codegobbletwo}[1][]{\verbatim}{\endverbatim}
+}
+\end{lstlisting}
+
+\subsection{Análisis Detallado}
+
+\subsubsection{Carga del Paquete Básico}
+
+\begin{lstlisting}
+\usepackage{verbatim}
+\end{lstlisting}
+
+El paquete \texttt{verbatim} es parte del núcleo de \LaTeX{} y siempre está disponible. Proporciona el entorno básico \texttt{verbatim} sin características avanzadas.
+
+\subsubsection{Definición de Entornos Simples}
+
+\begin{lstlisting}
+\newenvironment{codeblock}[1][]{\verbatim}{\endverbatim}
+\end{lstlisting}
+
+Esta línea:
+\begin{enumerate}
+    \item \texttt{\textbackslash newenvironment\{codeblock\}} - Crea un nuevo entorno llamado \texttt{codeblock}
+    \item \texttt{[1][]} - Acepta 1 argumento opcional (que será ignorado)
+    \item \texttt{\{\textbackslash verbatim\}} - Al iniciar, ejecuta \texttt{\textbackslash verbatim}
+    \item \texttt{\{\textbackslash endverbatim\}} - Al terminar, ejecuta \texttt{\textbackslash endverbatim}
+\end{enumerate}
+
+\subsubsection{¿Por qué [1][]?}
+
+El \texttt{[1][]} es crucial para la compatibilidad:
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=Sin el argumento opcional]
+Si alguien escribe:
+\begin{lstlisting}
+\begin{codeblock}[alguna opción]
+código
+\end{codeblock}
+\end{lstlisting}
+
+\textcolor{red}{\textbf{ERROR}}: El entorno no acepta argumentos
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=Con [1][]]
+Si alguien escribe:
+\begin{lstlisting}
+\begin{codeblock}[alguna opción]
+código
+\end{codeblock}
+\end{lstlisting}
+
+\textcolor{green!60!black}{\textbf{FUNCIONA}}: El argumento se acepta y se ignora silenciosamente
+\end{tcolorbox}
+
+\subsection{Limitaciones del Fallback}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Característica} & \textbf{Con fvextra} & \textbf{Sin fvextra} \\
+\midrule
+Romper líneas largas & ✓ & ✗ \\
+Marco alrededor & ✓ & ✗ \\
+Color de fondo & ✓ & ✗ \\
+Numeración de líneas & ✓ & ✗ \\
+Símbolo de continuación & ✓ & ✗ \\
+Opción gobble & ✓ & ✗ \\
+Texto monoespacio & ✓ & ✓ \\
+\bottomrule
+\end{tabular}
+\caption{Comparación de características}
+\end{table}
+
+\section{Comparación Visual de Entornos}
+
+\subsection{Tabla Resumen}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Entorno} & \textbf{Marco} & \textbf{Fondo} & \textbf{Números} & \textbf{Símbolo} \\
+\midrule
+codeblock & ✓ (0.4pt) & ✗ & ✗ & ✓ \\
+codeplain & ✗ & ✗ & ✗ & ✓ \\
+codefine & ✓ (0.2pt) & ✗ & ✗ & ✓ \\
+codebg & ✓ & ✓ & ✗ & ✓ \\
+codelines & ✓ & ✗ & ✓ & ✓ \\
+codenosymbol & ✓ & ✗ & ✗ & ✗ \\
+codegobbletwo & ✓ & ✗ & ✗ & ✓ \\
+\bottomrule
+\end{tabular}
+\caption{Características de cada entorno}
+\end{table}
+
+\subsection{Guía de Selección}
+
+\begin{description}[leftmargin=4cm,style=nextline]
+    \item[codeblock] Uso general, código estándar
+    \item[codeplain] Código inline discreto
+    \item[codefine] Código con separación sutil
+    \item[codebg] Código que debe destacar
+    \item[codelines] Código para referencias por línea
+    \item[codenosymbol] Continuación invisible
+    \item[codegobbletwo] Código indentado en fuente
+\end{description}
+
+\section{Mejores Prácticas}
+
+\subsection{Cuándo Usar Cada Entorno}
+
+\subsubsection{Para Código de Ejemplo}
+Use \texttt{codeblock} o \texttt{codelines}:
+\begin{codelines}
+# Ejemplo de algoritmo
+def buscar(lista, objetivo):
+    for i, elemento in enumerate(lista):
+        if elemento == objetivo:
+            return i
+    return -1
+\end{codelines}
+
+\subsubsection{Para Código Inline en Párrafos}
+Use \texttt{codeplain} cuando quiera código sin interrumpir el flujo visual:
+
+El siguiente código muestra una función simple:
+\begin{codeplain}
+lambda x: x * 2
+\end{codeplain}
+que duplica su entrada.
+
+\subsubsection{Para Código Destacado}
+Use \texttt{codebg} cuando necesite máxima visibilidad:
+\begin{codebg}
+¡ATENCIÓN! Este código es crítico para la seguridad:
+if user.is_authenticated():
+    grant_access()
+\end{codebg}
+
+\subsection{Errores Comunes}
+
+\begin{tcolorbox}[colback=red!5,colframe=red!75!black,title=❌ Error: Intentar usar comandos dentro]
+\begin{lstlisting}
+\begin{codeblock}
+print("Hola \textbf{mundo}")  % ¡NO funciona!
+\end{codeblock}
+\end{lstlisting}
+
+\textbf{Problema}: Los entornos verbatim no procesan comandos \LaTeX.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!75!black,title=✓ Correcto: Usar listings para resaltado]
+\begin{lstlisting}
+\begin{lstlisting}[language=Python]
+print("Hola mundo")  # Con resaltado de sintaxis
+\end{lstlisting}
+\verb|\end{lstlisting}|
+\end{tcolorbox}
+
+\subsection{Combinación con Otros Paquetes}
+
+\subsubsection{Con tcolorbox}
+\begin{lstlisting}
+\begin{tcolorbox}[title=Código de Ejemplo]
+\begin{codeblock}
+def ejemplo():
+    pass
+\end{codeblock}
+\end{tcolorbox}
+\end{lstlisting}
+
+\subsubsection{Con float para Posicionamiento}
+\begin{lstlisting}
+\begin{figure}[h]
+\begin{codeblock}
+código aquí
+\end{codeblock}
+\caption{Código del algoritmo principal}
+\end{figure}
+\end{lstlisting}
+
+\section{Implementación Paso a Paso}
+
+\subsection{Cómo Integrar en tu Documento}
+
+\textbf{Paso 1}: Copia todo el código de compatibilidad (desde \texttt{\textbackslash IfFileExists} hasta el cierre) en tu preámbulo.
+
+\textbf{Paso 2}: Usa los entornos libremente:
+
+\begin{lstlisting}
+\begin{document}
+
+\section{Mi Código}
+
+\begin{codelines}
+def mi_funcion():
+    return "Funciona"
+\end{codelines}
+
+\end{document}
+\end{lstlisting}
+
+\textbf{Paso 3}: Compila normalmente. El sistema detecta automáticamente las capacidades.
+
+\subsection{Prueba de Compatibilidad}
+
+Para verificar qué rama se está usando, puedes agregar:
+
+\begin{lstlisting}
+\IfFileExists{fvextra.sty}{
+    \typeout{*** Sistema usando fvextra (avanzado) ***}
+}{
+    \typeout{*** Sistema usando fallback (básico) ***}
+}
+\end{lstlisting}
+
+Este mensaje aparecerá en el log de compilación.
+
+\section{Extensiones Posibles}
+
+\subsection{Añadir Más Entornos}
+
+Puedes extender el sistema con nuevos entornos:
+
+\begin{lstlisting}
+% En la rama con fvextra:
+\DefineVerbatimEnvironment{codebigfont}{Verbatim}{
+    breaklines, breakanywhere,
+    fontsize=\large,  % Fuente más grande
+    frame=single, framerule=1pt, rulecolor=\color{blue!60},
+    tabsize=2
+}
+
+% En el fallback:
+\newenvironment{codebigfont}[1][]{\verbatim}{\endverbatim}
+\end{lstlisting}
+
+\subsection{Añadir Colores Personalizados}
+
+\begin{lstlisting}
+\definecolor{myblue}{RGB}{30,144,255}
+
+\DefineVerbatimEnvironment{codeazul}{Verbatim}{
+    breaklines, breakanywhere,
+    fontsize=\small,
+    frame=single, rulecolor=\color{myblue},
+    tabsize=2
+}
+\end{lstlisting}
+
+\subsection{Verificar Múltiples Paquetes}
+
+Puedes anidar \texttt{\textbackslash IfFileExists} para verificar múltiples dependencias:
+
+\begin{lstlisting}
+\IfFileExists{fvextra.sty}{
+    \IfFileExists{minted.sty}{
+        % Usar lo mejor de ambos
+    }{
+        % Solo fvextra
+    }
+}{
+    % Fallback básico
+}
+\end{lstlisting}
+
+\section{Casos de Uso Reales}
+
+\subsection{Documentación de Software}
+
+Para manuales de usuario con ejemplos de código:
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=Instalación]
+Para instalar el paquete, ejecute:
+
+\begin{codeblock}
+pip install mi-paquete
+python setup.py install
+\end{codeblock}
+
+Luego importe en su código:
+
+\begin{codelines}
+import mi_paquete
+resultado = mi_paquete.procesar(datos)
+print(resultado)
+\end{codelines}
+\end{tcolorbox}
+
+\subsection{Artículos Académicos}
+
+Para papers con pseudocódigo:
+
+\begin{codelines}
+Algoritmo: Búsqueda Binaria
+Entrada: array ordenado A, elemento x
+Salida: índice de x en A, o -1
+
+bajo = 0
+alto = longitud(A) - 1
+mientras bajo <= alto:
+    medio = (bajo + alto) / 2
+    si A[medio] == x:
+        retornar medio
+    si A[medio] < x:
+        bajo = medio + 1
+    sino:
+        alto = medio - 1
+retornar -1
+\end{codelines}
+
+\subsection{Tutoriales y Libros}
+
+Para contenido educativo con muchos ejemplos:
+
+\textbf{Ejemplo 1}: Bucle básico
+\begin{codebg}
+for i in range(10):
+    print(i)
+\end{codebg}
+
+\textbf{Ejemplo 2}: Función con parámetros
+\begin{codebg}
+def saludar(nombre, edad):
+    return f"{nombre} tiene {edad} años"
+\end{codebg}
+
+\section{Conclusiones}
+
+\subsection{Beneficios del Sistema}
+
+\begin{enumerate}
+    \item \textbf{Robustez}: Funciona en cualquier instalación \LaTeX
+    \item \textbf{Flexibilidad}: 7 estilos diferentes de código
+    \item \textbf{Mantenibilidad}: Código centralizado fácil de modificar
+    \item \textbf{Escalabilidad}: Fácil de extender con nuevos entornos
+    \item \textbf{Transparencia}: Los usuarios finales no necesitan conocer los detalles
+\end{enumerate}
+
+\subsection{Cuándo NO Usar Este Sistema}
+
+\begin{itemize}
+    \item Si necesitas resaltado de sintaxis avanzado → usa \texttt{minted}
+    \item Si todos los usuarios tienen los mismos paquetes → define directamente
+    \item Si el documento es solo para ti → no necesitas compatibilidad
+\end{itemize}
+
+\subsection{Recursos Adicionales}
+
+\begin{itemize}
+    \item \textbf{fancyvrb}: \texttt{texdoc fancyvrb}
+    \item \textbf{fvextra}: \texttt{texdoc fvextra}
+    \item \textbf{verbatim}: \texttt{texdoc verbatim}
+    \item \textbf{listings}: \texttt{texdoc listings}
+\end{itemize}
+
+\section{Apéndice: Referencia Rápida}
+
+\subsection{Opciones de fvextra}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lp{8cm}}
+\toprule
+\textbf{Opción} & \textbf{Descripción} \\
+\midrule
+breaklines & Rompe líneas automáticamente \\
+breakanywhere & Puede romper en cualquier carácter \\
+breaksymbol & Símbolo mostrado al romper líneas \\
+breaksymbolindentleft & Sangría del símbolo de ruptura \\
+fontsize & Tamaño de fuente (\textbackslash small, \textbackslash large, etc.) \\
+frame & Tipo de marco (single, none, leftline, etc.) \\
+framerule & Grosor del marco \\
+rulecolor & Color del marco \\
+bgcolor & Color de fondo \\
+numbers & Posición de números (left, right, none) \\
+numberstyle & Estilo de los números \\
+numbersep & Separación números-código \\
+tabsize & Espacios por tabulación \\
+gobble & Caracteres a eliminar al inicio \\
+\bottomrule
+\end{tabular}
+\caption{Opciones principales de fvextra}
+\end{table}
+
+\subsection{Sintaxis Completa}
+
+\begin{lstlisting}[caption={Plantilla completa del sistema}]
+\IfFileExists{fvextra.sty}{%
+    \usepackage{fvextra}
+    \DefineVerbatimEnvironment{micodigo}{Verbatim}{
+        breaklines,
+        breakanywhere,
+        fontsize=\small,
+        frame=single,
+        framerule=0.4pt,
+        rulecolor=\color{black!40},
+        tabsize=2
+    }
+}{%
+    \usepackage{verbatim}
+    \newenvironment{micodigo}[1][]{\verbatim}{\endverbatim}
+}
+\end{lstlisting}
+
+\vspace{2cm}
+
+\begin{center}
+\large
+\textit{Documento generado con \LaTeX{} usando el sistema de compatibilidad inteligente}
+
+\textit{\today}
+\end{center}
+
+\end{document}

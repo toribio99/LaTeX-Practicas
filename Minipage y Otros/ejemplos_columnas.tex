@@ -1,0 +1,503 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{xcolor}
+\usepackage{fancyvrb}
+\usepackage{lipsum}
+
+% Paquetes para columnas
+\usepackage{multicol}
+\usepackage{parallel}
+\usepackage{parcolumns}
+\usepackage{paracol}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+
+% Configuración de títulos
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{green!60!black}}{\thesubsection}{1em}{}
+
+\title{\textbf{Guía Completa de Métodos para Crear Columnas en LaTeX}}
+\author{Ejemplos Prácticos}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+%=================================================================
+\section{Introducción}
+%=================================================================
+
+Este documento presenta diferentes métodos para crear columnas en LaTeX, cada uno con sus características, ventajas y casos de uso específicos.
+
+%=================================================================
+\section{Método 1: \texttt{minipage}}
+%=================================================================
+
+\subsection{Descripción}
+El entorno \texttt{minipage} crea cajas independientes que pueden colocarse lado a lado. Es el método más básico y versátil.
+
+\subsection{Características}
+\begin{itemize}
+    \item Control total sobre ancho y alineación
+    \item Cada minipage es independiente
+    \item Requiere \texttt{\textbackslash hfill} o espacio entre minipages
+    \item No balancea automáticamente el contenido
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas básicas}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Columna Izquierda}
+
+    Este es el contenido de la primera columna usando minipage. Puedes incluir cualquier elemento de LaTeX aquí.
+
+    \begin{itemize}
+        \item Elemento 1
+        \item Elemento 2
+        \item Elemento 3
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Columna Derecha}
+
+    Este es el contenido de la segunda columna. Las columnas son completamente independientes entre sí.
+
+    \begin{enumerate}
+        \item Primero
+        \item Segundo
+        \item Tercero
+    \end{enumerate}
+\end{minipage}
+
+\subsection{Ejemplo 2: Con línea separadora}
+
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+    \textbf{Código LaTeX:}
+
+    \begin{Verbatim}[frame=single,fontsize=\small]
+\section{Título}
+\textbf{Negrita}
+\textit{Cursiva}
+    \end{Verbatim}
+\end{minipage}
+\hfill
+\vrule
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \textbf{Resultado:}
+
+    \subsection*{Título}
+    \textbf{Negrita}
+
+    \textit{Cursiva}
+\end{minipage}
+
+%=================================================================
+\section{Método 2: \texttt{multicol}}
+%=================================================================
+
+\subsection{Descripción}
+El paquete \texttt{multicol} permite crear múltiples columnas que se balancean automáticamente. Ideal para texto continuo.
+
+\subsection{Características}
+\begin{itemize}
+    \item Balancea automáticamente el contenido entre columnas
+    \item Puede crear 2 o más columnas
+    \item El texto fluye automáticamente de una columna a otra
+    \item No permite control independiente de cada columna
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas balanceadas}
+
+\begin{multicols}{2}
+    \textbf{Texto en múltiples columnas:}
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\end{multicols}
+
+\subsection{Ejemplo 2: Tres columnas}
+
+\begin{multicols}{3}
+    \textbf{Columna 1:} Primera sección de contenido que fluye automáticamente.
+
+    \textbf{Columna 2:} Segunda sección que se crea automáticamente.
+
+    \textbf{Columna 3:} Tercera sección también automática.
+
+    El contenido se distribuye equitativamente entre las tres columnas.
+\end{multicols}
+
+\subsection{Ejemplo 3: Con línea separadora}
+
+\setlength{\columnseprule}{0.4pt}
+\begin{multicols}{2}
+    \textbf{Con línea divisoria:}
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus.
+
+    Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam vehicula elementum.
+\end{multicols}
+\setlength{\columnseprule}{0pt}
+
+%=================================================================
+\section{Método 3: \texttt{parallel}}
+%=================================================================
+
+\subsection{Descripción}
+El paquete \texttt{parallel} permite crear contenido paralelo con control independiente de cada columna.
+
+\subsection{Características}
+\begin{itemize}
+    \item Control independiente de cada columna
+    \item Útil para comparaciones lado a lado
+    \item Requiere \texttt{\textbackslash ParallelPar} para sincronizar
+    \item Ideal para textos bilingües o comparaciones
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas paralelas}
+
+\begin{Parallel}{0.45\textwidth}{0.45\textwidth}
+    \ParallelLText{\textbf{Español}\\
+    Hola mundo\\
+    ¿Cómo estás?\\
+    Buenos días}
+
+    \ParallelRText{\textbf{English}\\
+    Hello world\\
+    How are you?\\
+    Good morning}
+
+    \ParallelPar
+\end{Parallel}
+
+\subsection{Ejemplo 2: Código vs Resultado}
+
+\begin{Parallel}{0.45\textwidth}{0.45\textwidth}
+    \ParallelLText{
+        \textbf{Código:}
+        \begin{Verbatim}[fontsize=\small]
+\textbf{Bold}
+\textit{Italic}
+\underline{Under}
+        \end{Verbatim}
+    }
+
+    \ParallelRText{
+        \textbf{Salida:}\\[1em]
+        \textbf{Bold}\\
+        \textit{Italic}\\
+        \underline{Under}
+    }
+
+    \ParallelPar
+\end{Parallel}
+
+%=================================================================
+\section{Método 4: \texttt{parcolumns}}
+%=================================================================
+
+\subsection{Descripción}
+El paquete \texttt{parcolumns} permite crear columnas paralelas con chunks de contenido.
+
+\subsection{Características}
+\begin{itemize}
+    \item Control por chunks (fragmentos)
+    \item Bueno para contenido estructurado
+    \item Alineación vertical automática
+    \item Sintaxis clara con \texttt{\textbackslash colchunk}
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas con chunks}
+
+\begin{parcolumns}[nofirstindent]{2}
+    \colchunk{
+        \textbf{Primera columna:}
+
+        Este es el primer fragmento de contenido. Cada chunk se alinea verticalmente con su contraparte.
+
+        \begin{itemize}
+            \item Punto A
+            \item Punto B
+        \end{itemize}
+    }
+
+    \colchunk{
+        \textbf{Segunda columna:}
+
+        Este es el segundo fragmento. El contenido está alineado horizontalmente con el primer chunk.
+
+        \begin{itemize}
+            \item Punto X
+            \item Punto Y
+        \end{itemize}
+    }
+\end{parcolumns}
+
+\subsection{Ejemplo 2: Tres columnas}
+
+\begin{parcolumns}[nofirstindent]{3}
+    \colchunk{\textbf{Columna 1}\\Contenido A}
+    \colchunk{\textbf{Columna 2}\\Contenido B}
+    \colchunk{\textbf{Columna 3}\\Contenido C}
+\end{parcolumns}
+
+%=================================================================
+\section{Método 5: \texttt{paracol}}
+%=================================================================
+
+\subsection{Descripción}
+El paquete \texttt{paracol} es similar a \texttt{parcolumns} pero con más funcionalidades avanzadas.
+
+\subsection{Características}
+\begin{itemize}
+    \item Permite cambiar entre columnas con \texttt{\textbackslash switchcolumn}
+    \item Soporte para líneas separadoras
+    \item Control de espaciado entre columnas
+    \item Puede abarcar múltiples páginas
+\end{itemize}
+
+\subsection{Ejemplo 1: Con línea separadora}
+
+\setlength{\columnsep}{0.5cm}
+\setlength{\columnseprule}{0.4pt}
+
+\begin{paracol}{2}
+    \textbf{Columna Izquierda con Paracol}
+
+    Este método permite mayor control sobre las columnas y puede extenderse a lo largo de múltiples páginas.
+
+    \begin{itemize}
+        \item Característica 1
+        \item Característica 2
+        \item Característica 3
+    \end{itemize}
+
+    \switchcolumn
+
+    \textbf{Columna Derecha con Paracol}
+
+    El comando \texttt{\textbackslash switchcolumn} permite cambiar explícitamente de columna.
+
+    \begin{enumerate}
+        \item Ventaja 1
+        \item Ventaja 2
+        \item Ventaja 3
+    \end{enumerate}
+\end{paracol}
+
+\subsection{Ejemplo 2: Código y resultado}
+
+\begin{paracol}{2}
+    \begin{Verbatim}[frame=single,fontsize=\small]
+\section{Mi Sección}
+Texto normal.
+
+\textcolor{red}{Rojo}
+    \end{Verbatim}
+
+    \switchcolumn
+
+    \subsection*{Mi Sección}
+    Texto normal.
+
+    \textcolor{red}{Rojo}
+\end{paracol}
+
+%=================================================================
+\section{Método 6: \texttt{tabularx}}
+%=================================================================
+
+\subsection{Descripción}
+Usar tablas sin bordes para crear columnas. Simple pero efectivo.
+
+\subsection{Características}
+\begin{itemize}
+    \item Usa entorno de tabla
+    \item Control preciso de anchos
+    \item Alineación vertical automática
+    \item Puede incluir líneas divisorias con \texttt{|}
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas sin bordes}
+
+\noindent
+\begin{tabularx}{\textwidth}{XX}
+    \textbf{Columna A} & \textbf{Columna B} \\[0.5em]
+    Contenido de la primera columna usando tabularx. Este método es simple y efectivo. & Contenido de la segunda columna. Las columnas se ajustan automáticamente al ancho disponible. \\[0.5em]
+    Lista: \newline • Item 1 \newline • Item 2 & Lista: \newline 1. Primero \newline 2. Segundo
+\end{tabularx}
+
+\subsection{Ejemplo 2: Con línea separadora}
+
+\noindent
+\begin{tabularx}{\textwidth}{X|X}
+    \textbf{Ventajas} & \textbf{Desventajas} \\[0.5em]
+    \hline
+    • Fácil de usar \newline • Flexible \newline • Buen control & • Sintaxis de tabla \newline • Limitado para contenido complejo
+\end{tabularx}
+
+%=================================================================
+\section{Método 7: \texttt{\textbackslash twocolumn}}
+%=================================================================
+
+\subsection{Descripción}
+Comando nativo de LaTeX que cambia todo el documento a dos columnas.
+
+\subsection{Características}
+\begin{itemize}
+    \item Afecta todo el documento o sección
+    \item Balancea automáticamente
+    \item Simple pero poco flexible
+    \item Se controla con \texttt{\textbackslash twocolumn} y \texttt{\textbackslash onecolumn}
+\end{itemize}
+
+\subsection{Ejemplo}
+
+Para usar este método, se debe cambiar la configuración del documento:
+
+\begin{Verbatim}[frame=single]
+\documentclass[twocolumn]{article}
+% o dentro del documento:
+\twocolumn
+Contenido en dos columnas...
+\onecolumn % Volver a una columna
+\end{Verbatim}
+
+\textbf{Nota:} No se muestra ejemplo práctico aquí porque afectaría todo el documento.
+
+%=================================================================
+\section{Método 8: \texttt{adjustbox}}
+%=================================================================
+
+\subsection{Descripción}
+Mejora las minipages con opciones adicionales de alineación y ajuste.
+
+\subsection{Características}
+\begin{itemize}
+    \item Similar a minipage pero más flexible
+    \item Opciones de alineación vertical mejoradas
+    \item Puede escalar y rotar contenido
+    \item Útil para cajas complejas
+\end{itemize}
+
+\subsection{Ejemplo 1: Dos columnas alineadas arriba}
+
+\noindent
+\begin{adjustbox}{minipage=0.45\textwidth, valign=t, frame}
+    \textbf{Caja 1 con adjustbox}
+
+    Este entorno ofrece más opciones que minipage estándar.
+
+    • Opción 1\\
+    • Opción 2
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.45\textwidth, valign=t, frame}
+    \textbf{Caja 2 con adjustbox}
+
+    Contenido de la segunda caja con marco.
+
+    • Característica A\\
+    • Característica B
+\end{adjustbox}
+
+\subsection{Ejemplo 2: Con diferentes alturas}
+
+\noindent
+\begin{adjustbox}{minipage=0.3\textwidth, valign=t, bgcolor=yellow!20}
+    Caja corta
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.3\textwidth, valign=t, bgcolor=blue!20}
+    Caja mediana\\
+    con más\\
+    contenido
+\end{adjustbox}
+\hfill
+\begin{adjustbox}{minipage=0.3\textwidth, valign=t, bgcolor=green!20}
+    Caja más larga\\
+    con mucho\\
+    más contenido\\
+    distribuido\\
+    en varias líneas
+\end{adjustbox}
+
+%=================================================================
+\section{Comparación y Recomendaciones}
+%=================================================================
+
+\subsection{Tabla Comparativa}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Método} & \textbf{Facilidad} & \textbf{Flexibilidad} & \textbf{Uso Recomendado} \\
+\hline
+minipage & Alta & Alta & Control preciso \\
+multicol & Alta & Media & Texto continuo \\
+parallel & Media & Alta & Textos paralelos \\
+parcolumns & Media & Media & Contenido estructurado \\
+paracol & Media & Alta & Documentos largos \\
+tabularx & Alta & Baja & Comparaciones simples \\
+twocolumn & Baja & Baja & Documento completo \\
+adjustbox & Media & Alta & Cajas complejas \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Recomendaciones de Uso}
+
+\begin{itemize}
+    \item \textbf{Para código y resultado lado a lado:} Usa \texttt{minipage} o \texttt{paracol}
+    \item \textbf{Para texto continuo en columnas:} Usa \texttt{multicol}
+    \item \textbf{Para traducciones o comparaciones:} Usa \texttt{parallel}
+    \item \textbf{Para documentos técnicos largos:} Usa \texttt{paracol}
+    \item \textbf{Para tablas comparativas simples:} Usa \texttt{tabularx}
+    \item \textbf{Para efectos especiales:} Usa \texttt{adjustbox}
+\end{itemize}
+
+%=================================================================
+\section{Conclusión}
+%=================================================================
+
+Cada método tiene sus propias ventajas y casos de uso específicos. La elección del método correcto depende de:
+
+\begin{enumerate}
+    \item Tipo de contenido (texto, código, tablas, etc.)
+    \item Nivel de control necesario
+    \item Complejidad del diseño
+    \item Extensión del documento
+\end{enumerate}
+
+Experimenta con cada método para encontrar el que mejor se adapte a tus necesidades específicas.
+
+\end{document}

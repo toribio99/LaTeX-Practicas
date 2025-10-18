@@ -1,0 +1,1831 @@
+\documentclass[10pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\tcbuselibrary{listings,skins,breakable}  % Librerías para tcblisting
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{multicol}
+
+
+% Colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+
+% Configuración de listings
+\lstset{
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible,
+keepspaces=true,
+escapechar=@
+}
+
+% Título
+\title{\textbf{\Huge Modo Matemático en \LaTeX{}}\\\large Guía Completa de Entornos, Comandos y Símbolos}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+	\LaTeX{} proporciona un sistema completo para escribir expresiones matemáticas de alta calidad. Este documento cubre todos los entornos, comandos, símbolos y paquetes disponibles para matemáticas.
+\end{tcolorbox}
+
+\tableofcontents
+%\newpage
+
+\section{Paquetes Matemáticos}
+
+\subsection{Paquetes Esenciales}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{amsmath\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Paquete fundamental de AMS (American Mathematical Society)
+	
+	\textbf{Proporciona:} Entornos mejorados para ecuaciones, alineación, matrices, casos
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{amsmath}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{amssymb\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Símbolos matemáticos adicionales de AMS
+	
+	\textbf{Proporciona:} Símbolos especiales, flechas, relaciones
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{amssymb}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{amsfonts\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fuentes matemáticas adicionales
+	
+	\textbf{Proporciona:} Fuentes blackboard bold, fraktur
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{amsfonts}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{mathtools\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Extensión de amsmath con correcciones y mejoras
+	
+	\textbf{Proporciona:} Comandos mejorados, delimitadores ajustables
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{mathtools}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{amsthm\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Entornos para teoremas, definiciones, pruebas
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{amsthm}
+		\newtheorem{theorem}{Teorema}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Paquetes Adicionales}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{bm\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Negrita matemática mejorada
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{bm}
+		$\bm{x} = \bm{\alpha}$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{mathrsfs\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fuente script (caligráfica)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{mathrsfs}
+		$\mathscr{L}$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash usepackage\{dsfont\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fuente doublestroke (para indicadoras)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{dsfont}
+		$\mathds{1}, \mathds{R}$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Modos Matemáticos}
+
+\subsection{Modo Matemático en Línea (Inline)}
+
+\subsubsection*{\texttt{\$...\$}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matemáticas en línea con el texto
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		La ecuación $E = mc^2$ es famosa.
+	\end{lstlisting}
+	
+	\textbf{Resultado:} La ecuación $E = mc^2$ es famosa.
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash(...\textbackslash)}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Alternativa a \$...\$ (recomendada en LaTeX)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		La fórmula \( a^2 + b^2 = c^2 \) es el teorema de Pitágoras.
+	\end{lstlisting}
+	
+	\textbf{Resultado:} La fórmula \( a^2 + b^2 = c^2 \) es el teorema de Pitágoras.
+\end{tcolorbox}
+
+\subsection{Modo Matemático Display (Ecuaciones Destacadas)}
+
+\subsubsection*{\texttt{\$\$...\$\$}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuación centrada sin número (TeX plano, no recomendado)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$$E = mc^2$$
+	\end{lstlisting}
+	
+	\textbf{Nota:} Preferir \texttt{\textbackslash[...\textbackslash]} en LaTeX
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash[...\textbackslash]}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuación centrada sin número (recomendado)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[ \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2} \]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[ \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2} \]
+\end{tcolorbox}
+
+\section{Entornos de Ecuaciones}
+
+\subsection{Ecuación Simple}
+
+\subsubsection*{\texttt{equation}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuación numerada automáticamente
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation}
+			E = mc^2
+		\end{equation}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation}
+		E = mc^2
+	\end{equation}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{equation*}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuación sin número (requiere amsmath)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation*}
+			a^2 + b^2 = c^2
+		\end{equation*}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation*}
+		a^2 + b^2 = c^2
+	\end{equation*}
+\end{tcolorbox}
+
+\subsection{Alineación de Ecuaciones}
+
+\subsubsection*{\texttt{align}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Múltiples ecuaciones alineadas (numeradas)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{align}
+			x &= a + b \\
+			y &= c + d \\
+			z &= e + f
+		\end{align}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{align}
+		x &= a + b \\
+		y &= c + d \\
+		z &= e + f
+	\end{align}
+	
+	\textbf{Nota:} \& marca el punto de alineación, \textbackslash\textbackslash{} separa líneas
+\end{tcolorbox}
+
+\subsubsection*{\texttt{align*}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Alineación sin numeración
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{align*}
+			f(x) &= x^2 + 2x + 1 \\
+			&= (x+1)^2
+		\end{align*}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{align*}
+		f(x) &= x^2 + 2x + 1 \\
+		&= (x+1)^2
+	\end{align*}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{aligned}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Alineación dentro de otro entorno
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation}
+			\begin{aligned}
+				x &= a + b \\
+				y &= c + d
+			\end{aligned}
+		\end{equation}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation}
+		\begin{aligned}
+			x &= a + b \\
+			y &= c + d
+		\end{aligned}
+	\end{equation}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{alignat}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Múltiples alineaciones controladas
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{alignat}{2}
+			x &= a &&+ b \\
+			y &= c &&+ d
+		\end{alignat}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{alignat}{2}
+		x &= a &&+ b \\
+		y &= c &&+ d
+	\end{alignat}
+	
+	\textbf{Nota:} El número indica pares de alineación
+\end{tcolorbox}
+
+\subsubsection*{\texttt{flalign}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Alineación extendida al ancho completo
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{flalign}
+			x &= a + b & \\
+			y &= c + d &
+		\end{flalign}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Ecuaciones Agrupadas}
+
+\subsubsection*{\texttt{gather}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuaciones centradas sin alineación
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{gather}
+			a = b + c \\
+			x = y + z \\
+			p = q + r
+		\end{gather}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{gather}
+		a = b + c \\
+		x = y + z \\
+		p = q + r
+	\end{gather}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{gather*}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Gather sin numeración
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{gather*}
+			E = mc^2 \\
+			F = ma
+		\end{gather*}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{gather*}
+		E = mc^2 \\
+		F = ma
+	\end{gather*}
+\end{tcolorbox}
+
+\subsection{Ecuaciones Multilínea}
+
+\subsubsection*{\texttt{multline}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Ecuación larga dividida en varias líneas
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{multline}
+			p(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \\
+			a_4 x^4 + a_5 x^5 + a_6 x^6
+		\end{multline}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{multline}
+		p(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \\
+		a_4 x^4 + a_5 x^5 + a_6 x^6
+	\end{multline}
+	
+	\textbf{Nota:} Primera línea izquierda, última derecha, intermedias centradas
+\end{tcolorbox}
+
+\subsubsection*{\texttt{split}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Divide ecuación con alineación (dentro de equation)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation}
+			\begin{split}
+				f(x) &= (x+1)^2 \\
+				&= x^2 + 2x + 1
+			\end{split}
+		\end{equation}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation}
+		\begin{split}
+			f(x) &= (x+1)^2 \\
+			&= x^2 + 2x + 1
+		\end{split}
+	\end{equation}
+\end{tcolorbox}
+
+\section{Matrices}
+
+\subsection{Entornos de Matrices}
+
+\subsubsection*{\texttt{matrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz sin delimitadores
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation}
+			\begin{matrix}
+				a & b \\
+				c & d
+			\end{matrix}
+		\end{equation}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation}
+		\begin{matrix}
+			a & b \\
+			c & d
+		\end{matrix}
+	\end{equation}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{pmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz con paréntesis ( )
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation}
+			\begin{pmatrix}
+				1 & 2 & 3 \\
+				4 & 5 & 6 \\
+				7 & 8 & 9
+			\end{pmatrix}
+		\end{equation}
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\begin{equation}
+		\begin{pmatrix}
+			1 & 2 & 3 \\
+			4 & 5 & 6 \\
+			7 & 8 & 9
+		\end{pmatrix}
+	\end{equation}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{bmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz con corchetes [ ]
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{bmatrix}
+			a_{11} & a_{12} \\
+			a_{21} & a_{22}
+		\end{bmatrix}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\begin{bmatrix}
+		a_{11} & a_{12} \\
+		a_{21} & a_{22}
+	\end{bmatrix}
+	\]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{Bmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz con llaves \{ \}
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{Bmatrix}
+			1 & 0 \\
+			0 & 1
+		\end{Bmatrix}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\begin{Bmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{Bmatrix}
+	\]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{vmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz con barras | | (determinante)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{vmatrix}
+			a & b \\
+			c & d
+		\end{vmatrix} = ad - bc
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\begin{vmatrix}
+		a & b \\
+		c & d
+	\end{vmatrix} = ad - bc
+	\]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{Vmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz con barras dobles || || (norma)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{Vmatrix}
+			x \\
+			y \\
+			z
+		\end{Vmatrix}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\begin{Vmatrix}
+		x \\
+		y \\
+		z
+	\end{Vmatrix}
+	\]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{smallmatrix}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Matriz pequeña para inline
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		La matriz $\bigl(\begin{smallmatrix} a&b\\ c&d \end{smallmatrix}\bigr)$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} La matriz $\bigl(\begin{smallmatrix} a&b\\ c&d \end{smallmatrix}\bigr)$
+\end{tcolorbox}
+
+\subsection{Matrices Aumentadas}
+
+\subsubsection*{Matriz aumentada con línea vertical}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\left[\begin{array}{cc|c}
+			1 & 2 & 3 \\
+			4 & 5 & 6
+		\end{array}\right]
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\left[\begin{array}{cc|c}
+		1 & 2 & 3 \\
+		4 & 5 & 6
+	\end{array}\right]
+	\]
+\end{tcolorbox}
+
+\section{Fracciones y Binomios}
+
+\subsection{Fracciones}
+
+\subsubsection*{\texttt{\textbackslash frac\{numerador\}\{denominador\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fracción estándar
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\frac{a}{b}$, $\frac{x^2 + y^2}{x - y}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\frac{a}{b}$, $\frac{x^2 + y^2}{x - y}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash dfrac\{numerador\}\{denominador\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fracción display style (tamaño completo)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\dfrac{a}{b}$ en línea
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\dfrac{a}{b}$ en línea
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash tfrac\{numerador\}\{denominador\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fracción text style (compacta)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[ \tfrac{a}{b} \text{ es más pequeña} \]
+	\end{lstlisting}
+	
+	\textbf{Resultado:} \[ \tfrac{a}{b} \text{ es más pequeña} \]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash cfrac\{numerador\}\{denominador\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fracción continua (requiere amsmath)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		x = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3}}}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	x = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3}}}
+	\]
+\end{tcolorbox}
+
+\subsection{Binomios}
+
+\subsubsection*{\texttt{\textbackslash binom\{n\}\{k\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Coeficiente binomial
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash dbinom, \textbackslash tbinom}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Binomios en display/text style
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\dbinom{n}{k}$ display, $\tbinom{n}{k}$ text
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\dbinom{n}{k}$ display, $\tbinom{n}{k}$ text
+\end{tcolorbox}
+
+\section{Raíces}
+
+\subsubsection*{\texttt{\textbackslash sqrt\{x\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Raíz cuadrada
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\sqrt{x^2 + y^2}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\sqrt{x^2 + y^2}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash sqrt[n]\{x\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Raíz n-ésima
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\sqrt[3]{27} = 3$, $\sqrt[n]{x}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\sqrt[3]{27} = 3$, $\sqrt[n]{x}$
+\end{tcolorbox}
+
+\section{Subíndices y Superíndices}
+
+\subsection{Básicos}
+
+\subsubsection*{\texttt{\^{}\{superíndice\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Superíndice (exponente)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$x^2$, $e^{i\pi}$, $a^{b^c}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $x^2$, $e^{i\pi}$, $a^{b^c}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\_\{subíndice\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Subíndice
+
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$x_i$, $a_{ij}$, $x_{i_j}$
+	\end{lstlisting}
+
+	\textbf{Resultado:} $x_i$, $a_{ij}$, $x_{i_j}$
+\end{tcolorbox}
+
+\subsubsection*{Combinación de sub y superíndices}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$x_i^2$, $a_1^2 + a_2^2$, ${}_nC_r$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $x_i^2$, $a_1^2 + a_2^2$, ${}_nC_r$
+\end{tcolorbox}
+
+\subsection{Límites, Sumas e Integrales}
+
+\subsubsection*{\texttt{\textbackslash lim\_\{x \textbackslash to a\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Límite
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\lim_{x \to 0} \frac{\sin x}{x} = 1$
+		\[ \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e \]
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\lim_{x \to 0} \frac{\sin x}{x} = 1$
+	\[ \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e \]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash sum\_\{i=1\}\^{}\{n\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Sumatoria
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$
+		\[ \sum_{k=0}^{\infty} \frac{1}{2^k} = 2 \]
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$
+	\[ \sum_{k=0}^{\infty} \frac{1}{2^k} = 2 \]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash prod\_\{i=1\}\^{}\{n\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Productoria
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$n! = \prod_{i=1}^{n} i$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $n! = \prod_{i=1}^{n} i$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash int\_a\^{}b}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Integral definida
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\int_0^1 x^2 dx = \frac{1}{3}$
+		\[ \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} \]
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\int_0^1 x^2 dx = \frac{1}{3}$
+	\[ \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} \]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash iint, \textbackslash iiint, \textbackslash iiiint}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Integrales múltiples
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\iint_D f(x,y) \, dA$, $\iiint_V g(x,y,z) \, dV$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\iint_D f(x,y) \, dA$, $\iiint_V g(x,y,z) \, dV$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash oint}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Integral de contorno
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\oint_C \vec{F} \cdot d\vec{r}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\oint_C \vec{F} \cdot d\vec{r}$
+\end{tcolorbox}
+
+\section{Delimitadores}
+
+\subsection{Paréntesis y Corchetes}
+
+\subsubsection*{Delimitadores básicos}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$(x)$, $[x]$, $\{x\}$, $|x|$, $\|x\|$, $\langle x \rangle$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $(x)$, $[x]$, $\{x\}$, $|x|$, $\|x\|$, $\langle x \rangle$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash left y \textbackslash right}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Delimitadores que se ajustan automáticamente
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\left( \frac{a}{b} \right)$, $\left[ \sum_{i=1}^{n} x_i \right]$
+		$\left\{ x \in \mathbb{R} : x > 0 \right\}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\left( \frac{a}{b} \right)$, $\left[ \sum_{i=1}^{n} x_i \right]$, $\left\{ x \in \mathbb{R} : x > 0 \right\}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash left. y \textbackslash right.}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Delimitador invisible (para equilibrar)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\left. \frac{dy}{dx} \right|_{x=0}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\left. \frac{dy}{dx} \right|_{x=0}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash big, \textbackslash Big, \textbackslash bigg, \textbackslash Bigg}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Tamaños manuales de delimitadores
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\big( \Big( \bigg( \Bigg( x$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\big( \Big( \bigg( \Bigg( x$
+\end{tcolorbox}
+
+\subsection{Delimitadores Especiales}
+
+\subsubsection*{Más delimitadores}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\lfloor x \rfloor$, $\lceil x \rceil$, $\langle x, y \rangle$
+		$\ulcorner x \urcorner$, $\llcorner x \lrcorner$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\lfloor x \rfloor$, $\lceil x \rceil$, $\langle x, y \rangle$, $\ulcorner x \urcorner$, $\llcorner x \lrcorner$
+\end{tcolorbox}
+
+\section{Acentos y Decoraciones}
+
+\subsection{Acentos Matemáticos}
+
+\subsubsection*{Acentos sobre símbolos}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\hat{x}$, $\bar{x}$, $\tilde{x}$, $\vec{x}$, $\dot{x}$, $\ddot{x}$
+		$\acute{x}$, $\grave{x}$, $\breve{x}$, $\check{x}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\hat{x}$, $\bar{x}$, $\tilde{x}$, $\vec{x}$, $\dot{x}$, $\ddot{x}$, $\acute{x}$, $\grave{x}$, $\breve{x}$, $\check{x}$
+\end{tcolorbox}
+
+\subsubsection*{Acentos anchos}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\widehat{xyz}$, $\widetilde{abc}$, $\overline{AB}$, $\underline{text}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\widehat{xyz}$, $\widetilde{abc}$, $\overline{AB}$, $\underline{text}$
+\end{tcolorbox}
+
+\subsection{Flechas sobre Símbolos}
+
+\subsubsection*{Vectores y flechas}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\vec{v}$, $\overrightarrow{AB}$, $\overleftarrow{BA}$
+		$\overline{AB}$, $\underline{text}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\vec{v}$, $\overrightarrow{AB}$, $\overleftarrow{BA}$, $\overline{AB}$, $\underline{text}$
+\end{tcolorbox}
+
+\subsection{Llaves sobre/bajo Expresiones}
+
+\subsubsection*{\texttt{\textbackslash overbrace, \textbackslash underbrace}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Llave sobre o bajo expresión
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\overbrace{a + b + c}^{\text{suma}}$
+		$\underbrace{x + y + z}_{\text{variables}}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\overbrace{a + b + c}^{\text{suma}}$, $\underbrace{x + y + z}_{\text{variables}}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash stackrel}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Coloca símbolo sobre otro
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\stackrel{def}{=}$, $\stackrel{?}{=}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\stackrel{def}{=}$, $\stackrel{?}{=}$
+\end{tcolorbox}
+
+\section{Espaciado}
+
+\subsection{Espacios en Modo Matemático}
+
+\subsubsection*{Comandos de espacio}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Espacios disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{\textbackslash,} -- Espacio fino (3/18 quad)
+		\item \texttt{\textbackslash:} -- Espacio medio (4/18 quad)
+		\item \texttt{\textbackslash;} -- Espacio grueso (5/18 quad)
+		\item \texttt{\textbackslash quad} -- Espacio de 1em
+		\item \texttt{\textbackslash qquad} -- Espacio de 2em
+		\item \texttt{\textbackslash !} -- Espacio negativo fino
+	\end{itemize}
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$a\,b$ $a\:b$ $a\;b$ $a\quad b$ $a\qquad b$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $a\,b$ $a\:b$ $a\;b$ $a\quad b$ $a\qquad b$
+\end{tcolorbox}
+
+\section{Texto en Modo Matemático}
+
+\subsubsection*{\texttt{\textbackslash text\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Inserta texto normal en modo matemático
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$x = 5 \text{ donde } x \text{ es un entero}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $x = 5 \text{ donde } x \text{ es un entero}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash textrm, \textbackslash textit, \textbackslash textbf}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Texto con formato específico
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\textrm{roman}$, $\textit{italic}$, $\textbf{bold}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\textrm{roman}$, $\textit{italic}$, $\textbf{bold}$
+\end{tcolorbox}
+
+\section{Fuentes Matemáticas}
+
+\subsection{Estilos de Fuentes}
+
+\subsubsection*{\texttt{\textbackslash mathrm\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Romano (para texto en fórmulas)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathrm{d}x$, $\sin x$ vs $\mathrm{sin} x$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathrm{d}x$, $\sin x$ vs $\mathrm{sin} x$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathit\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Itálica matemática
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathit{variable}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathit{variable}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathbf\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Negrita (para vectores)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathbf{v}$, $\mathbf{A}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathbf{v}$, $\mathbf{A}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathsf\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Sans serif
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathsf{T}$, $\mathsf{ABC}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathsf{T}$, $\mathsf{ABC}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathtt\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Typewriter (monoespaciada)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathtt{code}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathtt{code}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathcal\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Caligráfica (solo mayúsculas)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathcal{L}$, $\mathcal{F}$, $\mathcal{ABCD}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathcal{L}$, $\mathcal{F}$, $\mathcal{ABCD}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathscr\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Script (requiere mathrsfs)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{mathrsfs}
+		$\mathscr{L}$, $\mathscr{H}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathscr{L}$, $\mathscr{H}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathbb\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Blackboard bold (conjuntos numéricos)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathbb{R}$, $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{C}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathbb{R}$, $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{C}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash mathfrak\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Fraktur (gótica)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\mathfrak{g}$, $\mathfrak{A}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\mathfrak{g}$, $\mathfrak{A}$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash bm\{...\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Negrita matemática mejorada (requiere bm)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{bm}
+		$\bm{\alpha}$, $\bm{A}$, $\bm{\nabla}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\bm{\alpha}$, $\bm{A}$, $\bm{\nabla}$
+\end{tcolorbox}
+
+\section{Operadores y Funciones}
+
+\subsection{Funciones Estándar}
+
+\subsubsection*{Funciones trigonométricas}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\sin x$, $\cos x$, $\tan x$, $\cot x$, $\sec x$, $\csc x$
+		$\arcsin x$, $\arccos x$, $\arctan x$
+		$\sinh x$, $\cosh x$, $\tanh x$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\sin x$, $\cos x$, $\tan x$, $\cot x$, $\sec x$, $\csc x$, $\arcsin x$, $\arccos x$, $\arctan x$, $\sinh x$, $\cosh x$, $\tanh x$
+\end{tcolorbox}
+
+\subsubsection*{Funciones logarítmicas y exponenciales}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\log x$, $\ln x$, $\lg x$, $\exp x$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\log x$, $\ln x$, $\lg x$, $\exp x$
+\end{tcolorbox}
+
+\subsubsection*{Otras funciones}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\min$, $\max$, $\sup$, $\inf$, $\lim$, $\limsup$, $\liminf$
+		$\arg$, $\deg$, $\det$, $\dim$, $\ker$, $\hom$, $\gcd$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\min$, $\max$, $\sup$, $\inf$, $\lim$, $\limsup$, $\liminf$, $\arg$, $\deg$, $\det$, $\dim$, $\ker$, $\hom$, $\gcd$
+\end{tcolorbox}
+
+\subsection{Operadores Personalizados}
+
+\subsubsection*{\texttt{\textbackslash operatorname\{name\}}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define operador personalizado
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\operatorname{sen} x$, $\operatorname{tr} A$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\operatorname{sen} x$, $\operatorname{tr} A$
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash DeclareMathOperator}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Declara operador permanente (preámbulo)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\DeclareMathOperator{\sen}{sen}
+		\DeclareMathOperator*{\argmax}{arg\,max}
+		$\sen x$, $\argmax_{x \in X} f(x)$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\newpage
+
+\section{Símbolos Matemáticos}
+
+\subsection{Operadores Binarios}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{3}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $+$ \texttt{+}
+			\item $-$ \texttt{-}
+			\item $\times$ \texttt{\textbackslash times}
+			\item $\div$ \texttt{\textbackslash div}
+			\item $\pm$ \texttt{\textbackslash pm}
+			\item $\mp$ \texttt{\textbackslash mp}
+			\item $\cdot$ \texttt{\textbackslash cdot}
+			\item $\ast$ \texttt{\textbackslash ast}
+			\item $\star$ \texttt{\textbackslash star}
+			\item $\circ$ \texttt{\textbackslash circ}
+			\item $\bullet$ \texttt{\textbackslash bullet}
+			\item $\oplus$ \texttt{\textbackslash oplus}
+			\item $\ominus$ \texttt{\textbackslash ominus}
+			\item $\otimes$ \texttt{\textbackslash otimes}
+			\item $\oslash$ \texttt{\textbackslash oslash}
+			\item $\odot$ \texttt{\textbackslash odot}
+			\item $\cup$ \texttt{\textbackslash cup}
+			\item $\cap$ \texttt{\textbackslash cap}
+			\item $\sqcup$ \texttt{\textbackslash sqcup}
+			\item $\sqcap$ \texttt{\textbackslash sqcap}
+			\item $\vee$ \texttt{\textbackslash vee}
+			\item $\wedge$ \texttt{\textbackslash wedge}
+			\item $\setminus$ \texttt{\textbackslash setminus}
+			\item $\wr$ \texttt{\textbackslash wr}
+			\item $\diamond$ \texttt{\textbackslash diamond}
+			\item $\bigtriangleup$ \texttt{\textbackslash bigtriangleup}
+			\item $\bigtriangledown$ \texttt{\textbackslash bigtriangledown}
+			\item $\triangleleft$ \texttt{\textbackslash triangleleft}
+			\item $\triangleright$ \texttt{\textbackslash triangleright}
+			\item $\bigcirc$ \texttt{\textbackslash bigcirc}
+			\item $\amalg$ \texttt{\textbackslash amalg}
+			\item $\dagger$ \texttt{\textbackslash dagger}
+			\item $\ddagger$ \texttt{\textbackslash ddagger}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsection{Relaciones}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{3}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $=$ \texttt{=}
+			\item $\neq$ \texttt{\textbackslash neq}
+			\item $<$ \texttt{<}
+			\item $>$ \texttt{>}
+			\item $\leq$ \texttt{\textbackslash leq}
+			\item $\geq$ \texttt{\textbackslash geq}
+			\item $\ll$ \texttt{\textbackslash ll}
+			\item $\gg$ \texttt{\textbackslash gg}
+			\item $\equiv$ \texttt{\textbackslash equiv}
+			\item $\sim$ \texttt{\textbackslash sim}
+			\item $\simeq$ \texttt{\textbackslash simeq}
+			\item $\approx$ \texttt{\textbackslash approx}
+			\item $\cong$ \texttt{\textbackslash cong}
+			\item $\propto$ \texttt{\textbackslash propto}
+			\item $\perp$ \texttt{\textbackslash perp}
+			\item $\parallel$ \texttt{\textbackslash parallel}
+			\item $\subset$ \texttt{\textbackslash subset}
+			\item $\supset$ \texttt{\textbackslash supset}
+			\item $\subseteq$ \texttt{\textbackslash subseteq}
+			\item $\supseteq$ \texttt{\textbackslash supseteq}
+			\item $\sqsubset$ \texttt{\textbackslash sqsubset}
+			\item $\sqsupset$ \texttt{\textbackslash sqsupset}
+			\item $\sqsubseteq$ \texttt{\textbackslash sqsubseteq}
+			\item $\sqsupseteq$ \texttt{\textbackslash sqsupseteq}
+			\item $\in$ \texttt{\textbackslash in}
+			\item $\ni$ \texttt{\textbackslash ni}
+			\item $\notin$ \texttt{\textbackslash notin}
+			\item $\prec$ \texttt{\textbackslash prec}
+			\item $\succ$ \texttt{\textbackslash succ}
+			\item $\preceq$ \texttt{\textbackslash preceq}
+			\item $\succeq$ \texttt{\textbackslash succeq}
+			\item $\vdash$ \texttt{\textbackslash vdash}
+			\item $\dashv$ \texttt{\textbackslash dashv}
+			\item $\models$ \texttt{\textbackslash models}
+			\item $\mid$ \texttt{\textbackslash mid}
+			\item $\asymp$ \texttt{\textbackslash asymp}
+			\item $\bowtie$ \texttt{\textbackslash bowtie}
+			\item $\smile$ \texttt{\textbackslash smile}
+			\item $\frown$ \texttt{\textbackslash frown}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsection{Flechas}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{3}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $\leftarrow$ \texttt{\textbackslash leftarrow}
+			\item $\rightarrow$ \texttt{\textbackslash rightarrow}
+			\item $\leftrightarrow$ \texttt{\textbackslash leftrightarrow}
+			\item $\Leftarrow$ \texttt{\textbackslash Leftarrow}
+			\item $\Rightarrow$ \texttt{\textbackslash Rightarrow}
+			\item $\Leftrightarrow$ \texttt{\textbackslash Leftrightarrow}
+			\item $\leftrightharpoons$ \texttt{\textbackslash leftrightharpoons}
+			\item $\rightleftharpoons$ \texttt{\textbackslash rightleftharpoons}
+			\item $\uparrow$ \texttt{\textbackslash uparrow}
+			\item $\downarrow$ \texttt{\textbackslash downarrow}
+			\item $\updownarrow$ \texttt{\textbackslash updownarrow}
+			\item $\Uparrow$ \texttt{\textbackslash Uparrow}
+			\item $\Downarrow$ \texttt{\textbackslash Downarrow}
+			\item $\Updownarrow$ \texttt{\textbackslash Updownarrow}
+			\item $\nearrow$ \texttt{\textbackslash nearrow}
+			\item $\searrow$ \texttt{\textbackslash searrow}
+			\item $\swarrow$ \texttt{\textbackslash swarrow}
+			\item $\nwarrow$ \texttt{\textbackslash nwarrow}
+			\item $\mapsto$ \texttt{\textbackslash mapsto}
+			\item $\longmapsto$ \texttt{\textbackslash longmapsto}
+			\item $\hookleftarrow$ \texttt{\textbackslash hookleftarrow}
+			\item $\hookrightarrow$ \texttt{\textbackslash hookrightarrow}
+			\item $\leftharpoonup$ \texttt{\textbackslash leftharpoonup}
+			\item $\rightharpoonup$ \texttt{\textbackslash rightharpoonup}
+			\item $\leftharpoondown$ \texttt{\textbackslash leftharpoondown}
+			\item $\rightharpoondown$ \texttt{\textbackslash rightharpoondown}
+			\item $\leadsto$ \texttt{\textbackslash leadsto}
+			\item $\to$ \texttt{\textbackslash to}
+			\item $\gets$ \texttt{\textbackslash gets}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsection{Letras Griegas}
+
+\subsubsection*{Minúsculas}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{4}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $\alpha$ \texttt{\textbackslash alpha}
+			\item $\beta$ \texttt{\textbackslash beta}
+			\item $\gamma$ \texttt{\textbackslash gamma}
+			\item $\delta$ \texttt{\textbackslash delta}
+			\item $\epsilon$ \texttt{\textbackslash epsilon}
+			\item $\varepsilon$ \texttt{\textbackslash varepsilon}
+			\item $\zeta$ \texttt{\textbackslash zeta}
+			\item $\eta$ \texttt{\textbackslash eta}
+			\item $\theta$ \texttt{\textbackslash theta}
+			\item $\vartheta$ \texttt{\textbackslash vartheta}
+			\item $\iota$ \texttt{\textbackslash iota}
+			\item $\kappa$ \texttt{\textbackslash kappa}
+			\item $\lambda$ \texttt{\textbackslash lambda}
+			\item $\mu$ \texttt{\textbackslash mu}
+			\item $\nu$ \texttt{\textbackslash nu}
+			\item $\xi$ \texttt{\textbackslash xi}
+			\item $\pi$ \texttt{\textbackslash pi}
+			\item $\varpi$ \texttt{\textbackslash varpi}
+			\item $\rho$ \texttt{\textbackslash rho}
+			\item $\varrho$ \texttt{\textbackslash varrho}
+			\item $\sigma$ \texttt{\textbackslash sigma}
+			\item $\varsigma$ \texttt{\textbackslash varsigma}
+			\item $\tau$ \texttt{\textbackslash tau}
+			\item $\upsilon$ \texttt{\textbackslash upsilon}
+			\item $\phi$ \texttt{\textbackslash phi}
+			\item $\varphi$ \texttt{\textbackslash varphi}
+			\item $\chi$ \texttt{\textbackslash chi}
+			\item $\psi$ \texttt{\textbackslash psi}
+			\item $\omega$ \texttt{\textbackslash omega}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsubsection*{Mayúsculas}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{4}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $\Gamma$ \texttt{\textbackslash Gamma}
+			\item $\Delta$ \texttt{\textbackslash Delta}
+			\item $\Theta$ \texttt{\textbackslash Theta}
+			\item $\Lambda$ \texttt{\textbackslash Lambda}
+			\item $\Xi$ \texttt{\textbackslash Xi}
+			\item $\Pi$ \texttt{\textbackslash Pi}
+			\item $\Sigma$ \texttt{\textbackslash Sigma}
+			\item $\Upsilon$ \texttt{\textbackslash Upsilon}
+			\item $\Phi$ \texttt{\textbackslash Phi}
+			\item $\Psi$ \texttt{\textbackslash Psi}
+			\item $\Omega$ \texttt{\textbackslash Omega}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsection{Símbolos Especiales}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{3}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $\infty$ \texttt{\textbackslash infty}
+			\item $\partial$ \texttt{\textbackslash partial}
+			\item $\nabla$ \texttt{\textbackslash nabla}
+			\item $\emptyset$ \texttt{\textbackslash emptyset}
+			\item $\varnothing$ \texttt{\textbackslash varnothing}
+			\item $\forall$ \texttt{\textbackslash forall}
+			\item $\exists$ \texttt{\textbackslash exists}
+			\item $\nexists$ \texttt{\textbackslash nexists}
+			\item $\neg$ \texttt{\textbackslash neg}
+			\item $\lnot$ \texttt{\textbackslash lnot}
+			\item $\wedge$ \texttt{\textbackslash wedge}
+			\item $\vee$ \texttt{\textbackslash vee}
+			\item $\therefore$ \texttt{\textbackslash therefore}
+			\item $\because$ \texttt{\textbackslash because}
+			\item $\angle$ \texttt{\textbackslash angle}
+			\item $\measuredangle$ \texttt{\textbackslash measuredangle}
+			\item $\sphericalangle$ \texttt{\textbackslash sphericalangle}
+			\item $\triangle$ \texttt{\textbackslash triangle}
+			\item $\square$ \texttt{\textbackslash square}
+			\item $\blacksquare$ \texttt{\textbackslash blacksquare}
+			\item $\Box$ \texttt{\textbackslash Box}
+			\item $\Diamond$ \texttt{\textbackslash Diamond}
+			\item $\ell$ \texttt{\textbackslash ell}
+			\item $\hbar$ \texttt{\textbackslash hbar}
+			\item $\imath$ \texttt{\textbackslash imath}
+			\item $\jmath$ \texttt{\textbackslash jmath}
+			\item $\wp$ \texttt{\textbackslash wp}
+			\item $\Re$ \texttt{\textbackslash Re}
+			\item $\Im$ \texttt{\textbackslash Im}
+			\item $\aleph$ \texttt{\textbackslash aleph}
+			\item $\prime$ \texttt{\textbackslash prime}
+			\item $\surd$ \texttt{\textbackslash surd}
+			\item $\top$ \texttt{\textbackslash top}
+			\item $\bot$ \texttt{\textbackslash bot}
+			\item $\flat$ \texttt{\textbackslash flat}
+			\item $\natural$ \texttt{\textbackslash natural}
+			\item $\sharp$ \texttt{\textbackslash sharp}
+			\item $\clubsuit$ \texttt{\textbackslash clubsuit}
+			\item $\diamondsuit$ \texttt{\textbackslash diamondsuit}
+			\item $\heartsuit$ \texttt{\textbackslash heartsuit}
+			\item $\spadesuit$ \texttt{\textbackslash spadesuit}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\subsection{Operadores Grandes}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\begin{multicols}{3}
+		\begin{itemize}[nosep,leftmargin=*]
+			\item $\sum$ \texttt{\textbackslash sum}
+			\item $\prod$ \texttt{\textbackslash prod}
+			\item $\coprod$ \texttt{\textbackslash coprod}
+			\item $\int$ \texttt{\textbackslash int}
+			\item $\iint$ \texttt{\textbackslash iint}
+			\item $\iiint$ \texttt{\textbackslash iiint}
+			\item $\oint$ \texttt{\textbackslash oint}
+			\item $\bigcup$ \texttt{\textbackslash bigcup}
+			\item $\bigcap$ \texttt{\textbackslash bigcap}
+			\item $\bigsqcup$ \texttt{\textbackslash bigsqcup}
+			\item $\biguplus$ \texttt{\textbackslash biguplus}
+			\item $\bigvee$ \texttt{\textbackslash bigvee}
+			\item $\bigwedge$ \texttt{\textbackslash bigwedge}
+			\item $\bigoplus$ \texttt{\textbackslash bigoplus}
+			\item $\bigotimes$ \texttt{\textbackslash bigotimes}
+			\item $\bigodot$ \texttt{\textbackslash bigodot}
+		\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\section{Casos y Condicionales}
+
+\subsubsection*{\texttt{cases}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Definición por casos
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		f(x) = \begin{cases}
+			x^2 & \text{si } x \geq 0 \\
+			-x^2 & \text{si } x < 0
+		\end{cases}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	f(x) = \begin{cases}
+		x^2 & \text{si } x \geq 0 \\
+		-x^2 & \text{si } x < 0
+	\end{cases}
+	\]
+\end{tcolorbox}
+
+\subsubsection*{\texttt{dcases}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Cases con fracciones en display style (mathtools)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		f(x) = \begin{dcases}
+			\frac{x}{2} & x > 0 \\
+			0 & x = 0
+		\end{dcases}
+		\]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Entornos de Teoremas}
+
+\subsection{Definición de Entornos}
+
+\subsubsection*{\texttt{\textbackslash newtheorem}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Define nuevo entorno de teorema (en preámbulo)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{amsthm}
+		\newtheorem{theorem}{Teorema}[section]
+		\newtheorem{lemma}[theorem]{Lema}
+		\newtheorem{corollary}{Corolario}[theorem]
+		\newtheorem{definition}{Definición}
+		
+		\theoremstyle{definition}
+		\newtheorem{example}{Ejemplo}
+		\newtheorem{remark}{Observación}
+		
+		\theoremstyle{remark}
+		\newtheorem*{note}{Nota}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Uso de Entornos}
+
+\subsubsection*{Teorema}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{theorem}[Pitágoras]
+			En un triángulo rectángulo, $a^2 + b^2 = c^2$.
+		\end{theorem}
+		
+		\begin{proof}
+			Demostración...
+		\end{proof}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Numeración y Referencias}
+
+\subsection{Etiquetas y Referencias}
+
+\subsubsection*{\texttt{\textbackslash label y \textbackslash ref}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation} \label{eq:pythagoras}
+			a^2 + b^2 = c^2
+		\end{equation}
+		
+		Como vimos en la ecuación \ref{eq:pythagoras}...
+		Ver ecuación~\eqref{eq:pythagoras} en la página~\pageref{eq:pythagoras}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash tag}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Etiqueta personalizada para ecuación
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{equation} \tag{$\star$}
+			E = mc^2
+		\end{equation}
+		
+		\begin{equation} \tag{Ec. Principal}
+			F = ma
+		\end{equation}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{\texttt{\textbackslash notag o \textbackslash nonumber}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Omite numeración en una línea de align
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\begin{align}
+			x &= a + b \\
+			y &= c + d \notag \\
+			z &= e + f
+		\end{align}
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section{Comandos Especiales}
+
+\subsection{Cancelación}
+
+\subsubsection*{\texttt{\textbackslash cancel}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Tacha término (requiere cancel)
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\usepackage{cancel}
+		$\frac{\cancel{x}(x+1)}{\cancel{x}} = x+1$
+		$\cancelto{0}{x}$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Extensibles}
+
+\subsubsection*{\texttt{\textbackslash xleftarrow, \textbackslash xrightarrow}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Flechas extensibles con texto
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$A \xrightarrow{f} B \xrightarrow[\text{abajo}]{\text{arriba}} C$
+		$X \xleftarrow{g} Y$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $A \xrightarrow{f} B \xrightarrow[\text{abajo}]{\text{arriba}} C$, $X \xleftarrow{g} Y$
+\end{tcolorbox}
+
+\subsection{Colores en Matemáticas}
+
+\subsubsection*{\texttt{\textbackslash color, \textbackslash textcolor}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		${\color{red} x^2} + {\color{blue} y^2} = 1$
+		$\textcolor{red}{a} + \textcolor{green}{b}$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} ${\color{red} x^2} + {\color{blue} y^2} = 1$, $\textcolor{red}{a} + \textcolor{green}{b}$
+\end{tcolorbox}
+
+\subsection{Tamaños de Fuente}
+
+\subsubsection*{Comandos de tamaño}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		$\displaystyle \sum_{i=1}^n$ vs $\textstyle \sum_{i=1}^n$
+		$\scriptstyle \sum_{i=1}^n$ vs $\scriptscriptstyle \sum_{i=1}^n$
+	\end{lstlisting}
+	
+	\textbf{Resultado:} $\displaystyle \sum_{i=1}^n$ vs $\textstyle \sum_{i=1}^n$ vs $\scriptstyle \sum_{i=1}^n$ vs $\scriptscriptstyle \sum_{i=1}^n$
+\end{tcolorbox}
+
+\section{Arrays Personalizados}
+
+\subsubsection*{\texttt{array}}
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Arreglo personalizado con alineación
+	
+	\textbf{Ejemplo:}
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{array}{c|cc}
+			& x & y \\
+			\hline
+			A & 1 & 2 \\
+			B & 3 & 4
+		\end{array}
+		\]
+	\end{lstlisting}
+	
+	\textbf{Resultado:}
+	\[
+	\begin{array}{c|cc}
+		& x & y \\
+		\hline
+		A & 1 & 2 \\
+		B & 3 & 4
+	\end{array}
+	\]
+\end{tcolorbox}
+
+\newpage
+
+\section*{\faCheckCircle\ Ejemplos Completos}
+
+\subsection*{Ejemplo 1: Ecuaciones Complejas}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Sistema de ecuaciones]
+	\begin{lstlisting}[language=TeX]
+		\begin{align}
+			x + y + z &= 6 \\
+			2x - y + 3z &= 14 \\
+			-x + 4y - z &= 2
+		\end{align}
+		
+		Solución: $(x,y,z) = (1,2,3)$
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Ejemplo 2: Cálculo}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Derivadas e integrales]
+	\begin{lstlisting}[language=TeX]
+		\[
+		\frac{d}{dx}\left(\int_a^x f(t) \, dt\right) = f(x)
+		\]
+		
+		\[
+		\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+		\]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Ejemplo 3: Álgebra Lineal}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Matrices y determinantes]
+	\begin{lstlisting}[language=TeX]
+		\[
+		\begin{vmatrix}
+			a & b \\
+			c & d
+		\end{vmatrix} = ad - bc
+		\]
+		
+		\[
+		\mathbf{A} = \begin{bmatrix}
+			1 & 2 & 3 \\
+			4 & 5 & 6 \\
+			7 & 8 & 9
+		\end{bmatrix}
+		\]
+	\end{lstlisting}
+\end{tcolorbox}
+
+\section*{\faLightbulb\ Tips Importantes}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+	\begin{itemize}[leftmargin=*]
+		\item Usa \texttt{\textbackslash[...\textbackslash]} en lugar de \$\$...\$\$ para ecuaciones display
+		\item Siempre carga \texttt{amsmath} para matemáticas avanzadas
+		\item Usa \texttt{\textbackslash left} y \texttt{\textbackslash right} para delimitadores que se ajustan automáticamente
+		\item Para vectores usa \texttt{\textbackslash mathbf} o \texttt{\textbackslash bm}
+		\item Usa \texttt{\textbackslash text\{...\}} para texto dentro de ecuaciones
+		\item \texttt{align} numera cada línea, \texttt{gather} también; usa versión * para sin números
+		\item Para fracciones en línea considera \texttt{\textbackslash tfrac} para mantener altura
+		\item \texttt{\textbackslash mathrm} para operadores no estándar
+		\item Usa \texttt{\textbackslash,} para espacio fino entre diferenciales: \texttt{\$dx\textbackslash,dy\$}
+		\item \texttt{\textbackslash label} debe ir después de \texttt{\textbackslash caption} o dentro de equation
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faExclamationTriangle\ Errores Comunes}
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black]
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{Olvidar \textbackslash} antes de comandos: escribir \texttt{sin} en lugar de \texttt{\textbackslash sin}
+		\item \textbf{Modo matemático incorrecto}: usar \$ dentro de equation
+		\item \textbf{Llaves desequilibradas}: \texttt{\textbackslash left(} sin \texttt{\textbackslash right)}
+		\item \textbf{Subíndices/superíndices sin llaves}: \texttt{x\_12} → \texttt{x\_\{12\}}
+		\item \textbf{Espacios en nombres}: \texttt{\textbackslash operatorname\{arg max\}} → \texttt{\textbackslash operatorname\{arg\textbackslash,max\}}
+		\item \textbf{Matrices sin entorno}: intentar alinear con espacios en lugar de usar matrix
+		\item \textbf{Punto y coma en ecuaciones}: \LaTeX{} no necesita ; al final de ecuaciones
+		\item \textbf{Cargar paquetes sin declararlos}: usar \texttt{\textbackslash mathbb} sin \texttt{amsfonts}
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faBook\ Paquetes Adicionales Útiles}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black]
+	\textbf{Paquetes recomendados:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{physics} -- Comandos para física (vectores, derivadas, brakets)
+		\item \texttt{siunitx} -- Unidades del SI y formateo de números
+		\item \texttt{tensor} -- Notación tensorial
+		\item \texttt{mathrsfs} -- Fuente script adicional
+		\item \texttt{nicefrac} -- Fracciones diagonales: 1/2
+		\item \texttt{cancel} -- Cancelar términos en ecuaciones
+		\item \texttt{cases} -- Más opciones para cases
+		\item \texttt{empheq} -- Resaltar ecuaciones con cajas
+	\end{itemize}
+\end{tcolorbox}
+
+\section*{\faKeyboard\ Atajos Comunes}
+
+\begin{tcolorbox}[colback=teal!10,colframe=teal!75!black]
+	\textbf{Convenciones útiles:}
+	\begin{itemize}[leftmargin=*]
+		\item Conjuntos numéricos: $\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}, \mathbb{C}$
+		\item Vectores: $\vec{v}, \mathbf{v}, \bm{v}$
+		\item Matrices: usar letras mayúsculas $A, B, X$
+		\item Operadores: $\sin, \cos, \log, \lim, \max, \min$
+		\item Derivadas: $\frac{d}{dx}, \frac{\partial}{\partial x}$
+		\item Integrales: añadir \texttt{\textbackslash,} antes del diferencial: $\int f(x) \, dx$
+	\end{itemize}
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\begin{center}
+	\textit{Documento generado con \LaTeX{} -- \today}
+	
+	\textit{Este documento cubre las funcionalidades principales del modo matemático en \LaTeX{}.}
+	
+	\textit{Para más información, consulta los manuales oficiales de amsmath, mathtools y amsthm.}
+\end{center}
+
+
+\end{document}

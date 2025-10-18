@@ -1,0 +1,684 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{paracol}
+
+% Colores personalizados
+\definecolor{categorycolor}{RGB}{41,128,185}
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{examplecolor}{RGB}{149,165,166}
+
+% Configuración de listings
+\lstset{
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true
+}
+
+% Título
+\title{\textbf{\Huge Entorno \texttt{paracol} en \LaTeX{}}\\\large Guía Completa de Comandos y Opciones}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		El paquete \texttt{paracol} permite crear columnas paralelas con contenido independiente en cada columna. Es ideal para documentos bilingües, comparaciones de texto, o comentarios paralelos. A diferencia de \texttt{multicol}, el contenido NO fluye automáticamente entre columnas.
+	\end{tcolorbox}
+	
+	\tableofcontents
+	
+	\section{Paquete paracol}
+	
+	\subsection*{Carga del paquete}
+	
+	\subsubsection*{\texttt{\textbackslash usepackage\{paracol\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Carga básica del paquete
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash usepackage[colaction]\{paracol\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Habilita acciones sincronizadas entre columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage[colaction]{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Entorno paracol}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\begin{paracol}{n}
+			... contenido columna 1 ...
+			\switchcolumn
+			... contenido columna 2 ...
+		\end{paracol}
+	\end{lstlisting}
+	
+	\subsection{Inicialización}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{paracol\}\{n\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Inicia entorno con n columnas (2-10 típicamente)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				Contenido columna 1
+				\switchcolumn
+				Contenido columna 2
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} n = número de columnas deseadas
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{paracol\}\{2\}} -- Caso común}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Caso más común: dos columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				Texto izquierda
+				\switchcolumn
+				Texto derecha
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash end\{paracol\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Termina el entorno de columnas paralelas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{Comando \textbackslash switchcolumn}
+	
+	Cambia entre columnas.
+	
+	\subsection*{\texttt{\textbackslash switchcolumn}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cambia a la siguiente columna
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Columna 1
+			\switchcolumn
+			Columna 2
+			\switchcolumn
+			Columna 3
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash switchcolumn[n]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cambia a columna específica n (0-indexed)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Columna 0
+			\switchcolumn[2]
+			Salta a columna 2
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Primera columna = 0, segunda = 1, etc.
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash switchcolumn*}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cambia de columna y sincroniza altura
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Texto 1
+			\switchcolumn*
+			Texto 2 alineado verticalmente
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Útil para alinear contenido horizontalmente
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash switchcolumn*[n]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cambia a columna n y sincroniza
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\switchcolumn*[1]
+			Salta a columna 1 sincronizada
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Control de Columnas}
+	
+	\subsection{Ancho de columnas}
+	
+	\subsubsection*{\texttt{\textbackslash columnratio\{ratio\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define proporción de anchos para 2 columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\columnratio{0.6}
+			\begin{paracol}{2}
+				% Col 1: 60%, Col 2: 40%
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Solo para 2 columnas, valor entre 0 y 1
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash columnratio\{r1,r2,...\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define proporciones para múltiples columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\columnratio{0.3,0.5,0.2}
+			\begin{paracol}{3}
+				% 30%, 50%, 20%
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} La suma debe ser $\leq$ 1.0
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash setcolumnwidth\{w1,w2,...\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define anchos absolutos de columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\setcolumnwidth{4cm,6cm,5cm}
+			\begin{paracol}{3}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Usar unidades: cm, pt, in, etc.
+	\end{tcolorbox}
+	
+	\subsection{Separación entre columnas}
+	
+	\subsubsection*{\texttt{\textbackslash columnsep}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Espacio horizontal entre columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\setlength{\columnsep}{2cm}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Por defecto: 35pt
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash columnseprule}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grosor de línea separadora
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\setlength{\columnseprule}{0.4pt}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} 0pt = sin línea (por defecto)
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash columnseprulecolor}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Color de la línea separadora
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\renewcommand{\columnseprulecolor}{\color{blue}}
+			\setlength{\columnseprule}{1pt}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Requiere xcolor
+	\end{tcolorbox}
+	
+	\subsection{Numeración de columnas}
+	
+	\subsubsection*{\texttt{\textbackslash globalcounter\{counter\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Contador global (compartido entre columnas)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\globalcounter{equation}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Ecuaciones numeradas consecutivamente
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash globalcounter*}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Todos los contadores como globales
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\globalcounter*
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash localcounter\{counter\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Contador local (independiente por columna)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\localcounter{footnote}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Notas al pie independientes
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{Características Avanzadas}
+	
+	\subsection{Fondo de columnas}
+	
+	\subsubsection*{\texttt{\textbackslash backgroundcolor\{c\}[color]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define color de fondo para columna c
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{xcolor}
+			\backgroundcolor{c}[gray]{0.9}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} c = 0,1,2... (columna), requiere xcolor
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash backgroundcolor\{c\}(color)}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Color de fondo con modelo de color
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\backgroundcolor{0}(rgb){1,0.9,0.9}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash nobackgroundcolor\{c\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Elimina color de fondo de columna c
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\nobackgroundcolor{1}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Notas al pie}
+	
+	\subsubsection*{\texttt{\textbackslash footnotelayout\{mode\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define disposición de notas al pie
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\footnotelayout{m}
+			\begin{paracol}{2}
+				Texto\footnote{Nota}
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} m=merged, c=columned, p=page
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash footnote\{text\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Nota al pie normal en paracol
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Texto\footnote{Esta es una nota}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash footnotemark, \textbackslash footnotetext}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Marca y texto separados
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Texto\footnotemark
+			\switchcolumn
+			\footnotetext{Nota en otra columna}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Saltos de página}
+	
+	\subsubsection*{\texttt{\textbackslash flushpage}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Fuerza que todas las columnas lleguen al final de página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				Texto columna 1
+				\switchcolumn
+				Texto columna 2
+				\flushpage
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Útil antes de cambiar configuración
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash clearpage}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Termina página actual en modo paracol
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				...
+				\clearpage
+				Nueva página
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Sincronización}
+	
+	\subsubsection*{\texttt{\textbackslash synccounter\{counter\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Sincroniza contador entre columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\synccounter{equation}
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash syncallcounters}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Sincroniza todos los contadores
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\syncallcounters
+			\begin{paracol}{2}
+				...
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{Contenido que Abarca Columnas}
+	
+	\subsection{Entornos especiales}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{leftcolumn*\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Solo en columna izquierda, ancho completo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{2}
+				\begin{leftcolumn*}
+					Título ancho completo
+				\end{leftcolumn*}
+				Columna 1
+				\switchcolumn
+				Columna 2
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{rightcolumn*\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Solo en columna derecha, ancho completo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{rightcolumn*}
+				Contenido
+			\end{rightcolumn*}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{column*\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Contenido que abarca todas las columnas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{paracol}{3}
+				Col1
+				\switchcolumn
+				Col2
+				\switchcolumn
+				Col3
+				\switchcolumn*
+				\begin{column*}
+					Título completo
+				\end{column*}
+			\end{paracol}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Muy útil para títulos y secciones
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faCheckCircle\ Ejemplos Completos}
+	
+	\subsection*{Ejemplo 1: Básico (dos columnas)}
+	
+	\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Dos columnas simples]
+		\begin{lstlisting}[language=TeX]
+			\usepackage{paracol}
+			
+			\begin{paracol}{2}
+				Este texto aparece en la columna izquierda.
+				Puedo escribir varios párrafos aquí.
+				
+				\switchcolumn
+				
+				Este texto aparece en la columna derecha.
+				Completamente independiente del izquierdo.
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 2: Avanzado (3 columnas con colores)}
+	
+	\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Tres columnas con fondos de color]
+		\begin{lstlisting}[language=TeX]
+			\usepackage{paracol}
+			\usepackage{xcolor}
+			
+			\columnratio{0.3,0.4,0.3}
+			\setlength{\columnseprule}{0.4pt}
+			\backgroundcolor{0}[gray]{0.95}
+			\backgroundcolor{2}[gray]{0.95}
+			
+			\begin{paracol}{3}
+				Columna 1 (30\%)
+				Con fondo gris
+				
+				\switchcolumn
+				
+				Columna 2 (40\%)
+				Sin fondo
+				
+				\switchcolumn
+				
+				Columna 3 (30\%)
+				Con fondo gris
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 3: Práctico (documento bilingüe)}
+	
+	\begin{tcolorbox}[colback=orange!10,colframe=orange!75!black,title=\faCode\ Documento bilingüe]
+		\begin{lstlisting}[language=TeX]
+			\usepackage{paracol}
+			\columnratio{0.5}
+			
+			\begin{paracol}{2}
+				\section{Introduction}
+				This is the English version of the text.
+				We can have complete paragraphs here.
+				
+				\switchcolumn
+				
+				\section{Introducción}
+				Esta es la versión en español del texto.
+				Podemos tener párrafos completos aquí.
+				
+				\switchcolumn*
+				
+				\begin{column*}
+					\section{Common Section}
+					This section spans both columns.
+				\end{column*}
+			\end{paracol}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faLightbulb\ Tips Importantes}
+	
+	\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+		\begin{itemize}[leftmargin=*]
+			\item Usa \texttt{\textbackslash switchcolumn*} para sincronizar altura entre columnas
+			\item \texttt{\textbackslash flushpage} antes de cambiar configuración de columnas
+			\item \texttt{\textbackslash globalcounter} para ecuaciones numeradas consecutivamente
+			\item Primera columna es índice 0, no 1
+			\item Para documentos bilingües, paracol es ideal
+			\item Los anchos con \texttt{\textbackslash columnratio} deben sumar $\leq$ 1.0
+			\item Puedes anidar entornos normales (figuras, ecuaciones) dentro de paracol
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faExclamationTriangle\ Diferencias paracol vs multicol}
+	
+	\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=paracol vs multicol]
+		\begin{description}[leftmargin=*]
+			\item[\textbf{multicol}:] Contenido fluye automáticamente entre columnas (como periódico). El texto se distribuye de forma balanceada.
+			\item[\textbf{paracol}:] Contenido independiente en cada columna. Tú controlas qué va en cada columna con \texttt{\textbackslash switchcolumn}.
+		\end{description}
+		
+		\textbf{Cuándo usar paracol:}
+		\begin{itemize}[leftmargin=*]
+			\item Documentos bilingües (texto en dos idiomas lado a lado)
+			\item Comparación de versiones (código antiguo vs nuevo)
+			\item Comentarios paralelos al texto principal
+			\item CVs con columnas independientes
+			\item Notas marginales extensas
+		\end{itemize}
+		
+		\textbf{Cuándo usar multicol:}
+		\begin{itemize}[leftmargin=*]
+			\item Artículos estilo revista/periódico
+			\item Listas largas en múltiples columnas
+			\item Referencias bibliográficas
+			\item Cuando quieres balanceo automático
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\textit{Documento generado con \LaTeX{} -- \today}
+	\end{center}
+	
+\end{document}

@@ -1,0 +1,1228 @@
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes básicos
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\tcbuselibrary{listings,skins,breakable}  % Librerías para tcblisting
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+
+% Paquete principal para código con colores
+\usepackage{listings}
+
+% Paquetes verbatim
+\usepackage{fancyvrb}
+\usepackage{alltt}
+
+% Paquetes adicionales
+\usepackage{graphicx}
+\usepackage{caption}
+%\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+
+% Definir colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{codebackground}{RGB}{245,245,245}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codeblue}{RGB}{0,0,255}
+\definecolor{codered}{RGB}{187,0,0}
+\definecolor{codepurple}{RGB}{128,0,128}
+
+% Colores Monokai
+\definecolor{monokaibg}{RGB}{39,40,34}
+\definecolor{monokaifg}{RGB}{248,248,242}
+\definecolor{monokaicomment}{RGB}{117,113,94}
+\definecolor{monokaistring}{RGB}{230,219,116}
+\definecolor{monokaikeyword}{RGB}{249,38,114}
+\definecolor{monokaifunction}{RGB}{166,226,46}
+\definecolor{monokainumber}{RGB}{174,129,255}
+
+% Colores Dracula
+\definecolor{draculabg}{RGB}{40,42,54}
+\definecolor{draculafg}{RGB}{248,248,242}
+\definecolor{draculacomment}{RGB}{98,114,164}
+\definecolor{draculacyan}{RGB}{139,233,253}
+\definecolor{draculagreen}{RGB}{80,250,123}
+\definecolor{draculaorange}{RGB}{255,184,108}
+\definecolor{draculapink}{RGB}{255,121,198}
+\definecolor{draculapurple}{RGB}{189,147,249}
+\definecolor{draculared}{RGB}{255,85,85}
+\definecolor{draculayellow}{RGB}{241,250,140}
+
+% Colores Solarized Dark
+\definecolor{solarizedbase03}{RGB}{0,43,54}
+\definecolor{solarizedbase02}{RGB}{7,54,66}
+\definecolor{solarizedbase01}{RGB}{88,110,117}
+\definecolor{solarizedbase00}{RGB}{101,123,131}
+\definecolor{solarizedbase0}{RGB}{131,148,150}
+\definecolor{solarizedbase1}{RGB}{147,161,161}
+\definecolor{solarizedyellow}{RGB}{181,137,0}
+\definecolor{solarizedorange}{RGB}{203,75,22}
+\definecolor{solarizedred}{RGB}{220,50,47}
+\definecolor{solarizedmagenta}{RGB}{211,54,130}
+\definecolor{solarizedviolet}{RGB}{108,113,196}
+\definecolor{solarizedblue}{RGB}{38,139,210}
+\definecolor{solarizedcyan}{RGB}{42,161,152}
+\definecolor{solarizedgreen}{RGB}{133,153,0}
+
+% Colores GitHub
+\definecolor{githubbg}{RGB}{255,255,255}
+\definecolor{githubfg}{RGB}{36,41,46}
+\definecolor{githubcomment}{RGB}{106,115,125}
+\definecolor{githubstring}{RGB}{3,47,98}
+\definecolor{githubkeyword}{RGB}{215,58,73}
+\definecolor{githubfunction}{RGB}{111,66,193}
+\definecolor{githubnumber}{RGB}{0,92,197}
+
+% Configuración básica de listings
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	inputencoding=utf8,
+	extendedchars=true,
+	literate=
+		{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+		{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+		{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+		{ü}{{\"u}}1 {Ü}{{\"U}}1
+		{¿}{{?`}}1 {¡}{{!`}}1
+}
+
+% Definir entorno para mostrar código LaTeX en cajas
+\newtcblisting{texcode}{
+	listing only,
+	listing options={
+		language=TeX,
+		basicstyle=\ttfamily\small,
+		breaklines=true,
+		columns=fullflexible
+	},
+	colback=green!5,
+	colframe=green!50!black,
+	arc=1mm,
+	boxrule=0.5pt
+}
+
+% Título
+\title{\textbf{\Huge Personalización de Código con Colores en \LaTeX{}}\\\large Guía Completa de listings, minted, verbatim y tcolorbox}
+\author{}
+\date{\today}
+ \usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+Esta guía exhaustiva cubre todos los paquetes, comandos y configuraciones disponibles en \LaTeX{} para mostrar código fuente con colores personalizados. Incluye ejemplos en múltiples lenguajes de programación, paletas de colores predefinidas y técnicas avanzadas de personalización.
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\section{Paquete listings}
+
+\subsection{Introducción a listings}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} El paquete \texttt{listings} es el estándar para mostrar código fuente con resaltado de sintaxis personalizable.
+
+	\textbf{Carga:} \verb|\usepackage{listings}|
+\end{tcolorbox}
+
+\subsection{Configuración Básica de Colores}
+
+\subsubsection*{Opciones principales de color}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones disponibles:}
+	\begin{itemize}[nosep]
+		\item \texttt{backgroundcolor} -- Color de fondo
+		\item \texttt{commentstyle} -- Estilo de comentarios
+		\item \texttt{keywordstyle} -- Estilo de palabras clave
+		\item \texttt{numberstyle} -- Estilo de números de línea
+		\item \texttt{stringstyle} -- Estilo de cadenas de texto
+		\item \texttt{identifierstyle} -- Estilo de identificadores
+		\item \texttt{basicstyle} -- Estilo base del código
+	\end{itemize}
+\end{tcolorbox}
+
+\textbf{Ejemplo básico:}
+\begin{texcode}
+\lstset{
+  backgroundcolor=\color{gray!10},
+  commentstyle=\color{green},
+  keywordstyle=\color{blue}\bfseries,
+  numberstyle=\tiny\color{gray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize
+}
+\end{texcode}
+
+\subsection{Estilos Predefinidos}
+
+\subsubsection*{Estilo 1: Colores Básicos}
+
+\lstdefinestyle{basico}{
+	backgroundcolor=\color{gray!10},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{codeblue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codered},
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	numbers=left,
+	numbersep=5pt,
+	frame=single,
+	rulecolor=\color{gray!30}
+}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Definición]
+\end{tcolorbox}
+
+\begin{texcode}
+\lstdefinestyle{basico}{
+  backgroundcolor=\color{gray!10},
+  commentstyle=\color{green},
+  keywordstyle=\color{blue}\bfseries,
+  numberstyle=\tiny\color{gray},
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  numbers=left,
+  frame=single
+}
+\end{texcode}
+
+\textbf{Ejemplo en Python:}
+\begin{lstlisting}[style=basico,language=Python,caption={Código Python con estilo básico}]
+def factorial(n):
+    """Calcula el factorial de n"""
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+# Ejemplo de uso
+resultado = factorial(5)
+print(f"El factorial es: {resultado}")
+\end{lstlisting}
+
+\subsubsection*{Estilo 2: Tema Monokai}
+
+\lstdefinestyle{monokai}{
+	backgroundcolor=\color{monokaibg},
+	commentstyle=\color{monokaicomment}\itshape,
+	keywordstyle=\color{monokaikeyword}\bfseries,
+	numberstyle=\tiny\color{monokaicomment},
+	stringstyle=\color{monokaistring},
+	basicstyle=\ttfamily\color{monokaifg}\footnotesize,
+	identifierstyle=\color{monokaifunction},
+	breaklines=true,
+	numbers=left,
+	numbersep=8pt,
+	frame=single,
+	rulecolor=\color{monokaicomment},
+	showstringspaces=false,
+	tabsize=4
+}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Definición Monokai]
+\end{tcolorbox}
+
+\begin{texcode}
+% Primero definir los colores
+\definecolor{monokaibg}{RGB}{39,40,34}
+\definecolor{monokaifg}{RGB}{248,248,242}
+\definecolor{monokaicomment}{RGB}{117,113,94}
+\definecolor{monokaistring}{RGB}{230,219,116}
+\definecolor{monokaikeyword}{RGB}{249,38,114}
+\definecolor{monokaifunction}{RGB}{166,226,46}
+
+% Luego definir el estilo
+\lstdefinestyle{monokai}{
+  backgroundcolor=\color{monokaibg},
+  commentstyle=\color{monokaicomment}\itshape,
+  keywordstyle=\color{monokaikeyword}\bfseries,
+  stringstyle=\color{monokaistring},
+  basicstyle=\ttfamily\color{monokaifg},
+  numbers=left
+}
+\end{texcode}
+
+\textbf{Ejemplo en JavaScript:}
+\begin{lstlisting}[style=monokai,language=Java,caption={Código JavaScript con tema Monokai}]
+// Función para calcular fibonacci
+function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Clase de ejemplo
+class Calculator {
+    constructor() {
+        this.result = 0;
+    }
+
+    add(a, b) {
+        this.result = a + b;
+        return this.result;
+    }
+}
+
+const calc = new Calculator();
+console.log(calc.add(5, 3));
+\end{lstlisting}
+
+\subsubsection*{Estilo 3: Tema Dracula}
+
+\lstdefinestyle{dracula}{
+	backgroundcolor=\color{draculabg},
+	commentstyle=\color{draculacomment}\itshape,
+	keywordstyle=\color{draculapink}\bfseries,
+	numberstyle=\tiny\color{draculacomment},
+	stringstyle=\color{draculayellow},
+	basicstyle=\ttfamily\color{draculafg}\footnotesize,
+	identifierstyle=\color{draculacyan},
+	breaklines=true,
+	numbers=left,
+	numbersep=8pt,
+	frame=lines,
+	rulecolor=\color{draculapurple},
+	showstringspaces=false
+}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Definición Dracula]
+\end{tcolorbox}
+
+\begin{texcode}
+\definecolor{draculabg}{RGB}{40,42,54}
+\definecolor{draculafg}{RGB}{248,248,242}
+\definecolor{draculacomment}{RGB}{98,114,164}
+\definecolor{draculapink}{RGB}{255,121,198}
+\definecolor{draculayellow}{RGB}{241,250,140}
+\definecolor{draculacyan}{RGB}{139,233,253}
+
+\lstdefinestyle{dracula}{
+  backgroundcolor=\color{draculabg},
+  commentstyle=\color{draculacomment}\itshape,
+  keywordstyle=\color{draculapink}\bfseries,
+  stringstyle=\color{draculayellow},
+  basicstyle=\ttfamily\color{draculafg}
+}
+\end{texcode}
+
+\textbf{Ejemplo en C++:}
+\begin{lstlisting}[style=dracula,language=C++,caption={Código C++ con tema Dracula}]
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Clase plantilla
+template<typename T>
+class Stack {
+private:
+    vector<T> elements;
+
+public:
+    void push(T const& elem) {
+        elements.push_back(elem);
+    }
+
+    void pop() {
+        if (elements.empty()) {
+            throw out_of_range("Stack<>::pop(): stack vacía");
+        }
+        elements.pop_back();
+    }
+
+    T top() const {
+        if (elements.empty()) {
+            throw out_of_range("Stack<>::top(): stack vacía");
+        }
+        return elements.back();
+    }
+};
+
+int main() {
+    Stack<int> intStack;
+    intStack.push(7);
+    cout << intStack.top() << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\subsubsection*{Estilo 4: Tema Solarized Dark}
+
+\lstdefinestyle{solarized}{
+	backgroundcolor=\color{solarizedbase03},
+	commentstyle=\color{solarizedbase01}\itshape,
+	keywordstyle=\color{solarizedgreen}\bfseries,
+	numberstyle=\tiny\color{solarizedbase01},
+	stringstyle=\color{solarizedcyan},
+	basicstyle=\ttfamily\color{solarizedbase0}\footnotesize,
+	identifierstyle=\color{solarizedblue},
+	breaklines=true,
+	numbers=left,
+	numbersep=8pt,
+	frame=single,
+	rulecolor=\color{solarizedbase02}
+}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Definición Solarized]
+\end{tcolorbox}
+
+\begin{texcode}
+\definecolor{solarizedbase03}{RGB}{0,43,54}
+\definecolor{solarizedbase0}{RGB}{131,148,150}
+\definecolor{solarizedgreen}{RGB}{133,153,0}
+\definecolor{solarizedcyan}{RGB}{42,161,152}
+
+\lstdefinestyle{solarized}{
+  backgroundcolor=\color{solarizedbase03},
+  commentstyle=\color{solarizedbase01}\itshape,
+  keywordstyle=\color{solarizedgreen}\bfseries,
+  stringstyle=\color{solarizedcyan},
+  basicstyle=\ttfamily\color{solarizedbase0}
+}
+\end{texcode}
+
+\textbf{Ejemplo en Java:}
+\begin{lstlisting}[style=solarized,language=Java,caption={Código Java con tema Solarized}]
+public class Persona {
+    private String nombre;
+    private int edad;
+
+    // Constructor
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    // Getters y setters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    // Método toString
+    @Override
+    public String toString() {
+        return "Persona{nombre='" + nombre +
+               "', edad=" + edad + '}';
+    }
+
+    public static void main(String[] args) {
+        Persona persona = new Persona("Juan", 25);
+        System.out.println(persona);
+    }
+}
+\end{lstlisting}
+
+\subsubsection*{Estilo 5: Tema GitHub}
+
+\lstdefinestyle{github}{
+	backgroundcolor=\color{githubbg},
+	commentstyle=\color{githubcomment}\itshape,
+	keywordstyle=\color{githubkeyword}\bfseries,
+	numberstyle=\tiny\color{githubcomment},
+	stringstyle=\color{githubstring},
+	basicstyle=\ttfamily\color{githubfg}\footnotesize,
+	identifierstyle=\color{githubfunction},
+	breaklines=true,
+	numbers=left,
+	numbersep=8pt,
+	frame=single,
+	rulecolor=\color{gray!30},
+	showstringspaces=false
+}
+
+\textbf{Ejemplo en SQL:}
+\begin{lstlisting}[style=github,language=SQL,caption={Código SQL con tema GitHub}]
+-- Crear tabla de usuarios
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    edad INT CHECK (edad >= 18),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insertar datos
+INSERT INTO usuarios (nombre, email, edad)
+VALUES
+    ('Juan Pérez', 'juan@example.com', 25),
+    ('María García', 'maria@example.com', 30);
+
+-- Consulta con JOIN
+SELECT u.nombre, p.titulo, p.contenido
+FROM usuarios u
+INNER JOIN publicaciones p ON u.id = p.usuario_id
+WHERE u.edad > 20
+ORDER BY p.fecha DESC
+LIMIT 10;
+\end{lstlisting}
+
+\subsection{Personalización Avanzada}
+
+\subsubsection*{Palabras Clave Adicionales}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Agregar palabras clave personalizadas:}
+\end{tcolorbox}
+
+\begin{texcode}
+\lstset{
+  morekeywords={async, await, const, let},
+  keywordstyle=[2]\color{purple},
+  keywords=[2]{self, cls},
+  emphstyle=\color{orange},
+  emph={importante, nota}
+}
+\end{texcode}
+
+\subsubsection*{Escapado de Caracteres para LaTeX}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Permitir comandos LaTeX dentro del código:}
+\end{tcolorbox}
+
+\begin{texcode}
+\lstset{
+  escapechar=@,
+  escapeinside={(*@}{@*)}
+}
+
+% Uso:
+\begin{lstlisting}[escapechar=@]
+def funcion():
+    # @\textcolor{red}{Comentario resaltado}@
+    pass
+\end{lstlisting}
+\end{texcode}
+
+\subsubsection*{Resaltado de Líneas Específicas}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Resaltar líneas importantes:}
+\end{tcolorbox}
+
+\begin{texcode}
+% En el preámbulo
+\usepackage{xcolor,listings}
+
+% Definir estilo con líneas resaltadas
+\lstset{
+  moredelim=**[is][\color{red}]{@}{@}
+}
+
+% O usar linebackgroundcolor
+\lstset{
+  linebackgroundcolor={%
+    \ifodd\value{lstnumber}\color{gray!10}\fi}
+}
+\end{texcode}
+
+\subsection{Lenguajes Soportados}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black]
+	\textbf{Lenguajes principales con soporte en listings:}
+	\begin{multicols}{3}
+	\begin{itemize}[nosep,leftmargin=*]
+		\item Python
+		\item Java
+		\item C/C++
+		\item JavaScript
+		\item PHP
+		\item Ruby
+		\item Go
+		\item Rust
+		\item Swift
+		\item Kotlin
+		\item SQL
+		\item HTML
+		\item CSS
+		\item XML
+		\item JSON
+		\item YAML
+		\item Bash
+		\item PowerShell
+		\item R
+		\item MATLAB
+		\item Perl
+		\item Haskell
+		\item Scala
+		\item LaTeX
+	\end{itemize}
+	\end{multicols}
+\end{tcolorbox}
+
+\section{Paquete minted}
+
+\subsection{Introducción a minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{minted} usa Pygments (Python) para resaltado de sintaxis muy preciso y con soporte para cientos de lenguajes.
+
+	\textbf{Requisitos:}
+	\begin{itemize}[nosep]
+		\item Python instalado
+		\item Pygments: \texttt{pip install Pygments}
+		\item Compilar con \texttt{-shell-escape}: \texttt{pdflatex -shell-escape documento.tex}
+	\end{itemize}
+
+	\textbf{Carga:}
+\end{tcolorbox}
+
+\begin{texcode}
+\usepackage{minted}
+\end{texcode}
+
+\subsection{Uso Básico de minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Sintaxis:}
+\end{tcolorbox}
+
+\begin{texcode}
+\begin{minted}{python}
+def hola():
+    print("Hola Mundo")
+\end{minted}
+
+% O inline:
+\mint{python}|x = 5|
+\end{texcode}
+
+\subsection{Temas de Color en minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Temas disponibles:}
+	\begin{multicols}{3}
+	\begin{itemize}[nosep,leftmargin=*]
+		\item default
+		\item monokai
+		\item manni
+		\item perldoc
+		\item borland
+		\item colorful
+		\item murphy
+		\item tango
+		\item trac
+		\item fruity
+		\item autumn
+		\item bw
+		\item emacs
+		\item vim
+		\item pastie
+		\item friendly
+		\item native
+		\item paraiso-dark
+		\item paraiso-light
+		\item solarized-dark
+		\item solarized-light
+		\item dracula
+		\item gruvbox-dark
+		\item gruvbox-light
+		\item github-dark
+	\end{itemize}
+	\end{multicols}
+
+	\textbf{Configuración:}
+\end{tcolorbox}
+
+\begin{texcode}
+\usemintedstyle{monokai}
+
+% O para un lenguaje específico:
+\begin{minted}[style=dracula]{python}
+código
+\end{minted}
+\end{texcode}
+
+\subsection{Opciones de minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Opciones principales:}
+\end{tcolorbox}
+
+\begin{texcode}
+\begin{minted}[
+  bgcolor=lightgray,      % Color de fondo
+  linenos,                % Números de línea
+  numbersep=5pt,          % Separación de números
+  frame=lines,            % Marco (none, leftline, topline, bottomline, lines, single)
+  framesep=2mm,           % Separación del marco
+  fontsize=\footnotesize, % Tamaño de fuente
+  tabsize=4,              % Tamaño de tabulación
+  breaklines,             % Romper líneas largas
+  breakanywhere,          % Romper en cualquier lugar
+  highlightlines={2,4-6}, % Resaltar líneas
+  highlightcolor=yellow!30 % Color de resaltado
+]{python}
+código aquí
+\end{minted}
+\end{texcode}
+
+\subsection{Comandos Útiles de minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Comandos disponibles:}
+\end{tcolorbox}
+
+\begin{texcode}
+% Incluir archivo externo
+\inputminted{python}{script.py}
+
+% Con opciones
+\inputminted[linenos,bgcolor=gray!10]{python}{script.py}
+
+% Inline code
+\mint{python}|x = 10|
+
+% Mintinline
+\mintinline{python}{def foo(): pass}
+
+% Listar estilos disponibles
+pygmentize -L styles
+\end{texcode}
+
+\section{Entornos Verbatim}
+
+\subsection{Verbatim Básico}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Entorno básico:}
+\end{tcolorbox}
+
+\begin{texcode}
+\begin{verbatim}
+Texto literal sin formato
+  con espacios preservados
+\end{verbatim}
+
+% Inline
+\verb|código inline|
+\verb+código con +
+\end{texcode}
+
+\subsection{Paquete fancyvrb con Colores}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} \texttt{fancyvrb} permite añadir colores y formato usando la opción \texttt{formatcom}.
+
+	\textbf{Ejemplo de uso:}
+
+	\texttt{\textbackslash usepackage\{fancyvrb\}}
+
+	\texttt{\textbackslash begin\{Verbatim\}[formatcom=\textbackslash color\{blue\}]}
+
+	\texttt{Código en azul}
+
+	\texttt{\textbackslash end\{Verbatim\}}
+\end{tcolorbox}
+
+\subsection{Paquete alltt}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Descripción:} Permite comandos LaTeX dentro de verbatim
+
+	\textbf{Uso:}
+\end{tcolorbox}
+
+\begin{texcode}
+\usepackage{alltt}
+
+\begin{alltt}
+Este es código con \textcolor{red}{color}
+y \textbf{formato} de LaTeX
+\end{alltt}
+\end{texcode}
+
+\section{Integración con tcolorbox}
+
+\subsection{tcolorbox + listings}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Crear cajas de código decorativas:}
+\end{tcolorbox}
+
+\begin{texcode}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+% Definir estilo
+\newtcblisting{micodigo}[2][]{
+  listing only,
+  listing options={
+    language=#2,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}
+  },
+  colback=gray!10,
+  colframe=blue!75!black,
+  title=#1,
+  #1
+}
+
+% Uso
+\begin{micodigo}[Ejemplo Python]{python}
+def suma(a, b):
+    return a + b
+\end{micodigo}
+\end{texcode}
+
+\subsection{tcolorbox + minted}
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+	\textbf{Combinación con minted:}
+\end{tcolorbox}
+
+\begin{texcode}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,skins}
+
+% Definir entorno
+\newtcblisting{pythoncode}{
+  listing engine=minted,
+  minted language=python,
+  minted style=monokai,
+  colback=monokaibg,
+  colframe=monokaikeyword,
+  listing only,
+  left=5mm,
+  enhanced,
+  overlay={
+    \begin{tcbclipinterior}
+    \fill[monokaikeyword] (frame.south west)
+      rectangle ([xshift=5mm]frame.north west);
+    \end{tcbclipinterior}
+  }
+}
+\end{texcode}
+
+\subsection{Estilos Predefinidos con tcolorbox}
+
+\newtcblisting{codeboxbasic}[2][]{
+	listing only,
+	listing options={
+		language=#2,
+		basicstyle=\ttfamily\small,
+		keywordstyle=\color{blue}\bfseries,
+		commentstyle=\color{green!60!black},
+		stringstyle=\color{red}
+	},
+	colback=gray!5,
+	colframe=blue!75!black,
+	arc=2mm,
+	boxrule=0.5pt,
+	left=5pt,
+	right=5pt,
+	top=5pt,
+	bottom=5pt,
+	#1
+}
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Definición y Ejemplo]
+	\textbf{Resultado:}
+\end{tcolorbox}
+
+\begin{texcode}
+\newtcblisting{codeboxbasic}[2][]{
+  listing only,
+  listing options={
+    language=#2,
+    keywordstyle=\color{blue}\bfseries
+  },
+  colback=gray!5,
+  colframe=blue!75!black
+}
+\end{texcode}
+
+\begin{codeboxbasic}[title={Python con tcolorbox}]{Python}
+class Animal:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def hablar(self):
+        pass
+
+class Perro(Animal):
+    def hablar(self):
+        return f"{self.nombre} dice Guau!"
+
+perro = Perro("Firulais")
+print(perro.hablar())
+\end{codeboxbasic}
+
+\section{Ejemplos en Múltiples Lenguajes}
+
+\subsection{HTML y CSS}
+
+\lstdefinestyle{htmlcss}{
+	backgroundcolor=\color{white},
+	commentstyle=\color{gray},
+	keywordstyle=\color{blue!80!black},
+	numberstyle=\tiny\color{gray},
+	stringstyle=\color{red!80!black},
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	numbers=left,
+	frame=single,
+	rulecolor=\color{gray!30},
+	showstringspaces=false,
+	tabsize=2
+}
+
+\textbf{HTML:}
+\begin{lstlisting}[style=htmlcss,language=HTML,caption={Ejemplo HTML5}]
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <h2>Contenido Principal</h2>
+            <p>Este es un párrafo de ejemplo.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mi Sitio Web</p>
+    </footer>
+</body>
+</html>
+\end{lstlisting}
+
+\subsection{Ruby}
+
+\begin{lstlisting}[style=monokai,language=Ruby,caption={Código Ruby}]
+# Clase de ejemplo en Ruby
+class Rectangulo
+  attr_accessor :ancho, :alto
+
+  def initialize(ancho, alto)
+    @ancho = ancho
+    @alto = alto
+  end
+
+  def area
+    @ancho * @alto
+  end
+
+  def perimetro
+    2 * (@ancho + @alto)
+  end
+
+  def es_cuadrado?
+    @ancho == @alto
+  end
+end
+
+# Uso
+rect = Rectangulo.new(5, 10)
+puts "Área: #{rect.area}"
+puts "Perímetro: #{rect.perimetro}"
+puts "¿Es cuadrado? #{rect.es_cuadrado?}"
+\end{lstlisting}
+
+\subsection{R}
+
+\begin{lstlisting}[style=github,language=R,caption={Código R para análisis estadístico}]
+# Análisis estadístico en R
+library(ggplot2)
+
+# Crear datos de ejemplo
+set.seed(123)
+datos <- data.frame(
+  x = rnorm(100, mean = 50, sd = 10),
+  y = rnorm(100, mean = 50, sd = 10),
+  grupo = sample(c("A", "B", "C"), 100, replace = TRUE)
+)
+
+# Estadísticas descriptivas
+summary(datos)
+
+# Correlación
+cor(datos$x, datos$y)
+
+# Gráfico
+ggplot(datos, aes(x = x, y = y, color = grupo)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Relación entre X e Y",
+       x = "Variable X",
+       y = "Variable Y")
+\end{lstlisting}
+
+\subsection{Bash/Shell}
+
+\begin{lstlisting}[style=solarized,language=bash,caption={Script Bash}]
+#!/bin/bash
+
+# Script de backup automatizado
+
+# Variables
+FECHA=$(date +%Y-%m-%d)
+ORIGEN="/home/usuario/documentos"
+DESTINO="/backup"
+LOG="/var/log/backup.log"
+
+# Función de logging
+log_mensaje() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG
+}
+
+# Verificar si el directorio existe
+if [ ! -d "$ORIGEN" ]; then
+    log_mensaje "ERROR: El directorio origen no existe"
+    exit 1
+fi
+
+# Crear directorio de backup
+mkdir -p "$DESTINO/$FECHA"
+
+# Realizar backup
+log_mensaje "Iniciando backup..."
+tar -czf "$DESTINO/$FECHA/backup.tar.gz" "$ORIGEN" 2>&1 | tee -a $LOG
+
+if [ ${PIPESTATUS[0]} -eq 0 ]; then
+    log_mensaje "Backup completado exitosamente"
+else
+    log_mensaje "ERROR: Falló el backup"
+    exit 1
+fi
+
+# Limpiar backups antiguos (más de 7 días)
+find "$DESTINO" -type f -mtime +7 -delete
+log_mensaje "Backups antiguos eliminados"
+\end{lstlisting}
+
+\section{Plantillas Listas para Usar}
+
+\subsection{Plantilla 1: Documento Técnico}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Plantilla Completa,breakable]
+\end{tcolorbox}
+
+\begin{texcode}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Colores personalizados
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Estilo de código
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\section{Código de Ejemplo}
+
+\begin{lstlisting}[language=Python,caption={Mi primer script}]
+def main():
+    print("Hola Mundo")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\end{document}
+\end{texcode}
+
+\subsection{Plantilla 2: Con tcolorbox}
+
+\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Plantilla con tcolorbox,breakable]
+\end{tcolorbox}
+
+\begin{texcode}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{xcolor}
+
+% Definir colores
+\definecolor{mybg}{RGB}{245,245,245}
+\definecolor{myframe}{RGB}{70,130,180}
+
+% Crear entorno personalizado
+\newtcblisting{mycode}[2][]{
+  listing only,
+  listing options={
+    language=#2,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+  },
+  colback=mybg,
+  colframe=myframe,
+  arc=3mm,
+  boxrule=1pt,
+  title=#1,
+  fonttitle=\bfseries,
+  coltitle=white,
+  breakable,
+  #1
+}
+
+\begin{document}
+
+\begin{mycode}[title={Ejemplo en Python}]{Python}
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(10))
+\end{mycode}
+
+\end{document}
+\end{texcode}
+
+\section{Tips y Mejores Prácticas}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black,title=\faLightbulb\ Recomendaciones]
+	\textbf{Para listings:}
+	\begin{itemize}[leftmargin=*]
+		\item Define estilos reutilizables con \texttt{\textbackslash lstdefinestyle}
+		\item Usa \texttt{showstringspaces=false} para código más limpio
+		\item Ajusta \texttt{tabsize} según el lenguaje (2 para JS, 4 para Python)
+		\item Usa \texttt{breaklines=true} para líneas largas
+		\item Define colores en el preámbulo para consistencia
+	\end{itemize}
+
+	\textbf{Para minted:}
+	\begin{itemize}[leftmargin=*]
+		\item Requiere compilación con \texttt{-shell-escape}
+		\item Más preciso que listings pero más lento
+		\item Ideal para lenguajes modernos
+		\item Usa \texttt{\textbackslash usemintedstyle} para tema global
+	\end{itemize}
+
+	\textbf{Para colores:}
+	\begin{itemize}[leftmargin=*]
+		\item Usa RGB para colores precisos
+		\item Mantén contraste adecuado (fondo claro/oscuro)
+		\item Prueba temas existentes antes de crear propios
+		\item Considera accesibilidad (daltonismo)
+	\end{itemize}
+
+	\textbf{Para tcolorbox:}
+	\begin{itemize}[leftmargin=*]
+		\item Combina con listings o minted para cajas decorativas
+		\item Usa \texttt{breakable} para código largo
+		\item Define entornos personalizados con \texttt{\textbackslash newtcblisting}
+	\end{itemize}
+\end{tcolorbox}
+
+\section{Errores Comunes}
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black,title=\faExclamationTriangle\ Problemas Frecuentes]
+	\textbf{Errores típicos:}
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{minted no compila:} Falta \texttt{-shell-escape} o Pygments no instalado
+		\item \textbf{Caracteres especiales:} Usar \texttt{literate} para tildes y ñ
+		\item \textbf{Líneas cortadas:} Activar \texttt{breaklines=true}
+		\item \textbf{Colores no aparecen:} Verificar que \texttt{xcolor} esté cargado
+		\item \textbf{Números de línea desalineados:} Ajustar \texttt{numbersep}
+		\item \textbf{Código fuera de página:} Usar \texttt{breakable} en tcolorbox
+		\item \textbf{Espacios en strings:} Configurar \texttt{showstringspaces}
+	\end{itemize}
+\end{tcolorbox}
+
+\section{Recursos Adicionales}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faBook\ Documentación]
+	\textbf{Comandos útiles:}
+	\begin{itemize}[leftmargin=*]
+		\item \texttt{texdoc listings} -- Manual de listings
+		\item \texttt{texdoc minted} -- Documentación de minted
+		\item \texttt{texdoc tcolorbox} -- Guía de tcolorbox
+		\item \texttt{texdoc fancyvrb} -- Manual de fancyvrb
+		\item \texttt{pygmentize -L styles} -- Listar temas de Pygments
+		\item \texttt{pygmentize -L lexers} -- Listar lenguajes soportados
+	\end{itemize}
+
+	\textbf{Sitios web útiles:}
+	\begin{itemize}[leftmargin=*]
+		\item \url{https://pygments.org/styles/} -- Galería de temas Pygments
+		\item \url{https://www.overleaf.com/learn/latex/Code_listing} -- Tutorial Overleaf
+		\item \url{https://tex.stackexchange.com/} -- Preguntas y respuestas
+	\end{itemize}
+\end{tcolorbox}
+
+\vspace{2cm}
+
+\begin{center}
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,width=0.9\textwidth]
+		\centering
+		\large\textbf{Documento generado con \LaTeX{}}\\[0.5em]
+		\normalsize\textit{Guía Completa de Personalización de Código con Colores}\\[0.5em]
+		\small\today
+	\end{tcolorbox}
+
+	\vspace{1cm}
+
+	\textit{Esta guía cubre todos los paquetes principales para mostrar}\\
+	\textit{código fuente con colores en \LaTeX{}.}\\[0.5em]
+	\textit{Para más información, consulta la documentación oficial.}
+\end{center}
+
+\end{document}

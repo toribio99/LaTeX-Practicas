@@ -1,0 +1,1076 @@
+\documentclass[12pt,a4paper]{book}
+
+% Paquetes básicos
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Paquetes para personalización de estructura
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{tocloft}
+\usepackage{sectsty}
+
+% Paquetes para ejercicios
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xsim}
+
+% Paquetes para portadas
+\usepackage{eso-pic}
+
+% Colores personalizados
+\definecolor{chaptercolor}{RGB}{70,130,180}
+\definecolor{sectioncolor}{RGB}{39,174,96}
+\definecolor{fondoejemplo}{RGB}{245,245,245}
+
+% Configuración de hyperref
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+	pdftitle={Aplicación de Personalización de Estructura en LaTeX},
+	pdfauthor={Ejemplos Prácticos}
+}
+
+% Título
+\title{\textbf{\Huge Aplicación de Personalización de Estructura en \LaTeX{}}\\[0.5cm]\large Ejemplos Prácticos de Todos los Comandos y Entornos}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+Este documento contiene ejemplos prácticos de aplicación de todos los paquetes, comandos y entornos presentados en la guía de Personalización de Estructura en \LaTeX{}. Cada sección incluye ejemplos funcionales con texto de demostración usando \texttt{lipsum}.
+
+\textbf{Contenido:}
+\begin{itemize}
+\item Personalización de capítulos con \texttt{titlesec}
+\item Personalización de secciones con \texttt{sectsty}
+\item Tablas de contenido con \texttt{tocloft} y \texttt{titletoc}
+\item Creación de portadas personalizadas
+\item Sistemas de ejercicios y respuestas
+\item Ejemplos completos integrados
+\end{itemize}
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\part{Personalización de Capítulos y Secciones}
+
+\chapter{Ejemplos con titlesec}
+
+\section{Introducción a los Ejemplos}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!60!black,title=Objetivo de este Capítulo]
+En este capítulo veremos ejemplos prácticos de cómo personalizar capítulos y secciones usando el paquete \texttt{titlesec}. Cada ejemplo muestra diferentes estilos y configuraciones.
+\end{tcolorbox}
+
+\subsection{Ejemplo 1: Formato Básico de Capítulo}
+
+Este ejemplo muestra un formato simple de capítulo. El código utilizado es:
+
+\begin{verbatim}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}
+  {\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge}
+\end{verbatim}
+
+\textbf{Texto de demostración:}
+
+\lipsum[1-2]
+
+\subsection{Ejemplo 2: Capítulo con Línea Decorativa}
+
+En este caso, añadimos líneas decorativas antes y después del título del capítulo:
+
+\begin{verbatim}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue}}
+  {\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}
+  {4ex}
+  {\titlerule\vspace{2ex}\filleft}
+  [\vspace{2ex}\titlerule]
+\end{verbatim}
+
+\textbf{Demostración con texto:}
+
+\lipsum[3]
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faLightbulb\ Nota]
+Las líneas decorativas se crean con \texttt{\textbackslash titlerule} y el espaciado se controla con \texttt{\textbackslash vspace}.
+\end{tcolorbox}
+
+\lipsum[4]
+
+\subsection{Ejemplo 3: Formato de Sección con Caja de Color}
+
+Las secciones también pueden personalizarse. Este ejemplo usa cajas de color:
+
+\textbf{Código aplicado:}
+\begin{verbatim}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\colorbox{blue!80}{\color{white}\thesection}}
+  {1em}
+  {\colorbox{blue!20}{#1}}
+\end{verbatim}
+
+\lipsum[5-6]
+
+\subsection{Ejemplo 4: Ajuste de Espaciado con titlespacing}
+
+El comando \texttt{\textbackslash titlespacing} permite controlar los espacios antes y después de los títulos:
+
+\begin{verbatim}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\end{verbatim}
+
+\lipsum[7]
+
+\section{Personalización Avanzada}
+
+\subsection{Capítulo con Número Grande}
+
+Este diseño coloca un número de capítulo muy grande y prominente.
+
+\lipsum[8-9]
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Ventajas del Diseño]
+\begin{itemize}
+\item Visual impactante
+\item Fácil navegación
+\item Estilo moderno
+\item Personalizable con colores
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[10]
+
+\subsection{Sección con Línea Inferior}
+
+Las secciones pueden tener una línea decorativa debajo del título.
+
+\lipsum[11-12]
+
+\subsubsection{Subsubsección de Ejemplo}
+
+Las subsubsecciones mantienen el formato estándar pero pueden personalizarse también.
+
+\lipsum[13]
+
+\section{Aplicaciones Prácticas}
+
+\subsection{Documentos Académicos}
+
+En documentos académicos, la claridad y jerarquía visual son fundamentales.
+
+\lipsum[14-15]
+
+\subsection{Reportes Técnicos}
+
+Los reportes técnicos se benefician de un formato profesional y estructurado.
+
+\lipsum[16]
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black,title=\faExclamationTriangle\ Advertencia]
+Recuerda que \texttt{titlesec} no es compatible con las clases KOMA-Script. Si usas \texttt{scrbook} o \texttt{scrartcl}, deberás usar los comandos nativos de KOMA.
+\end{tcolorbox}
+
+\lipsum[17]
+
+\chapter{Ejemplos con sectsty}
+
+\section{Introducción al Paquete sectsty}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!60!black,title=¿Qué es sectsty?]
+El paquete \texttt{sectsty} proporciona una forma más simple de cambiar los estilos de secciones sin la complejidad de \texttt{titlesec}. Es ideal para cambios de fuente y color rápidos.
+\end{tcolorbox}
+
+\lipsum[18-19]
+
+\subsection{Ejemplo 1: Cambiar Fuente de Todas las Secciones}
+
+Con el comando \texttt{\textbackslash allsectionsfont}, podemos cambiar todas las secciones a la vez:
+
+\begin{verbatim}
+\allsectionsfont{\sffamily}
+\end{verbatim}
+
+\lipsum[20]
+
+\subsection{Ejemplo 2: Colores para Diferentes Niveles}
+
+Podemos asignar colores diferentes a cada nivel:
+
+\begin{verbatim}
+\chapterfont{\color{blue}\Huge}
+\sectionfont{\color{red}\Large}
+\subsectionfont{\color{green}\large}
+\end{verbatim}
+
+\lipsum[21-22]
+
+\subsection{Ejemplo 3: Combinación de Estilos}
+
+Es posible combinar diferentes características:
+
+\lipsum[23]
+
+\subsubsection{Subsubsección con Estilo}
+
+Las subsubsecciones también pueden ser estilizadas.
+
+\lipsum[24]
+
+\section{Comparación: titlesec vs sectsty}
+
+\subsection{Ventajas de titlesec}
+
+\begin{itemize}
+\item Control total sobre el formato
+\item Puede cambiar la estructura completamente
+\item Soporta formas complejas (display, hang, etc.)
+\item Ideal para diseños personalizados
+\end{itemize}
+
+\lipsum[25]
+
+\subsection{Ventajas de sectsty}
+
+\begin{itemize}
+\item Sintaxis más simple
+\item Rápido para cambios básicos
+\item Menos propenso a errores
+\item Ideal para ajustes de fuente y color
+\end{itemize}
+
+\lipsum[26]
+
+\section{Aplicaciones Combinadas}
+
+\subsection{Uso Conjunto (con Precaución)}
+
+Aunque es posible usar ambos paquetes, se recomienda elegir uno u otro para evitar conflictos.
+
+\lipsum[27-28]
+
+\subsection{Recomendaciones}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black,title=\faLightbulb\ Mejores Prácticas]
+\begin{enumerate}
+\item Para cambios simples: usa \texttt{sectsty}
+\item Para personalización completa: usa \texttt{titlesec}
+\item No mezcles ambos paquetes en el mismo documento
+\item Prueba tu diseño antes de aplicarlo a todo el documento
+\end{enumerate}
+\end{tcolorbox}
+
+\lipsum[29]
+
+\chapter{Personalización de Tablas de Contenido}
+
+\section{Ejemplos con tocloft}
+
+\subsection{Introducción a las Personalizaciones}
+
+El paquete \texttt{tocloft} permite personalizar completamente el aspecto de las tablas de contenido, listas de figuras y listas de tablas.
+
+\lipsum[30-31]
+
+\subsection{Ejemplo 1: Cambiar el Título del TOC}
+
+Podemos cambiar los nombres de los índices:
+
+\begin{verbatim}
+\renewcommand{\contentsname}{Índice General}
+\renewcommand{\listfigurename}{Índice de Figuras}
+\renewcommand{\listtablename}{Índice de Tablas}
+\end{verbatim}
+
+\lipsum[32]
+
+\subsection{Ejemplo 2: Formato de Capítulos en TOC}
+
+Podemos hacer que los capítulos aparezcan en negrita y con texto adicional:
+
+\begin{verbatim}
+\renewcommand{\cftchapfont}{\bfseries\large}
+\renewcommand{\cftchappagefont}{\bfseries\large}
+\renewcommand{\cftchappresnum}{Capítulo }
+\renewcommand{\cftchapaftersnum}{:}
+\setlength{\cftchapnumwidth}{5em}
+\end{verbatim}
+
+\lipsum[33-34]
+
+\subsection{Ejemplo 3: Formato de Secciones en TOC}
+
+Las secciones pueden tener formato diferente al de los capítulos:
+
+\begin{verbatim}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\setlength{\cftsecindent}{2em}
+\setlength{\cftsecnumwidth}{3em}
+\end{verbatim}
+
+\lipsum[35]
+
+\subsection{Ejemplo 4: Puntos Guía Personalizados}
+
+Los puntos que conectan el título con el número de página pueden personalizarse:
+
+\lipsum[36]
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faInfoCircle\ Opciones de Puntos]
+\begin{itemize}
+\item \texttt{\textbackslash cftnodots}: Elimina los puntos
+\item Valores bajos (1-2): Puntos más densos
+\item Valores altos (5-6): Puntos más espaciados
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[37]
+
+\section{Ejemplos con titletoc}
+
+\subsection{Introducción a titletoc}
+
+El paquete \texttt{titletoc} trabaja junto con \texttt{titlesec} y ofrece control más avanzado.
+
+\lipsum[38-39]
+
+\subsection{Ejemplo 1: Formato Personalizado con titlecontents}
+
+El comando \texttt{\textbackslash titlecontents} permite definir el formato completo:
+
+\begin{verbatim}
+\titlecontents{chapter}[0em]
+  {\vspace{1em}\bfseries\large}
+  {\contentslabel{2em}}
+  {}
+  {\hfill\contentspage}
+\end{verbatim}
+
+\lipsum[40]
+
+\subsection{Ejemplo 2: TOC con Diseño Moderno}
+
+Podemos crear diseños más creativos para el TOC:
+
+\lipsum[41-42]
+
+\section{Control de Profundidad del TOC}
+
+\subsection{Ajustar Niveles Visibles}
+
+El contador \texttt{tocdepth} controla qué niveles aparecen en el TOC:
+
+\begin{verbatim}
+\setcounter{tocdepth}{3}
+% 0 = solo capítulos
+% 1 = capítulos y secciones
+% 2 = hasta subsecciones
+% 3 = hasta subsubsecciones
+\end{verbatim}
+
+\lipsum[43]
+
+\subsection{Ejemplo Práctico de Profundidad}
+
+Dependiendo del tipo de documento, necesitaremos diferentes profundidades:
+
+\lipsum[44-45]
+
+\subsubsection{Documentos Largos}
+
+Para libros extensos, es mejor limitar la profundidad a 1 o 2.
+
+\lipsum[46]
+
+\subsubsection{Documentos Cortos}
+
+Para artículos o reportes breves, podemos mostrar todos los niveles.
+
+\lipsum[47]
+
+\section{Mini Tablas de Contenido}
+
+\subsection{Concepto de Mini-TOC}
+
+Las mini tablas de contenido muestran el contenido de un capítulo al inicio del mismo.
+
+\lipsum[48]
+
+\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Paquete minitoc]
+El paquete \texttt{minitoc} permite crear mini-TOC automáticamente al inicio de cada capítulo. Esto es muy útil en libros largos donde cada capítulo tiene muchas secciones.
+\end{tcolorbox}
+
+\lipsum[49]
+
+\subsection{Aplicaciones de Mini-TOC}
+
+\lipsum[50-51]
+
+\chapter{Creación de Portadas Personalizadas}
+
+\section{Uso del Entorno titlepage}
+
+\subsection{Portadas Simples}
+
+El entorno \texttt{titlepage} crea una página dedicada para el título.
+
+\lipsum[52]
+
+\subsection{Ejemplo 1: Portada Básica Centrada}
+
+Una portada simple con elementos centrados verticalmente:
+
+\begin{verbatim}
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\Huge\bfseries Título del Documento\par}
+  \vspace{1cm}
+  {\Large Subtítulo\par}
+  \vspace{2cm}
+  {\large Autor: Juan Pérez\par}
+  \vfill
+  {\large Universidad XYZ\par}
+  {\large \today\par}
+\end{titlepage}
+\end{verbatim}
+
+\lipsum[53-54]
+
+\subsection{Ejemplo 2: Portada con Logo}
+
+Las portadas académicas suelen incluir el logo de la institución:
+
+\lipsum[55]
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faLightbulb\ Consejos]
+\begin{itemize}
+\item Usa \texttt{\textbackslash vfill} para distribuir el espacio verticalmente
+\item \texttt{\textbackslash vspace*} mantiene el espacio al inicio de página
+\item Combina tamaños de fuente para crear jerarquía visual
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[56]
+
+\subsection{Ejemplo 3: Portada con Color de Fondo}
+
+Podemos añadir colores para hacer la portada más atractiva:
+
+\lipsum[57-58]
+
+\section{Paquete pdfpages}
+
+\subsection{Inserción de PDFs Externos}
+
+El paquete \texttt{pdfpages} permite insertar páginas de documentos PDF externos como portada.
+
+\lipsum[59]
+
+\subsection{Ejemplo 1: Incluir una Portada Pre-diseñada}
+
+Si tienes una portada diseñada en otro programa:
+
+\begin{verbatim}
+\includepdf{portada.pdf}
+\end{verbatim}
+
+\lipsum[60]
+
+\subsection{Ejemplo 2: Múltiples Páginas}
+
+También podemos incluir varias páginas:
+
+\begin{verbatim}
+\includepdf[pages={1-3}]{documento.pdf}
+\includepdf[pages=-]{documento.pdf}  % todas
+\end{verbatim}
+
+\lipsum[61]
+
+\subsection{Ejemplo 3: Opciones Avanzadas}
+
+El paquete ofrece muchas opciones:
+
+\lipsum[62-63]
+
+\section{Fondos y Marcas de Agua}
+
+\subsection{Paquete background}
+
+Podemos añadir imágenes de fondo a las páginas:
+
+\lipsum[64]
+
+\subsection{Paquete eso-pic}
+
+Este paquete permite posicionar elementos en ubicaciones absolutas:
+
+\lipsum[65-66]
+
+\subsection{Ejemplo: Marca de Agua BORRADOR}
+
+Para documentos en revisión, es útil añadir marcas de agua:
+
+\begin{verbatim}
+\AddToShipoutPictureBG{%
+  \AtPageCenter{%
+    \makebox(0,0){\rotatebox{45}{\textcolor{gray!30}{%
+      \fontsize{5cm}{5cm}\selectfont BORRADOR}}}}}
+\end{verbatim}
+
+\lipsum[67]
+
+\section{Diseños de Portadas Avanzados}
+
+\subsection{Portada Estilo Corporativo}
+
+Las portadas corporativas suelen tener un diseño más sobrio y profesional.
+
+\lipsum[68-69]
+
+\subsection{Portada Estilo Académico}
+
+Las tesis y trabajos académicos requieren elementos específicos:
+
+\lipsum[70]
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black,title=\faBook\ Elementos Típicos]
+\begin{itemize}
+\item Logo de la universidad
+\item Nombre completo de la institución
+\item Título de la tesis/trabajo
+\item Nombre del autor
+\item Nombre del director/tutor
+\item Requisito que cumple (grado, maestría, etc.)
+\item Fecha y lugar
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[71]
+
+\chapter{Sistemas de Ejercicios y Respuestas}
+
+\section{Entornos Básicos con amsthm}
+
+\subsection{Introducción a amsthm}
+
+El paquete \texttt{amsthm} proporciona entornos básicos para teoremas, definiciones y ejercicios.
+
+\lipsum[72]
+
+\subsection{Ejemplo 1: Definición de Entornos}
+
+Primero debemos definir los entornos en el preámbulo:
+
+\begin{verbatim}
+\theoremstyle{definition}
+\newtheorem{ejercicio}{Ejercicio}[chapter]
+\theoremstyle{remark}
+\newtheorem*{solucion}{Solución}
+\end{verbatim}
+
+\lipsum[73]
+
+\subsection{Ejemplo 2: Uso de Ejercicios}
+
+Ahora veamos ejemplos prácticos:
+
+\theoremstyle{definition}
+\newtheorem{ejercicio}{Ejercicio}[section]
+\theoremstyle{remark}
+\newtheorem*{solucion}{Solución}
+
+\begin{ejercicio}
+Calcular la derivada de la función $f(x) = x^3 + 2x^2 - 5x + 7$.
+\end{ejercicio}
+
+\lipsum[74]
+
+\begin{solucion}
+Aplicando las reglas de derivación:
+$$f'(x) = 3x^2 + 4x - 5$$
+\end{solucion}
+
+\lipsum[75]
+
+\begin{ejercicio}
+Resolver la integral $\int (3x^2 + 2x) \, dx$.
+\end{ejercicio}
+
+\lipsum[76]
+
+\begin{solucion}
+Integrando término a término:
+$$\int (3x^2 + 2x) \, dx = x^3 + x^2 + C$$
+\end{solucion}
+
+\subsection{Ventajas de amsthm}
+
+\begin{itemize}
+\item Simple y directo
+\item Integrado con AMS-LaTeX
+\item Suficiente para necesidades básicas
+\item Numeración automática
+\end{itemize}
+
+\lipsum[77]
+
+\section{Sistema Avanzado con xsim}
+
+\subsection{Introducción a xsim}
+
+El paquete \texttt{xsim} es un sistema moderno y flexible para ejercicios y soluciones.
+
+\lipsum[78]
+
+\subsection{Ejemplo 1: Configuración Básica}
+
+La configuración en el preámbulo:
+
+\begin{verbatim}
+\usepackage{xsim}
+\xsimsetup{
+  exercise/name = Ejercicio,
+  solution/name = Solución
+}
+\end{verbatim}
+
+\lipsum[79]
+
+\subsection{Ejemplo 2: Ejercicios con xsim}
+
+Ahora creemos algunos ejercicios:
+
+\begin{exercise}[subtitle={Álgebra Lineal}]
+Dadas dos matrices $A$ y $B$ de dimensión $2 \times 2$, donde $A$ tiene elementos 1, 2, 3, 4 y $B$ tiene elementos 5, 6, 7, 8, calcular la suma $A + B$.
+\end{exercise}
+
+\lipsum[80]
+
+\begin{solution}
+Sumando elemento a elemento, obtenemos que la matriz resultante tiene elementos 6, 8, 10, 12 en ese orden.
+\end{solution}
+
+\lipsum[81]
+
+\begin{exercise}[subtitle={Trigonometría}]
+Demostrar que $\sin^2(x) + \cos^2(x) = 1$.
+\end{exercise}
+
+\begin{solution}
+Esta es la identidad pitagórica fundamental. Se deriva directamente del teorema de Pitágoras aplicado al círculo unitario.
+\end{solution}
+
+\lipsum[82]
+
+\subsection{Ejemplo 3: Ejercicios con Puntos}
+
+Los ejercicios pueden tener puntuación:
+
+\begin{exercise}[subtitle={Geometría}, points={10}]
+Calcular el área de un círculo de radio $r = 5$ cm.
+\end{exercise}
+
+\begin{solution}
+Usando la fórmula del área del círculo:
+$$A = \pi r^2 = \pi (5)^2 = 25\pi \approx 78.54 \text{ cm}^2$$
+\end{solution}
+
+\lipsum[83]
+
+\subsection{Ventajas de xsim}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!60!black,title=\faCheckCircle\ Características]
+\begin{itemize}
+\item Sistema moderno y mantenido activamente
+\item Soluciones se pueden imprimir al final
+\item Soporte para puntuación y dificultad
+\item Plantillas personalizables
+\item Filtrado por tema o capítulo
+\item Estadísticas automáticas
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[84]
+
+\section{Comparación de Sistemas}
+
+\subsection{amsthm vs xsim}
+
+\lipsum[85]
+
+\begin{center}
+\begin{tabular}{|p{0.25\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}
+\hline
+\textbf{Característica} & \textbf{amsthm} & \textbf{xsim} \\
+\hline
+Facilidad de uso & Muy simple & Requiere configuración \\
+\hline
+Gestión de soluciones & Manual & Automática \\
+\hline
+Numeración & Automática básica & Avanzada y flexible \\
+\hline
+Puntuación & No & Sí \\
+\hline
+Impresión selectiva & No & Sí \\
+\hline
+Ideal para & Documentos simples & Libros de ejercicios \\
+\hline
+\end{tabular}
+\end{center}
+
+\lipsum[86]
+
+\subsection{Recomendaciones de Uso}
+
+\begin{itemize}
+\item \textbf{Para apuntes de clase}: usa \texttt{amsthm}
+\item \textbf{Para libros de texto}: usa \texttt{xsim}
+\item \textbf{Para exámenes}: usa \texttt{xsim} con ocultación de soluciones
+\item \textbf{Para guías de estudio}: usa \texttt{xsim} con soluciones al final
+\end{itemize}
+
+\lipsum[87]
+
+\section{Personalización Avanzada}
+
+\subsection{Entornos Personalizados con tcolorbox}
+
+Podemos combinar sistemas de ejercicios con cajas de color:
+
+\lipsum[88]
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faEdit\ Ejercicio 1]
+Resolver la ecuación cuadrática:
+$$x^2 - 5x + 6 = 0$$
+\end{tcolorbox}
+
+\lipsum[89]
+
+\begin{tcolorbox}[colback=green!5,colframe=green!75!black,title=\faCheck\ Solución]
+Factorizando:
+$$x^2 - 5x + 6 = (x-2)(x-3) = 0$$
+Por lo tanto: $x = 2$ o $x = 3$
+\end{tcolorbox}
+
+\lipsum[90]
+
+\subsection{Plantillas Visuales}
+
+Las plantillas visuales mejoran la experiencia de lectura:
+
+\lipsum[91-92]
+
+\chapter{Ejemplos Integrados Completos}
+
+\section{Documento Académico Completo}
+
+\subsection{Características del Diseño}
+
+Este tipo de documento combina todos los elementos vistos:
+
+\begin{itemize}
+\item Portada institucional
+\item Tabla de contenido personalizada
+\item Capítulos con diseño moderno
+\item Sistema de ejercicios integrado
+\end{itemize}
+
+\lipsum[93-94]
+
+\subsection{Aplicación en Tesis}
+
+Las tesis de grado requieren un formato específico:
+
+\lipsum[95]
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faExclamationTriangle\ Importante]
+Siempre verifica los requisitos de formato de tu institución antes de personalizar. Algunas universidades tienen plantillas obligatorias.
+\end{tcolorbox}
+
+\lipsum[96]
+
+\subsection{Aplicación en Libros de Texto}
+
+Los libros de texto educativos se benefician enormemente de estos elementos:
+
+\lipsum[97-98]
+
+\section{Reporte Técnico Profesional}
+
+\subsection{Diseño Corporativo}
+
+Los reportes técnicos requieren un diseño sobrio y profesional:
+
+\lipsum[99]
+
+\subsection{Elementos Esenciales}
+
+\begin{itemize}
+\item Portada con logo corporativo
+\item Índice ejecutivo
+\item Tabla de contenidos detallada
+\item Capítulos bien estructurados
+\item Referencias y bibliografía
+\end{itemize}
+
+\lipsum[100]
+
+\section{Material Didáctico}
+
+\subsection{Guías de Estudio}
+
+Las guías de estudio combinan teoría y práctica:
+
+\lipsum[101-102]
+
+\subsection{Cuadernos de Ejercicios}
+
+Los cuadernos de ejercicios se enfocan en la práctica:
+
+\lipsum[103]
+
+\begin{exercise}[subtitle={Práctica Final}]
+Integra todos los conceptos aprendidos para resolver:
+
+Dado un sistema de ecuaciones lineales: $2x + 3y = 7$ y $x - y = 1$.
+
+Encuentra los valores de $x$ e $y$.
+\end{exercise}
+
+\lipsum[104]
+
+\begin{solution}
+De la segunda ecuación: $x = 1 + y$
+
+Sustituyendo en la primera: $2(1+y) + 3y = 7$
+
+Simplificando: $2 + 2y + 3y = 7$, entonces $5y = 5$, por lo tanto $y = 1$
+
+Y entonces: $x = 1 + 1 = 2$
+
+Solución: $(x, y) = (2, 1)$
+\end{solution}
+
+\lipsum[105]
+
+\chapter{Mejores Prácticas y Recomendaciones}
+
+\section{Principios de Diseño}
+
+\subsection{Consistencia Visual}
+
+La consistencia es fundamental en cualquier documento largo:
+
+\lipsum[106]
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black,title=\faLightbulb\ Reglas de Oro]
+\begin{enumerate}
+\item Mantén el mismo estilo en todo el documento
+\item Usa colores de forma coherente
+\item Define una jerarquía visual clara
+\item No mezcles demasiados estilos diferentes
+\end{enumerate}
+\end{tcolorbox}
+
+\lipsum[107]
+
+\subsection{Legibilidad}
+
+El diseño debe mejorar, no dificultar, la lectura:
+
+\lipsum[108-109]
+
+\subsection{Espaciado Apropiado}
+
+El espacio en blanco es tan importante como el contenido:
+
+\lipsum[110]
+
+\section{Errores Comunes}
+
+\subsection{Incompatibilidades de Paquetes}
+
+Algunos paquetes no funcionan bien juntos:
+
+\lipsum[111]
+
+\begin{tcolorbox}[colback=red!10,colframe=red!75!black,title=\faExclamationTriangle\ Precaución]
+\begin{itemize}
+\item \texttt{titlesec} y KOMA-Script son incompatibles
+\item \texttt{tocloft} y clase \texttt{memoir} pueden entrar en conflicto
+\item Carga \texttt{hyperref} al final del preámbulo
+\end{itemize}
+\end{tcolorbox}
+
+\lipsum[112]
+
+\subsection{Sobrecomplicación}
+
+No todo documento necesita personalización extrema:
+
+\lipsum[113]
+
+\subsection{Falta de Pruebas}
+
+Siempre prueba los cambios:
+
+\lipsum[114]
+
+\section{Flujo de Trabajo Recomendado}
+
+\subsection{Planificación}
+
+Antes de comenzar a escribir:
+
+\begin{enumerate}
+\item Define el tipo de documento
+\item Identifica los elementos necesarios
+\item Elige los paquetes apropiados
+\item Crea una plantilla básica
+\item Prueba con contenido de ejemplo
+\end{enumerate}
+
+\lipsum[115]
+
+\subsection{Implementación}
+
+Durante la escritura:
+
+\lipsum[116]
+
+\subsection{Revisión Final}
+
+Al terminar:
+
+\lipsum[117]
+
+\section{Recursos y Referencias}
+
+\subsection{Documentación Oficial}
+
+\begin{itemize}
+\item \texttt{texdoc titlesec} -- Manual completo de titlesec
+\item \texttt{texdoc tocloft} -- Guía de tocloft
+\item \texttt{texdoc xsim} -- Documentación de xsim
+\item \texttt{texdoc amsthm} -- Referencia de amsthm
+\end{itemize}
+
+\lipsum[118]
+
+\subsection{Comunidades y Foros}
+
+\begin{itemize}
+\item TeX Stack Exchange (\texttt{tex.stackexchange.com})
+\item LaTeX Community (\texttt{latex.org/forum})
+\item Overleaf Guides (\texttt{overleaf.com/learn})
+\end{itemize}
+
+\lipsum[119]
+
+\subsection{Plantillas Útiles}
+
+Muchas instituciones y editoriales proporcionan plantillas:
+
+\lipsum[120]
+
+\chapter{Conclusiones}
+
+\section{Resumen de Paquetes}
+
+\subsection{Para Capítulos y Secciones}
+
+\begin{itemize}
+\item \textbf{titlesec}: Control total y diseños complejos
+\item \textbf{sectsty}: Cambios simples y rápidos
+\end{itemize}
+
+\lipsum[121]
+
+\subsection{Para Tablas de Contenido}
+
+\begin{itemize}
+\item \textbf{tocloft}: Simple y efectivo
+\item \textbf{titletoc}: Más potente, trabaja con titlesec
+\item \textbf{minitoc}: Mini-TOC por capítulo
+\end{itemize}
+
+\lipsum[122]
+
+\subsection{Para Ejercicios}
+
+\begin{itemize}
+\item \textbf{amsthm}: Básico y suficiente
+\item \textbf{xsim}: Sistema completo y moderno
+\item \textbf{exsheets}: Alternativa a xsim (menos mantenido)
+\end{itemize}
+
+\lipsum[123]
+
+\section{Palabras Finales}
+
+\subsection{La Importancia del Diseño}
+
+Un buen diseño mejora la comprensión y retención:
+
+\lipsum[124-125]
+
+\subsection{Experimentación}
+
+No tengas miedo de experimentar con diferentes estilos:
+
+\lipsum[126]
+
+\begin{tcolorbox}[colback=green!10,colframe=green!60!black,title=\faCheckCircle\ Mensaje Final]
+La personalización de la estructura en \LaTeX{} es una herramienta poderosa para crear documentos profesionales y atractivos. Con los paquetes y técnicas presentados en este documento, tienes todo lo necesario para crear documentos de alta calidad.
+
+¡Sigue experimentando y aprendiendo!
+\end{tcolorbox}
+
+\lipsum[127]
+
+\section*{Agradecimientos}
+
+Este documento fue creado como material de apoyo para el aprendizaje de \LaTeX{} y la personalización de documentos. Todos los ejemplos son funcionales y pueden ser adaptados según las necesidades específicas de cada proyecto.
+
+\vspace{1cm}
+
+\begin{center}
+\large\textit{Fin del documento}
+
+\vspace{0.5cm}
+
+\normalsize Documento generado con \LaTeX{} -- \today
+\end{center}
+
+% Imprimir todas las soluciones al final
+\newpage
+\chapter*{Soluciones a los Ejercicios}
+\addcontentsline{toc}{chapter}{Soluciones a los Ejercicios}
+
+\printsolutions
+
+\end{document}

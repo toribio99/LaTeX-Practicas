@@ -1,0 +1,1774 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{multicol}
+
+% Librerías TikZ comunes
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric}
+
+% Colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+
+% Configuración de listings
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true
+}
+
+% Título
+\title{\textbf{\Huge TikZ en \LaTeX{}}\\\large Guía Completa de Comandos, Opciones y Librerías}
+\author{}
+\date{\today}
+
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		TikZ (TikZ ist kein Zeichenprogramm) es un poderoso paquete para crear gráficos vectoriales programáticamente en \LaTeX{}. Permite dibujar desde figuras simples hasta diagramas complejos, gráficas matemáticas, diagramas de flujo, y más.
+	\end{tcolorbox}
+	
+	\tableofcontents
+	\newpage
+	
+	\section{Carga del Paquete}
+	
+	\subsection*{\texttt{\textbackslash usepackage\{tikz\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Carga básica del paquete TikZ
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{tikz}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash usetikzlibrary\{library\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Carga librerías adicionales de TikZ
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{arrows.meta, shapes.geometric, positioning}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Entorno tikzpicture}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\begin{tikzpicture}[opciones]
+			... comandos de dibujo ...
+		\end{tikzpicture}
+	\end{lstlisting}
+	
+	\subsection{Opciones Globales del Entorno}
+	
+	\subsubsection*{\texttt{scale=factor}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala todo el dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[scale=2]
+				\draw (0,0) -- (1,1);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xscale=factor, yscale=factor}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala solo en eje X o Y
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[xscale=2, yscale=0.5]
+				\draw (0,0) rectangle (1,1);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{rotate=angle}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rota todo el dibujo en grados
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[rotate=45]
+				\draw (0,0) rectangle (1,1);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xshift=dimension, yshift=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Desplaza todo el dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[xshift=2cm, yshift=1cm]
+				\draw (0,0) circle (1);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{baseline=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ajusta la línea base del dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Texto \begin{tikzpicture}[baseline=-0.5ex]
+				\draw (0,0) circle (0.5ex);
+			\end{tikzpicture} texto
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Comandos Básicos de Dibujo}
+	
+	\subsection{Comando \textbackslash draw}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) -- (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja una línea recta
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- (2,1) -- (3,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) -| (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Línea horizontal luego vertical
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -| (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) |- (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Línea vertical luego horizontal
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) |- (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) .. controls (cx,cy) .. (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Curva de Bézier con punto de control
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) .. controls (1,1) .. (2,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) to[bend left] (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Curva con doblez a la izquierda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) to[bend left] (2,0);
+			\draw (0,-1) to[bend right=60] (2,-1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) arc (start:end:radius);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja un arco
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) arc (0:90:1cm);
+			\draw (2,0) arc (0:180:1cm and 0.5cm);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Formas Básicas}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) rectangle (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja un rectángulo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) rectangle (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) circle (radius);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja un círculo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) circle (1cm);
+			\draw (2,0) circle [radius=0.5];
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) ellipse (xradius and yradius);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja una elipse
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) ellipse (2cm and 1cm);
+			\draw (3,0) ellipse [x radius=1, y radius=0.5];
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash draw (x,y) grid (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja una cuadrícula
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) grid (3,2);
+			\draw[step=0.5] (0,0) grid (3,2);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Comando \textbackslash fill}
+	
+	\subsubsection*{\texttt{\textbackslash fill (x,y) circle (radius);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rellena una forma (sin borde)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\fill (0,0) circle (1);
+			\fill[red] (2,0) rectangle (3,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Comando \textbackslash filldraw}
+	
+	\subsubsection*{\texttt{\textbackslash filldraw (x,y) circle (radius);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rellena y dibuja el borde
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\filldraw[fill=blue!20, draw=blue] (0,0) circle (1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Comando \textbackslash shade}
+	
+	\subsubsection*{\texttt{\textbackslash shade (x,y) rectangle (x,y);}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja con degradado
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\shade (0,0) rectangle (2,1);
+			\shade[left color=red, right color=blue] (0,0) rectangle (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Opciones de Estilo para \textbackslash draw}
+	
+	\subsection{Colores}
+	
+	\subsubsection*{\texttt{color=color, draw=color}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Color del trazo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[red] (0,0) -- (1,0);
+			\draw[draw=blue] (0,-0.5) -- (1,-0.5);
+			\draw[color=green!50!black] (0,-1) -- (1,-1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{fill=color}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Color de relleno
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[fill=yellow] (0,0) circle (0.5);
+			\draw[fill=red!30] (1,0) rectangle (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{opacity=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Opacidad (0=transparente, 1=opaco)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[fill=blue, opacity=0.5] (0,0) circle (1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{fill opacity=value, draw opacity=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Opacidad separada para relleno y trazo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[fill=red, fill opacity=0.3, draw opacity=1] (0,0) circle (1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Grosor de Línea}
+	
+	\subsubsection*{\texttt{line width=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grosor específico de línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[line width=2pt] (0,0) -- (2,0);
+			\draw[line width=0.5mm] (0,-0.5) -- (2,-0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{ultra thin, very thin, thin, semithick, thick, very thick, ultra thick}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grosores predefinidos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[ultra thin] (0,3) -- (1,3);
+			\draw[very thin] (0,2.5) -- (1,2.5);
+			\draw[thin] (0,2) -- (1,2);
+			\draw[semithick] (0,1.5) -- (1,1.5);
+			\draw[thick] (0,1) -- (1,1);
+			\draw[very thick] (0,0.5) -- (1,0.5);
+			\draw[ultra thick] (0,0) -- (1,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Estilos de Línea}
+	
+	\subsubsection*{\texttt{solid, dashed, dotted, dashdotted, densely dashed, loosely dashed}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Patrones de línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[solid] (0,3) -- (2,3);
+			\draw[dashed] (0,2.5) -- (2,2.5);
+			\draw[dotted] (0,2) -- (2,2);
+			\draw[dashdotted] (0,1.5) -- (2,1.5);
+			\draw[densely dashed] (0,1) -- (2,1);
+			\draw[loosely dashed] (0,0.5) -- (2,0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{dash pattern=on length off length}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Patrón de guiones personalizado
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[dash pattern=on 2pt off 3pt on 4pt off 4pt] (0,0) -- (3,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Terminaciones de Línea}
+	
+	\subsubsection*{\texttt{line cap=type}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de terminación (rect, round, butt)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[line width=5pt, line cap=rect] (0,1) -- (2,1);
+			\draw[line width=5pt, line cap=round] (0,0.5) -- (2,0.5);
+			\draw[line width=5pt, line cap=butt] (0,0) -- (2,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{line join=type}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de unión (miter, round, bevel)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[line width=5pt, line join=miter] (0,0) -- (1,1) -- (2,0);
+			\draw[line width=5pt, line join=round] (0,0) -- (1,1) -- (2,0);
+			\draw[line width=5pt, line join=bevel] (0,0) -- (1,1) -- (2,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Flechas}
+	
+	\subsubsection*{\texttt{->, <-, <->}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Flechas simples
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[->] (0,0) -- (2,0);
+			\draw[<-] (0,-0.5) -- (2,-0.5);
+			\draw[<->] (0,-1) -- (2,-1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{-latex, -stealth, -triangle}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tipos de flechas específicas (requiere arrows.meta)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{arrows.meta}
+			\draw[-latex] (0,0) -- (2,0);
+			\draw[-stealth] (0,-0.5) -- (2,-0.5);
+			\draw[-Triangle] (0,-1) -- (2,-1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{-\{Latex[options]\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Flecha con opciones personalizadas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[-{Latex[length=3mm, width=2mm]}] (0,0) -- (2,0);
+			\draw[-{Stealth[red, scale=2]}] (0,-0.5) -- (2,-0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Nodos (Nodes)}
+	
+	\subsection{Comando \textbackslash node}
+	
+	\subsubsection*{\texttt{\textbackslash node at (x,y) \{text\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coloca texto en una posición
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node at (0,0) {Texto};
+			\node[red] at (2,0) {Rojo};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash node (name) at (x,y) \{text\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Nodo con nombre para referencias
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node (A) at (0,0) {A};
+			\node (B) at (2,0) {B};
+			\draw[->] (A) -- (B);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Opciones de Nodos}
+	
+	\subsubsection*{\texttt{anchor=position}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Punto de anclaje (north, south, east, west, center, etc.)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[anchor=north] at (0,0) {Norte};
+			\node[anchor=south east] at (2,0) {SE};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{above, below, left, right}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Posicionamiento relativo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node (A) at (0,0) {A};
+			\node[above] at (A) {Arriba};
+			\node[right=1cm] at (A) {Derecha};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{draw, fill}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja borde y rellena nodo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw] at (0,0) {Con borde};
+			\node[draw, fill=yellow] at (2,0) {Relleno};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{shape=type}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Forma del nodo (rectangle, circle, ellipse, etc.)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, circle] at (0,0) {O};
+			\node[draw, rectangle] at (2,0) {R};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{minimum width=dimension, minimum height=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tamaño mínimo del nodo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, minimum width=2cm, minimum height=1cm] at (0,0) {Nodo};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{minimum size=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tamaño mínimo igual en ambas dimensiones
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, circle, minimum size=1.5cm] at (0,0) {A};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{inner sep=dimension, outer sep=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Separación interna y externa
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, inner sep=5pt] at (0,0) {A};
+			\node[draw, outer sep=10pt] at (2,0) {B};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{text width=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ancho de texto con ajuste automático
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, text width=3cm] at (0,0) {Texto largo que se ajusta automáticamente};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{align=type}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Alineación de texto (left, center, right, justify)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, text width=2cm, align=center] at (0,0) {Texto\\centrado};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{rotate=angle}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rota el nodo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[rotate=45] at (0,0) {Rotado};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{font=command}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cambia la fuente del texto
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[font=\Large\bfseries] at (0,0) {Grande y negrita};
+			\node[font=\tiny] at (2,0) {Pequeño};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Coordenadas y Sistemas}
+	
+	\subsection{Tipos de Coordenadas}
+	
+	\subsubsection*{\texttt{(x,y)} -- Cartesianas}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coordenadas cartesianas estándar
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- (2,1);
+			\draw (1cm,2cm) -- (3cm,1cm);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{(angle:radius)} -- Polares}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coordenadas polares
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0:1) -- (45:1) -- (90:1);
+			\draw (0,0) -- (30:2cm);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{++(x,y)} -- Relativas}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coordenadas relativas (mueve el punto actual)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- ++(1,0) -- ++(0,1) -- ++(-1,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{+(x,y)} -- Relativas sin mover}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coordenadas relativas sin actualizar posición
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- +(1,0) -- +(0,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{(nodename)} -- Referencias a nodos}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Usa la posición de un nodo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node (A) at (0,0) {A};
+			\node (B) at (2,1) {B};
+			\draw (A) -- (B);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{(nodename.anchor)} -- Anclas de nodos}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Punto específico del nodo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw] (A) at (0,0) {A};
+			\draw (A.north) -- +(0,1);
+			\draw (A.east) -- +(1,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{(\$(A)!factor!\$(B))} -- Interpolación (calc)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Punto entre A y B (requiere calc)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{calc}
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (2,2);
+			\fill ($0.5*(A) + 0.5*(B)$) circle (2pt);
+			\fill ($(A)!0.3!(B)$) circle (2pt);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Paths (Caminos)}
+	
+	\subsection{Operaciones de Path}
+	
+	\subsubsection*{\texttt{-- cycle}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Cierra el camino volviendo al inicio
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{[rounded corners]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Esquinas redondeadas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[rounded corners] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+			\draw[rounded corners=10pt] (2,0) rectangle (4,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{plot}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grafica coordenadas o funciones
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw plot coordinates {(0,0) (1,1) (2,0.5) (3,2)};
+			\draw[domain=0:3] plot (\x, {sin(\x r)});
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Transformaciones}
+	
+	\subsection{Comandos de Transformación}
+	
+	\subsubsection*{\texttt{shift=\{(x,y)\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Desplaza el dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[shift={(2,1)}] (0,0) circle (0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{rotate around=\{angle:(x,y)\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rota alrededor de un punto
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[rotate around={45:(1,1)}] (0,0) rectangle (2,2);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{cm=\{a,b,c,d,(x,y)\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Transformación de matriz personalizada
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[cm={1,0.5,0,1,(0,0)}] (0,0) rectangle (1,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Scopes (Alcances)}
+	
+	\subsubsection*{\texttt{\textbackslash begin\{scope\}[options]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Agrupa elementos con opciones locales
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{scope}[red, thick]
+				\draw (0,0) -- (1,1);
+				\draw (1,0) -- (0,1);
+			\end{scope}
+			\begin{scope}[xshift=2cm, blue]
+				\draw (0,0) rectangle (1,1);
+			\end{scope}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Clips y Límites}
+	
+	\subsubsection*{\texttt{\textbackslash clip}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Recorta el dibujo a una región
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{scope}
+				\clip (0,0) rectangle (2,2);
+				\draw (1,1) circle (1.5);
+			\end{scope}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash useasboundingbox}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define el bounding box del dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\useasboundingbox (0,0) rectangle (3,2);
+			\draw (-1,-1) -- (4,3);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Foreach (Bucles)}
+	
+	\subsubsection*{\texttt{\textbackslash foreach \textbackslash x in \{list\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Bucle para repetir comandos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\foreach \x in {0,1,2,3}
+			\draw (\x,0) circle (0.2);
+			
+			\foreach \x in {0,...,5}
+			\draw (\x,0) -- (\x,1);
+			
+			\foreach \x/\y in {0/0, 1/1, 2/0.5}
+			\fill (\x,\y) circle (2pt);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\newpage
+	
+	\section{Librerías de TikZ}
+	
+	\subsection{arrows.meta - Flechas Avanzadas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{arrows.meta\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tipos de flechas personalizables
+		
+		\textbf{Tipos disponibles:}
+		\begin{itemize}[nosep]
+			\item Latex, latex', Stealth, Triangle, To, Bar, Hooks, Classical TikZ Rightarrow
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[-Latex] (0,0) -- (2,0);
+			\draw[-{Stealth[scale=2]}] (0,-0.5) -- (2,-0.5);
+			\draw[-{Triangle[fill=white]}] (0,-1) -- (2,-1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shapes.geometric - Formas Geométricas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shapes.geometric\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Formas adicionales para nodos
+		
+		\textbf{Formas disponibles:}
+		\begin{itemize}[nosep]
+			\item diamond, ellipse, trapezium, semicircle, regular polygon, star, isosceles triangle, kite, dart, circular sector, cylinder
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, diamond] at (0,0) {D};
+			\node[draw, star, star points=5] at (2,0) {S};
+			\node[draw, regular polygon, regular polygon sides=6] at (4,0) {H};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shapes.symbols - Símbolos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shapes.symbols\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Formas simbólicas
+		
+		\textbf{Formas disponibles:}
+		\begin{itemize}[nosep]
+			\item cloud, starburst, signal, tape, magnifying glass, key
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, cloud, cloud puffs=10] at (0,0) {Nube};
+			\node[draw, starburst] at (3,0) {Boom};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shapes.arrows - Flechas como Nodos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shapes.arrows\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Nodos en forma de flecha
+		
+		\textbf{Formas disponibles:}
+		\begin{itemize}[nosep]
+			\item single arrow, double arrow, arrow box
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, single arrow] at (0,0) {Flecha};
+			\node[draw, double arrow, fill=red!20] at (0,-1) {Doble};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shapes.callouts - Globos de Diálogo}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shapes.callouts\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Globos de texto
+		
+		\textbf{Formas disponibles:}
+		\begin{itemize}[nosep]
+			\item rectangle callout, ellipse callout, cloud callout
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, rectangle callout, callout absolute pointer={(1,0)}] 
+			at (0,0) {Mensaje};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shapes.multipart - Nodos Multiparte}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shapes.multipart\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Nodos con múltiples secciones
+		
+		\textbf{Formas disponibles:}
+		\begin{itemize}[nosep]
+			\item rectangle split, circle split, ellipse split
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, rectangle split, rectangle split parts=3] at (0,0) {
+				Parte 1
+				\nodepart{two}
+				Parte 2
+				\nodepart{three}
+				Parte 3
+			};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{positioning - Posicionamiento Avanzado}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{positioning\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Posicionamiento relativo mejorado
+		
+		\textbf{Opciones disponibles:}
+		\begin{itemize}[nosep]
+			\item above=of node, below=of node, left=of node, right=of node
+			\item above left=of node, above right=of node, etc.
+			\item node distance=dimension
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw] (A) at (0,0) {A};
+			\node[draw, above=of A] (B) {B};
+			\node[draw, right=2cm of A] (C) {C};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{calc - Cálculos con Coordenadas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{calc\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Operaciones matemáticas con coordenadas
+		
+		\textbf{Operaciones disponibles:}
+		\begin{itemize}[nosep]
+			\item \texttt{(\$(A) + (B)\$)} -- Suma
+			\item \texttt{(\$(A) - (B)\$)} -- Resta
+			\item \texttt{(\$factor*(A)\$)} -- Multiplicación
+			\item \texttt{(\$(A)!factor!(B)\$)} -- Interpolación lineal
+			\item \texttt{(\$(A)!(x,y)!(B)\$)} -- Proyección
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (2,2);
+			\fill ($(A) + (B)$) circle (2pt);
+			\fill ($(A)!0.5!(B)$) circle (2pt);
+			\fill ($0.5*(A) + 0.5*(B)$) circle (2pt);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{decorations - Decoraciones}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{decorations.pathmorphing\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Deformaciones de paths
+		
+		\textbf{Decoraciones disponibles:}
+		\begin{itemize}[nosep]
+			\item zigzag, saw, random steps, bent, coil, bumps, snake
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[decorate, decoration=zigzag] (0,0) -- (3,0);
+			\draw[decorate, decoration={coil, amplitude=2mm}] (0,-0.5) -- (3,-0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{decorations.markings\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Marcas en paths
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[decoration={markings, mark=at position 0.5 with {\arrow{>}}},
+			postaction={decorate}] (0,0) -- (3,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{decorations.pathreplacing\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Reemplazo de paths (llaves, corchetes)
+		
+		\textbf{Decoraciones disponibles:}
+		\begin{itemize}[nosep]
+			\item brace, border, expanding waves, moveto, lineto, curveto, zigzag, saw, random steps, straight zigzag, ticks, waves, coil, bumps, bent, aspect, triangles, crosses
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[decorate, decoration={brace, amplitude=5pt}] (0,0) -- (3,0);
+			\draw[decorate, decoration={border, angle=45, amplitude=5pt}] (0,-0.5) -- (3,-0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{patterns - Patrones de Relleno}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{patterns\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Patrones para rellenar áreas
+		
+		\textbf{Patrones disponibles:}
+		\begin{itemize}[nosep]
+			\item horizontal lines, vertical lines, north east lines, north west lines, grid, crosshatch, dots, crosshatch dots, fivepointed stars, sixpointed stars, bricks, checkerboard
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\fill[pattern=horizontal lines] (0,0) rectangle (1,1);
+			\fill[pattern=dots, pattern color=red] (2,0) rectangle (3,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shadings - Degradados}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shadings\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Degradados predefinidos
+		
+		\textbf{Shadings disponibles:}
+		\begin{itemize}[nosep]
+			\item axis, radial, ball, color wheel, bilinear interpolation
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\shade[ball color=blue] (0,0) circle (0.5);
+			\shade[left color=red, right color=blue] (2,0) rectangle (4,1);
+			\shade[inner color=yellow, outer color=red] (5,0) circle (0.5);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{shadows - Sombras}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{shadows\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Efectos de sombra
+		
+		\textbf{Opciones disponibles:}
+		\begin{itemize}[nosep]
+			\item drop shadow, copy shadow, circular drop shadow, circular glow
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, drop shadow] at (0,0) {Sombra};
+			\node[draw, circular drop shadow] at (3,0) {Circular};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{backgrounds - Fondos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{backgrounds\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja fondos detrás de otros elementos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				\draw (0,0) -- (2,2);
+				\begin{scope}[on background layer]
+					\fill[yellow] (-0.5,-0.5) rectangle (2.5,2.5);
+				\end{scope}
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{fit - Ajuste Automático}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{fit\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Nodo que se ajusta a otros nodos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node (A) at (0,0) {A};
+			\node (B) at (2,1) {B};
+			\node[draw, fit=(A) (B), inner sep=5pt] {};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{through - A Través de Puntos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{through\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Círculos que pasan por puntos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[draw, circle through={(1,1)}] at (0,0) {};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{intersections - Intersecciones}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{intersections\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Encuentra intersecciones entre paths
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[name path=A] (0,0) -- (2,2);
+			\draw[name path=B] (0,2) -- (2,0);
+			\fill[red, name intersections={of=A and B}] 
+			(intersection-1) circle (2pt);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{graphs - Grafos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{graphs\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Sintaxis simplificada para grafos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\graph { a -> {b, c} -> d };
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{trees - Árboles}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{trees\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilos y opciones para árboles
+		
+		\textbf{Opciones:}
+		\begin{itemize}[nosep]
+			\item level distance, sibling distance, child, edge from parent
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node {Raíz}
+			child {node {A}}
+			child {node {B}
+				child {node {B1}}
+				child {node {B2}}
+			};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{mindmap - Mapas Mentales}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{mindmap\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo para mapas mentales
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[mindmap]
+				\node[concept] {Concepto Central}
+				child[concept color=blue] { node[concept] {Idea 1} }
+				child[concept color=red] { node[concept] {Idea 2} };
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{matrix - Matrices de Nodos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{matrix\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Organiza nodos en matriz
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\matrix[matrix of nodes, nodes={draw}] {
+				A & B & C \\
+				D & E & F \\
+			};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{chains - Cadenas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{chains\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Conecta nodos secuencialmente
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{scope}[start chain=going right]
+				\node[on chain] {A};
+				\node[on chain] {B};
+				\node[on chain] {C};
+			\end{scope}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{circuits - Circuitos Eléctricos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{circuits.ee.IEC\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Símbolos de circuitos eléctricos (IEC)
+		
+		\textbf{Símbolos disponibles:}
+		\begin{itemize}[nosep]
+			\item resistor, capacitor, inductor, voltage source, current source, diode, battery, ground, make contact
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) to[resistor] (2,0) to[battery] (2,2);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{automata - Autómatas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{automata\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Dibuja autómatas finitos
+		
+		\textbf{Opciones:}
+		\begin{itemize}[nosep]
+			\item state, accepting, initial, initial text
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[state, initial] (q0) at (0,0) {$q_0$};
+			\node[state, accepting] (q1) at (3,0) {$q_1$};
+			\draw (q0) edge[loop above] node{0} (q0)
+			(q0) edge[bend left] node{1} (q1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{petri - Redes de Petri}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{petri\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Elementos para redes de Petri
+		
+		\textbf{Opciones:}
+		\begin{itemize}[nosep]
+			\item place, transition, pre, post, tokens
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[place, tokens=2] (p1) at (0,0) {};
+			\node[transition] (t1) at (2,0) {};
+			\draw[->] (p1) -- (t1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{calendar - Calendarios}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{calendar\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Crea calendarios
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\calendar[dates=2024-01-01 to 2024-01-31];
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{folding - Plegado}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{folding\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Crea plantillas de plegado 3D
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\pic{cube folding};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{er - Diagramas ER}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{er\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Diagramas Entidad-Relación
+		
+		\textbf{Formas:}
+		\begin{itemize}[nosep]
+			\item entity, relationship, attribute
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\node[entity] (E) {Entidad};
+			\node[relationship] (R) [right=of E] {Relación};
+			\draw (E) -- (R);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{datavisualization - Visualización de Datos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{datavisualization\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Sistema avanzado de visualización
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\datavisualization[scientific axes, visualize as smooth line]
+			data {x, y
+				0, 0
+				1, 1
+				2, 0.5};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{tikzmark - Marcas en Texto}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{tikzmark\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Marca posiciones en el texto para conectar
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Texto \tikzmark{a} más texto \tikzmark{b}.
+			\begin{tikzpicture}[overlay, remember picture]
+				\draw[->] (pic cs:a) to[bend left] (pic cs:b);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{spy - Ampliación}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{spy\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Amplía una región del dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[spy using outlines={circle, magnification=3, size=1cm}]
+				\draw (0,0) grid (4,4);
+				\spy on (1,1) in node at (3,3);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{perspective - Perspectiva 3D}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{perspective\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Proyección en perspectiva
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}[3d view]
+				\draw (0,0,0) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- cycle;
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{angles - Ángulos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{angles\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Marca y etiqueta ángulos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (2,0);
+			\coordinate (C) at (1,1);
+			\draw (A) -- (B) -- (C) -- cycle;
+			\pic[draw, angle radius=0.5cm] {angle = B--A--C};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{quotes - Comillas para Etiquetas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{quotes\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Sintaxis simplificada para etiquetas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- node["texto"] (2,0);
+			\draw (0,0) edge["etiqueta", ->] (2,2);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{babel - Compatibilidad con Babel}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{babel\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Resuelve conflictos con paquete babel
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage[spanish]{babel}
+			\usetikzlibrary{babel}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{bending - Curvatura de Flechas}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{bending\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Flechas que se curvan con el path
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw[->, bend left] (0,0) to (2,2);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{fadings - Desvanecimientos}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{fadings\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Efectos de desvanecimiento
+		
+		\textbf{Fadings predefinidos:}
+		\begin{itemize}[nosep]
+			\item fade out, fade inside, fade right, fade left, fade up, fade down
+		\end{itemize}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\fill[red, path fading=east] (0,0) rectangle (3,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{external - Externalización}
+	
+	\subsubsection*{\texttt{\textbackslash usetikzlibrary\{external\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Guarda dibujos como archivos externos (acelera compilación)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{external}
+			\tikzexternalize
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\newpage
+	
+	\section{Opciones Adicionales Importantes}
+	
+	\subsection{Texto en Paths}
+	
+	\subsubsection*{\texttt{node[options] \{text\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coloca texto a lo largo de un path
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- node[above] {etiqueta} (2,0);
+			\draw (0,0) -- node[midway, below] {medio} (2,0);
+			\draw (0,0) -- node[pos=0.3] {30\%} (2,0);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{sloped}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rota el texto siguiendo el path
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0) -- node[sloped, above] {texto inclinado} (2,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Pics - Dibujos Reutilizables}
+	
+	\subsubsection*{\texttt{\textbackslash tikzset\{pics/name/.style=\{...\}\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define un dibujo reutilizable
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\tikzset{
+				pics/my shape/.style={
+					code={
+						\draw (0,0) circle (0.3);
+						\fill (0,0) circle (0.1);
+					}
+				}
+			}
+			\pic at (0,0) {my shape};
+			\pic at (2,0) {my shape};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Estilos Personalizados}
+	
+	\subsubsection*{\texttt{\textbackslash tikzset\{style name/.style=\{...\}\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define estilos reutilizables
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\tikzset{
+				my arrow/.style={->, thick, blue},
+				my node/.style={draw, circle, fill=red!20}
+			}
+			\draw[my arrow] (0,0) -- (2,0);
+			\node[my node] at (1,1) {A};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Capas (Layers)}
+	
+	\subsubsection*{\texttt{pgfdeclarelayer}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define capas de dibujo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\pgfdeclarelayer{background}
+			\pgfdeclarelayer{foreground}
+			\pgfsetlayers{background,main,foreground}
+			
+			\begin{pgfonlayer}{background}
+				\fill[yellow] (0,0) rectangle (3,2);
+			\end{pgfonlayer}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Dibujo 3D Básico}
+	
+	\subsection{Coordenadas 3D}
+	
+	\subsubsection*{\texttt{(x,y,z)} -- Coordenadas 3D}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Coordenadas tridimensionales
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\draw (0,0,0) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- cycle;
+			\draw (0,0,0) -- (0,0,1);
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{canvas is xy plane at z=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define plano de trabajo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{scope}[canvas is xy plane at z=0]
+				\draw (0,0) rectangle (2,2);
+			\end{scope}
+			\begin{scope}[canvas is xz plane at y=0]
+				\draw (0,0) rectangle (2,2);
+			\end{scope}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\newpage
+	
+	\section*{\faCheckCircle\ Ejemplos Completos}
+	
+	\subsection*{Ejemplo 1: Diagrama de Flujo}
+	
+	\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Diagrama de flujo]
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+			
+			\begin{tikzpicture}[
+				node distance=1.5cm,
+				startstop/.style={rectangle, rounded corners, draw, fill=red!20},
+				process/.style={rectangle, draw, fill=blue!20},
+				decision/.style={diamond, draw, fill=green!20, aspect=2}
+				]
+				\node[startstop] (start) {Inicio};
+				\node[process, below=of start] (proc1) {Proceso 1};
+				\node[decision, below=of proc1] (dec1) {¿Condición?};
+				\node[process, below=of dec1] (proc2) {Proceso 2};
+				\node[startstop, below=of proc2] (stop) {Fin};
+				
+				\draw[-Stealth] (start) -- (proc1);
+				\draw[-Stealth] (proc1) -- (dec1);
+				\draw[-Stealth] (dec1) -- node[right] {Sí} (proc2);
+				\draw[-Stealth] (dec1) -| node[above] {No} ++(3,0) |- (proc1);
+				\draw[-Stealth] (proc2) -- (stop);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 2: Gráfica de Función}
+	
+	\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Gráfica matemática]
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				% Ejes
+				\draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+				\draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
+				
+				% Cuadrícula
+				\draw[gray!30, very thin] (0,0) grid (3.5,2.5);
+				
+				% Función seno
+				\draw[blue, thick, domain=0:3.5, samples=100] 
+				plot (\x, {1.5 + sin(\x r)});
+				
+				% Puntos
+				\foreach \x in {0,1,2,3}
+				\fill (\x, {1.5 + sin(\x r)}) circle (2pt);
+				
+				% Etiquetas
+				\node at (3.5,2.5) {$f(x) = \sin(x) + 1.5$};
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 3: Diagrama de Circuito}
+	
+	\begin{tcolorbox}[colback=orange!10,colframe=orange!75!black,title=\faCode\ Circuito simple]
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{circuits.ee.IEC}
+			
+			\begin{tikzpicture}[circuit ee IEC]
+				\draw (0,0) to[resistor={info=$R_1$}] (2,0)
+				to[capacitor={info=$C$}] (2,2)
+				to[battery={info=$V$}] (0,2)
+				to (0,0);
+				\draw (2,0) to[resistor={info=$R_2$}] (4,0);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 4: Árbol}
+	
+	\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Árbol binario]
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{trees}
+			
+			\begin{tikzpicture}[
+				level 1/.style={sibling distance=3cm},
+				level 2/.style={sibling distance=1.5cm},
+				every node/.style={circle, draw}
+				]
+				\node {1}
+				child {node {2}
+					child {node {4}}
+					child {node {5}}
+				}
+				child {node {3}
+					child {node {6}}
+					child {node {7}}
+				};
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 5: Formas Geométricas con Patrones}
+	
+	\begin{tcolorbox}[colback=yellow!10,colframe=yellow!75!black,title=\faCode\ Formas con patrones]
+		\begin{lstlisting}[language=TeX]
+			\usetikzlibrary{patterns, shapes.geometric}
+			
+			\begin{tikzpicture}
+				\node[draw, star, star points=5, minimum size=2cm,
+				fill=yellow, pattern=dots] at (0,0) {};
+				\node[draw, regular polygon, regular polygon sides=6,
+				minimum size=2cm, fill=blue!20, 
+				pattern=horizontal lines] at (3,0) {};
+				\node[draw, diamond, minimum size=2cm,
+				fill=red!20, pattern=crosshatch] at (6,0) {};
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 6: Cubo 3D}
+	
+	\begin{tcolorbox}[colback=red!10,colframe=red!75!black,title=\faCode\ Cubo tridimensional]
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				% Cara frontal
+				\draw[fill=blue!20] (0,0,0) -- (2,0,0) -- (2,2,0) -- (0,2,0) -- cycle;
+				% Cara superior
+				\draw[fill=red!20] (0,2,0) -- (2,2,0) -- (2,2,2) -- (0,2,2) -- cycle;
+				% Cara derecha
+				\draw[fill=green!20] (2,0,0) -- (2,2,0) -- (2,2,2) -- (2,0,2) -- cycle;
+				% Aristas ocultas
+				\draw[dashed] (0,0,0) -- (0,0,2) -- (0,2,2);
+				\draw[dashed] (0,0,2) -- (2,0,2);
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\newpage
+	
+	\section*{\faLightbulb\ Tips Importantes}
+	
+	\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+		\begin{itemize}[leftmargin=*]
+			\item TikZ usa unidades por defecto en cm, pero puedes especificar otras: pt, mm, in
+			\item Siempre termina los comandos con punto y coma (;)
+			\item Usa \texttt{\textbackslash usetikzlibrary\{babel\}} si usas babel con idiomas que modifican caracteres activos
+			\item Para dibujos complejos, considera usar \texttt{external} para acelerar compilación
+			\item Los nodos tienen anclas: north, south, east, west, north east, north west, south east, south west, center
+			\item Puedes combinar opciones: \texttt{[red, thick, dashed, ->]}
+			\item Usa \texttt{remember picture, overlay} para conectar elementos entre diferentes tikzpictures
+			\item Para debugging, usa \texttt{[show background rectangle]} con backgrounds library
+			\item La librería \texttt{calc} es muy útil para cálculos de coordenadas
+			\item Siempre nombra tus nodos importantes para referencias futuras
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faExclamationTriangle\ Errores Comunes}
+	
+	\begin{tcolorbox}[colback=red!10,colframe=red!75!black]
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Olvidar el punto y coma}: Todos los comandos de dibujo deben terminar con ;
+			\item \textbf{Paréntesis vs llaves}: Coordenadas usan (), opciones usan []
+			\item \textbf{Unidades inconsistentes}: Mezclar coordenadas con y sin unidades
+			\item \textbf{Nombres de nodos duplicados}: Cada nodo debe tener nombre único
+			\item \textbf{Olvidar cargar librerías}: Algunas funciones requieren \texttt{\textbackslash usetikzlibrary}
+			\item \textbf{Usar comillas incorrectas}: Para texto usa \{texto\}, no "texto"
+			\item \textbf{Coordenadas relativas mal usadas}: ++ mueve el cursor, + no lo mueve
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\textit{Documento generado con \LaTeX{} y TikZ -- \today}
+		
+		\textit{Este documento cubre las funcionalidades principales de TikZ.}
+		
+		\textit{Para más información, consulta el manual oficial de TikZ/PGF.}
+	\end{center}
+	
+\end{document}

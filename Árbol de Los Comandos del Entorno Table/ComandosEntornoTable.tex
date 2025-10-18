@@ -1,0 +1,841 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{booktabs}
+
+% Colores personalizados
+\definecolor{categorycolor}{RGB}{41,128,185}
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{examplecolor}{RGB}{149,165,166}
+
+% Configuración de listings
+\lstset{
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true
+}
+
+% Título
+\title{\textbf{\Huge Entornos \texttt{table} y \texttt{tabular} en \LaTeX{}}\\\large Guía Completa de Comandos y Opciones}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		El entorno \texttt{table} es un contenedor flotante para tablas (similar a \texttt{figure}), mientras que \texttt{tabular} crea la estructura real de la tabla con filas y columnas.
+	\end{tcolorbox}
+	
+	\tableofcontents
+	
+	\section{Entorno table}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\begin{table}[opciones]
+			... contenido ...
+		\end{table}
+	\end{lstlisting}
+	
+	\subsection{Opciones de Posición}
+	
+	Controlan dónde \LaTeX{} coloca la tabla en el documento.
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[h]}} -- Here}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Intenta colocar la tabla aquí
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{cc}
+					...
+				\end{tabular}
+			\end{table}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[t]}} -- Top}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Parte superior de la página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[t]
+				...
+			\end{table}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[b]}} -- Bottom}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Parte inferior de la página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[b]
+				...
+			\end{table}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[p]}} -- Page}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Página solo para flotantes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[p]
+				...
+			\end{table}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[H]}} -- HERE (forzado)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Fuerza posición exacta (requiere paquete \texttt{float})
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{float}
+			\begin{table}[H]
+				...
+			\end{table}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{float\}}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[htbp]}} -- Combinación}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Múltiples opciones de posición (más flexible)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[htbp]
+				...
+			\end{table}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Más flexible, \LaTeX{} elige la mejor opción
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textcolor{commandcolor}{[!h]}} -- Override}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ignora restricciones internas de \LaTeX{}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[!h]
+				...
+			\end{table}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} El ! relaja las restricciones de \LaTeX{}
+	\end{tcolorbox}
+	
+	\subsection{Comando \textbackslash centering}
+	
+	\subsubsection*{\texttt{\textbackslash centering}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Centra el contenido de la tabla
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{cc}
+					...
+				\end{tabular}
+			\end{table}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Preferible a \texttt{\textbackslash begin\{center\}...\textbackslash end\{center\}}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash raggedright}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Alineación a la izquierda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\raggedright
+			\begin{tabular}{cc}...
+			\end{lstlisting}
+		\end{tcolorbox}
+		
+		\subsubsection*{\texttt{\textbackslash raggedleft}}
+		\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+			\textbf{Descripción:} Alineación a la derecha
+			
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				\raggedleft
+				\begin{tabular}{cc}...
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsection{Comando \textbackslash caption}
+			
+			\subsubsection*{\texttt{\textbackslash caption\{texto\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Título de tabla básico
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\caption{Resultados experimentales}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\textbackslash caption[corto]\{largo\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Versión corta para índice de tablas
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\caption[Resultados]{Resultados completos del experimento realizado}
+				\end{lstlisting}
+				
+				\tcblower
+				\faLightbulb\ \textbf{Nota:} Corto aparece en \texttt{\textbackslash listoftables}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\textbackslash caption*\{texto\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Caption sin numeración (requiere paquete caption)
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\usepackage{caption}
+					\caption*{Nota: Sin número}
+				\end{lstlisting}
+				
+				\tcblower
+				\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{caption\}}
+			\end{tcolorbox}
+			
+			\subsection{Comando \textbackslash label}
+			
+			\subsubsection*{\texttt{\textbackslash label\{nombre\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Crea etiqueta identificadora
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\label{tab:resultados}
+				\end{lstlisting}
+				
+				\tcblower
+				\faLightbulb\ \textbf{Nota:} Usar prefijo \texttt{tab:} es convención común
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\textbackslash ref\{nombre\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Referencia al número de tabla
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					Ver Tabla \ref{tab:resultados}
+				\end{lstlisting}
+				
+				\tcblower
+				\faLightbulb\ \textbf{Nota:} Muestra solo el número
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\textbackslash pageref\{nombre\}}}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Referencia al número de página
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					En la página \pageref{tab:resultados}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			%\newpage
+			
+			\section{Entorno tabular}
+			
+			\subsection*{Sintaxis básica}
+			\begin{lstlisting}[language=TeX]
+				\begin{tabular}{especificación}
+					... contenido ...
+				\end{tabular}
+			\end{lstlisting}
+			
+			\subsection{Especificación de Columnas}
+			
+			Define alineación y número de columnas.
+			
+			\subsubsection*{\texttt{\{l\}} -- Left}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Columna alineada a la izquierda
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\begin{tabular}{l}
+						Texto izquierda \\
+					\end{tabular}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\{c\}} -- Center}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Columna centrada
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\begin{tabular}{c}
+						Texto centrado \\
+					\end{tabular}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\{r\}} -- Right}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Columna alineada a la derecha
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\begin{tabular}{r}
+						Texto derecha \\
+					\end{tabular}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\{p\{ancho\}\}} -- Paragraph}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Columna con ancho fijo y texto justificado
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\begin{tabular}{p{3cm}}
+						Texto largo que se ajusta \\
+					\end{tabular}
+				\end{lstlisting}
+			\end{tcolorbox}
+			
+			\subsubsection*{\texttt{\{m\{ancho\}\}} -- Middle}
+			\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+				\textbf{Descripción:} Como p pero verticalmente centrado (requiere array)
+				
+				\textbf{Ejemplo:}
+				\begin{lstlisting}[language=TeX]
+					\usepackage{array}
+					\begin{tabular}{m{3cm}}
+					\end{lstlisting}
+					
+					\tcblower
+					\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{array\}}
+				\end{tcolorbox}
+				
+				\subsubsection*{\texttt{\{b\{ancho\}\}} -- Bottom}
+				\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+					\textbf{Descripción:} Como p pero alineado abajo (requiere array)
+					
+					\textbf{Ejemplo:}
+					\begin{lstlisting}[language=TeX]
+						\usepackage{array}
+						\begin{tabular}{b{3cm}}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{array\}}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\{|c|\}} -- Líneas verticales}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} | añade línea vertical
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\begin{tabular}{|c|c|c|}
+								A & B & C \\
+							\end{tabular}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\{lll\}} -- Múltiples columnas}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Ejemplo: 3 columnas izquierda
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\begin{tabular}{lll}
+								A & B & C \\
+							\end{tabular}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\{*\{n\}\{especif\}\}} -- Repetir}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Repetir especificación n veces
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\begin{tabular}{*{5}{c}}
+								% 5 columnas centradas
+							\end{tabular}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} \texttt{\{*\{5\}\{c\}\}} = \texttt{\{ccccc\}}
+					\end{tcolorbox}
+					
+					\subsection{Comandos de Contenido}
+					
+					\subsubsection*{\texttt{\&} -- Separador}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Separador de columnas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							Columna1 & Columna2 & Columna3 \\
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash\textbackslash} -- Nueva fila}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Nueva fila
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							Fila 1 \\
+							Fila 2 \\
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash\textbackslash[espacio]} -- Nueva fila con espacio}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Nueva fila con espacio adicional
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							Fila 1 \\[5pt]
+							Fila 2 con espacio extra
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash hline} -- Línea horizontal}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Línea horizontal completa
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\hline
+							Fila 1 \\
+							\hline
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash cline\{i-j\}} -- Línea parcial}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Línea horizontal parcial (columnas i a j)
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							Fila 1 \\
+							\cline{2-3}
+							Fila 2
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash multicolumn}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Celda que abarca n columnas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\multicolumn{3}{|c|}{Título centrado} \\
+							\hline
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} n = número de columnas a fusionar
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash multirow}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Celda que abarca n filas (requiere multirow)
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{multirow}
+							\multirow{2}{*}{Texto} & Col2 \\
+							& Col2 \\
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{multirow\}}
+					\end{tcolorbox}
+					
+					\subsection{Espaciado y Formato}
+					
+					\subsubsection*{\texttt{\textbackslash arraystretch}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Factor de espaciado vertical entre filas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\renewcommand{\arraystretch}{1.5}
+							\begin{tabular}{cc}
+								...
+							\end{tabular}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} 1.5 = 150\% del espaciado normal
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash tabcolsep}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Espaciado horizontal entre columnas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\setlength{\tabcolsep}{10pt}
+							\begin{tabular}{cc}
+								...
+							\end{tabular}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} Por defecto es 6pt
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash arrayrulewidth}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Grosor de las líneas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\setlength{\arrayrulewidth}{1pt}
+							\begin{tabular}{|c|c|}
+								\hline
+								...
+							\end{tabular}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{@\{separador\}} -- Separador personalizado}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Separador personalizado entre columnas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\begin{tabular}{c@{:}c}
+								A : B \\
+							\end{tabular}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} Reemplaza el espacio por defecto
+					\end{tcolorbox}
+					
+					%\newpage
+					
+					\section{Paquetes para Tablas}
+					
+					\subsection{Paquetes Esenciales}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{booktabs\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Líneas profesionales (\textbackslash toprule, \textbackslash midrule, \textbackslash bottomrule)
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{booktabs}
+							\begin{tabular}{ccc}
+								\toprule
+								A & B & C \\
+								\midrule
+								1 & 2 & 3 \\
+								\bottomrule
+							\end{tabular}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} Mejor que \textbackslash hline para tablas profesionales
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{array\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Mejoras para tabular (columnas m, b, >\{\})
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{array}
+							\begin{tabular}{>{\bfseries}c}
+								Negrita \\
+							\end{tabular}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{multirow\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Celdas que abarcan múltiples filas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{multirow}
+							\multirow{2}{*}{Texto}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{longtable\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Tablas que pueden ocupar múltiples páginas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{longtable}
+							\begin{longtable}{ccc}
+								\caption{Tabla larga} \\
+								\hline
+								...
+							\end{longtable}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{tabularx\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Tablas con ancho total específico
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{tabularx}
+							\begin{tabularx}{\textwidth}{XXX}
+								...
+							\end{tabularx}
+						\end{lstlisting}
+						
+						\tcblower
+						\faLightbulb\ \textbf{Nota:} X ajusta automáticamente el ancho
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{tabulary\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Similar a tabularx pero mejor para párrafos
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{tabulary}
+							\begin{tabulary}{\textwidth}{LCR}
+								...
+							\end{tabulary}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsection{Paquetes Avanzados}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{colortbl\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Colorear celdas, filas y columnas
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage[table]{xcolor}
+							\rowcolor{gray!30} A & B \\
+							\cellcolor{blue!20} C & D
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{makecell\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Múltiples líneas en celdas y formato
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{makecell}
+							\makecell{Línea 1 \\ Línea 2}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{rotating\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Rotar tablas (sidewaystable)
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{rotating}
+							\begin{sidewaystable}
+								...
+							\end{sidewaystable}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsubsection*{\texttt{\textbackslash usepackage\{diagbox\}}}
+					\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+						\textbf{Descripción:} Celdas con diagonal
+						
+						\textbf{Ejemplo:}
+						\begin{lstlisting}[language=TeX]
+							\usepackage{diagbox}
+							\diagbox{Fila}{Columna}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					%\newpage
+					
+					\section*{\faCheckCircle\ Ejemplos Completos}
+					
+					\subsection*{Ejemplo Básico}
+					
+					\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Tabla básica]
+						\begin{lstlisting}[language=TeX]
+							\begin{table}[htbp]
+								\centering
+								\caption{Resultados del experimento}
+								\label{tab:resultados}
+								\begin{tabular}{|l|c|r|}
+									\hline
+									\textbf{Nombre} & \textbf{Valor} & \textbf{Error} \\
+									\hline
+									Muestra A & 25.4 & ±0.2 \\
+									Muestra B & 30.1 & ±0.3 \\
+									\hline
+								\end{tabular}
+							\end{table}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\subsection*{Ejemplo Profesional con booktabs}
+					
+					\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Tabla profesional]
+						\begin{lstlisting}[language=TeX]
+							\usepackage{booktabs}
+							
+							\begin{table}[htbp]
+								\centering
+								\caption{Comparación de métodos}
+								\label{tab:comparacion}
+								\begin{tabular}{lcc}
+									\toprule
+									\textbf{Método} & \textbf{Precisión} & \textbf{Tiempo (s)} \\
+									\midrule
+									Método A & 95.2\% & 1.23 \\
+									Método B & 97.8\% & 2.45 \\
+									Método C & 92.1\% & 0.89 \\
+									\bottomrule
+								\end{tabular}
+							\end{table}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\section*{\faLightbulb\ Tips Importantes}
+					
+					\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+						\begin{itemize}[leftmargin=*]
+							\item \texttt{table} es el contenedor flotante, \texttt{tabular} crea la tabla real
+							\item El \texttt{\textbackslash label} debe ir DESPUÉS del \texttt{\textbackslash caption}
+							\item Usa \texttt{booktabs} para tablas profesionales (evita líneas verticales)
+							\item Para tablas largas que ocupan múltiples páginas, usa \texttt{longtable}
+							\item \texttt{tabularx} es útil cuando necesitas que la tabla ocupe un ancho específico
+							\item \texttt{[htbp]} es la combinación más flexible para posicionamiento
+							\item Evita usar demasiadas líneas verticales y horizontales (estilo minimalista es mejor)
+							\item Con \texttt{booktabs}, nunca usar \texttt{\textbackslash hline} junto con \texttt{\textbackslash toprule/midrule/bottomrule}
+						\end{itemize}
+					\end{tcolorbox}
+					
+					\section*{\faTable\ Diferencias importantes}
+					
+					\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faExclamationTriangle\ table vs tabular]
+						\begin{itemize}[leftmargin=*]
+							\item \textbf{table}: Es el entorno flotante (como \texttt{figure}). Permite usar \texttt{\textbackslash caption}, \texttt{\textbackslash label} y opciones de posición [htbp].
+							\item \textbf{tabular}: Es el entorno que crea la estructura real de la tabla con filas y columnas.
+							\item Puedes usar \texttt{tabular} sin \texttt{table} si no necesitas que sea flotante ni numeración automática.
+							\item El \texttt{table} puede contener múltiples \texttt{tabular} si es necesario.
+						\end{itemize}
+					\end{tcolorbox}
+					
+					\section*{\faCode\ Ejemplo Avanzado con Colores}
+					
+					\begin{tcolorbox}[colback=orange!10,colframe=orange!75!black,title=Tabla con colores]
+						\begin{lstlisting}[language=TeX]
+							\usepackage[table]{xcolor}
+							\usepackage{booktabs}
+							
+							\begin{table}[htbp]
+								\centering
+								\caption{Datos con colores}
+								\label{tab:colores}
+								\begin{tabular}{lcc}
+									\toprule
+									\textbf{Categoría} & \textbf{Valor 1} & \textbf{Valor 2} \\
+									\midrule
+									\rowcolor{gray!20}
+									Categoría A & 100 & 120 \\
+									Categoría B & 150 & 180 \\
+									\rowcolor{gray!20}
+									Categoría C & 200 & 210 \\
+									\bottomrule
+								\end{tabular}
+							\end{table}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\section*{\faTable\ Ejemplo con multirow y multicolumn}
+					
+					\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=Celdas fusionadas]
+						\begin{lstlisting}[language=TeX]
+							\usepackage{multirow}
+							
+							\begin{table}[htbp]
+								\centering
+								\caption{Tabla con celdas fusionadas}
+								\begin{tabular}{|c|c|c|}
+									\hline
+									\multicolumn{3}{|c|}{\textbf{Título General}} \\
+									\hline
+									\multirow{2}{*}{Grupo 1} & Dato A & 10 \\
+									& Dato B & 20 \\
+									\hline
+									\multirow{2}{*}{Grupo 2} & Dato C & 30 \\
+									& Dato D & 40 \\
+									\hline
+								\end{tabular}
+							\end{table}
+						\end{lstlisting}
+					\end{tcolorbox}
+					
+					\vspace{1cm}
+					
+					\begin{center}
+						\textit{Documento generado con \LaTeX{} -- \today}
+					\end{center}
+					
+				\end{document}

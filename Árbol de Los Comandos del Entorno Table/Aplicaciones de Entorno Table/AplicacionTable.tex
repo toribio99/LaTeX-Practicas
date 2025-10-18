@@ -1,0 +1,844 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage[table]{xcolor}
+
+% Título
+\title{\textbf{\Huge Aplicaciones Prácticas del Entorno Table} \\[3mm] \large Ejemplos de Uso de Comandos y Opciones}
+\author{}
+\date{\today}
+
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introducción al Entorno Table}
+
+El entorno \texttt{table} es un contenedor flotante para tablas en \LaTeX, similar al entorno \texttt{figure}. Este documento presenta ejemplos prácticos de todas las opciones y comandos disponibles.
+
+\lipsum[1][1-3]
+
+\section{Opciones de Posición del Entorno Table}
+
+\subsection{Opción [h] -- Here}
+
+La opción \texttt{[h]} intenta colocar la tabla en la posición actual del texto.
+
+\lipsum[2][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con posición [h] -- Aquí}
+\label{tab:here}
+\begin{tabular}{lcc}
+\hline
+\textbf{Producto} & \textbf{Cantidad} & \textbf{Precio} \\
+\hline
+Laptop & 5 & \$800 \\
+Mouse & 20 & \$15 \\
+Teclado & 15 & \$45 \\
+\hline
+\end{tabular}
+\end{table}
+
+\lipsum[2][3-4]
+
+\subsection{Opción [t] -- Top}
+
+La opción \texttt{[t]} coloca la tabla en la parte superior de la página.
+
+\lipsum[3][1-2]
+
+\begin{table}[t]
+\centering
+\caption{Tabla con posición [t] -- Superior}
+\label{tab:top}
+\begin{tabular}{lrr}
+\hline
+\textbf{Mes} & \textbf{Ingresos} & \textbf{Gastos} \\
+\hline
+Enero & 10,000 & 7,500 \\
+Febrero & 12,000 & 8,200 \\
+Marzo & 11,500 & 7,800 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Opción [htbp] -- Combinación Flexible}
+
+La combinación \texttt{[htbp]} es la más flexible, permitiendo a \LaTeX{} elegir la mejor posición.
+
+\lipsum[3][3-5]
+
+\begin{table}[htbp]
+\centering
+\caption{Tabla con posición [htbp] -- Flexible}
+\label{tab:flexible}
+\begin{tabular}{lcr}
+\hline
+\textbf{Estudiante} & \textbf{Calificación} & \textbf{Promedio} \\
+\hline
+Ana García & 9.5 & 9.2 \\
+Luis Martínez & 8.7 & 8.5 \\
+María López & 9.8 & 9.6 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Alineación del Contenido de Table}
+
+\subsection{Uso de \textbackslash centering}
+
+El comando \texttt{\textbackslash centering} centra el contenido de la tabla.
+
+\lipsum[4][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla centrada con \textbackslash centering}
+\label{tab:centered}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{País} & \textbf{Población (M)} & \textbf{PIB (\$B)} \\
+\hline
+España & 47 & 1,425 \\
+México & 128 & 1,293 \\
+Argentina & 45 & 487 \\
+\hline
+\end{tabular}
+\end{table}
+
+\lipsum[4][3-4]
+
+\section{Uso de \textbackslash caption y \textbackslash label}
+
+\subsection{Caption Básico}
+
+El comando \texttt{\textbackslash caption} proporciona un título numerado automáticamente.
+
+\lipsum[5][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Resultados del experimento de laboratorio}
+\label{tab:experimento}
+\begin{tabular}{ccc}
+\hline
+\textbf{Muestra} & \textbf{Temperatura (°C)} & \textbf{pH} \\
+\hline
+A & 25.3 & 7.2 \\
+B & 28.1 & 6.8 \\
+C & 26.5 & 7.0 \\
+\hline
+\end{tabular}
+\end{table}
+
+Como se puede observar en la Tabla \ref{tab:experimento}, los valores de pH se mantienen cercanos a la neutralidad.
+
+\lipsum[5][3-4]
+
+\subsection{Caption con Versión Corta}
+
+La versión corta del caption aparece en el índice de tablas.
+
+\lipsum[6][1-2]
+
+\begin{table}[h]
+\centering
+\caption[Ventas trimestrales]{Ventas trimestrales del año 2024 desglosadas por región}
+\label{tab:ventas}
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Región} & \textbf{Q1} & \textbf{Q2} & \textbf{Q3} & \textbf{Q4} \\
+\hline
+Norte & 45,000 & 52,000 & 48,000 & 61,000 \\
+Sur & 38,000 & 41,000 & 43,000 & 47,000 \\
+Este & 51,000 & 55,000 & 58,000 & 63,000 \\
+Oeste & 42,000 & 46,000 & 49,000 & 54,000 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Especificación de Columnas en Tabular}
+
+\subsection{Alineación: l, c, r}
+
+Las columnas pueden alinearse a la izquierda (l), centro (c) o derecha (r).
+
+\lipsum[7][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con diferentes alineaciones de columnas}
+\label{tab:alignment}
+\begin{tabular}{lcr}
+\hline
+\textbf{Izquierda} & \textbf{Centro} & \textbf{Derecha} \\
+\hline
+Texto corto & Centro 1 & 123 \\
+Texto más largo & Centro 2 & 4,567 \\
+Corto & Centro 3 & 89 \\
+\hline
+\end{tabular}
+\end{table}
+
+\lipsum[7][3-4]
+
+\subsection{Columnas con Ancho Fijo: p\{ancho\}}
+
+La especificación \texttt{p\{ancho\}} crea columnas con ancho fijo y texto justificado.
+
+\lipsum[8][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con columnas de ancho fijo}
+\label{tab:fixed-width}
+\begin{tabular}{p{3cm}p{4cm}c}
+\hline
+\textbf{Categoría} & \textbf{Descripción} & \textbf{Código} \\
+\hline
+Electrónica & Dispositivos electrónicos como computadoras, tablets y smartphones & E-001 \\
+Muebles & Artículos de mobiliario para oficina y hogar & M-002 \\
+Ropa & Prendas de vestir y accesorios & R-003 \\
+\hline
+\end{tabular}
+\end{table}
+
+\lipsum[8][3-4]
+
+\subsection{Columnas con Alineación Vertical: m\{ancho\} y b\{ancho\}}
+
+Las columnas tipo \texttt{m} se alinean verticalmente al centro, y tipo \texttt{b} al fondo.
+
+\lipsum[9][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Comparación de alineaciones verticales}
+\label{tab:vertical-align}
+\begin{tabular}{|p{2.5cm}|m{2.5cm}|b{2.5cm}|}
+\hline
+\textbf{Top (p)} & \textbf{Middle (m)} & \textbf{Bottom (b)} \\
+\hline
+Este texto está alineado arriba por defecto & Este texto está centrado verticalmente & Este texto está alineado abajo \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Líneas Verticales}
+
+Las líneas verticales se especifican con el símbolo \texttt{|} en la especificación de columnas.
+
+\lipsum[9][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con líneas verticales}
+\label{tab:vertical-lines}
+\begin{tabular}{|l|c|c|r|}
+\hline
+\textbf{Nombre} & \textbf{Edad} & \textbf{Ciudad} & \textbf{Puntos} \\
+\hline
+Carlos & 28 & Madrid & 850 \\
+Laura & 32 & Barcelona & 920 \\
+Pedro & 25 & Valencia & 780 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Repetición de Especificación: *\{n\}\{especif\}}
+
+La notación \texttt{*\{n\}\{especif\}} repite una especificación n veces.
+
+\lipsum[10][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con 5 columnas centradas usando *\{5\}\{c\}}
+\label{tab:repeat-spec}
+\begin{tabular}{*{5}{c}}
+\hline
+\textbf{Lun} & \textbf{Mar} & \textbf{Mié} & \textbf{Jue} & \textbf{Vie} \\
+\hline
+8 & 9 & 10 & 11 & 12 \\
+15 & 16 & 17 & 18 & 19 \\
+22 & 23 & 24 & 25 & 26 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Comandos de Contenido}
+
+\subsection{Líneas Horizontales: \textbackslash hline}
+
+El comando \texttt{\textbackslash hline} crea líneas horizontales completas.
+
+\lipsum[11][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con múltiples \textbackslash hline}
+\label{tab:hlines}
+\begin{tabular}{lcc}
+\hline
+\hline
+\textbf{Equipo} & \textbf{Victorias} & \textbf{Derrotas} \\
+\hline
+Equipo A & 15 & 3 \\
+Equipo B & 12 & 6 \\
+Equipo C & 10 & 8 \\
+\hline
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Líneas Horizontales Parciales: \textbackslash cline}
+
+El comando \texttt{\textbackslash cline\{i-j\}} crea líneas que abarcan solo de la columna i a la j.
+
+\lipsum[11][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash cline para líneas parciales}
+\label{tab:clines}
+\begin{tabular}{lccc}
+\hline
+\textbf{Producto} & \textbf{Ene} & \textbf{Feb} & \textbf{Mar} \\
+\hline
+Producto A & 100 & 120 & 115 \\
+\cline{2-4}
+Producto B & 80 & 95 & 90 \\
+\cline{2-4}
+Producto C & 110 & 105 & 125 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Espacio Adicional entre Filas: \textbackslash\textbackslash[espacio]}
+
+Se puede agregar espacio vertical entre filas.
+
+\lipsum[12][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con espacio adicional entre filas}
+\label{tab:row-space}
+\begin{tabular}{lc}
+\hline
+\textbf{Concepto} & \textbf{Valor} \\
+\hline
+Ingreso total & \$50,000 \\[5pt]
+Gastos operativos & \$30,000 \\[5pt]
+Utilidad neta & \$20,000 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Fusión de Celdas}
+
+\subsection{Fusión de Columnas: \textbackslash multicolumn}
+
+El comando \texttt{\textbackslash multicolumn} fusiona varias columnas en una sola celda.
+
+\lipsum[13][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash multicolumn}
+\label{tab:multicolumn}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{\textbf{Reporte Anual 2024}} \\
+\hline
+\textbf{Trimestre} & \textbf{Ventas} & \textbf{Costos} & \textbf{Ganancia} \\
+\hline
+Q1 & \$100,000 & \$60,000 & \$40,000 \\
+Q2 & \$120,000 & \$70,000 & \$50,000 \\
+\hline
+\multicolumn{4}{|c|}{Total Semestral: \$90,000} \\
+\hline
+\end{tabular}
+\end{table}
+
+\lipsum[13][3-4]
+
+\subsection{Fusión de Filas: \textbackslash multirow}
+
+El comando \texttt{\textbackslash multirow} fusiona varias filas en una sola celda.
+
+\lipsum[14][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash multirow}
+\label{tab:multirow}
+\begin{tabular}{|l|l|c|}
+\hline
+\textbf{Categoría} & \textbf{Subcategoría} & \textbf{Unidades} \\
+\hline
+\multirow{3}{*}{Frutas} & Manzanas & 150 \\
+& Naranjas & 200 \\
+& Plátanos & 180 \\
+\hline
+\multirow{2}{*}{Verduras} & Lechuga & 120 \\
+& Tomate & 160 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Combinación de \textbackslash multirow y \textbackslash multicolumn}
+
+Se pueden combinar ambos comandos para estructuras complejas.
+
+\lipsum[14][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con multirow y multicolumn combinados}
+\label{tab:multi-both}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{Región}} & \multicolumn{3}{c|}{\textbf{Ventas por Trimestre}} \\
+\cline{2-4}
+& \textbf{Q1} & \textbf{Q2} & \textbf{Q3} \\
+\hline
+Norte & 45,000 & 48,000 & 52,000 \\
+Sur & 38,000 & 41,000 & 43,000 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Espaciado y Formato}
+
+\subsection{Factor de Espaciado Vertical: \textbackslash arraystretch}
+
+El comando \texttt{\textbackslash arraystretch} ajusta el espaciado vertical entre filas.
+
+\lipsum[15][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash arraystretch aumentado a 1.5}
+\label{tab:arraystretch}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{lcc}
+\hline
+\textbf{Artículo} & \textbf{Precio} & \textbf{Stock} \\
+\hline
+Monitor & \$250 & 25 \\
+Teclado & \$60 & 50 \\
+Mouse & \$30 & 100 \\
+\hline
+\end{tabular}
+\renewcommand{\arraystretch}{1.0}
+\end{table}
+
+\lipsum[15][3-4]
+
+\subsection{Espaciado Horizontal: \textbackslash tabcolsep}
+
+El parámetro \texttt{\textbackslash tabcolsep} controla el espaciado horizontal entre columnas.
+
+\lipsum[16][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash tabcolsep=15pt}
+\label{tab:tabcolsep}
+\setlength{\tabcolsep}{15pt}
+\begin{tabular}{lcc}
+\hline
+\textbf{Ciudad} & \textbf{Temp. (°C)} & \textbf{Humedad (\%)} \\
+\hline
+Madrid & 25 & 45 \\
+Barcelona & 28 & 60 \\
+Valencia & 30 & 55 \\
+\hline
+\end{tabular}
+\setlength{\tabcolsep}{6pt}
+\end{table}
+
+\subsection{Grosor de Líneas: \textbackslash arrayrulewidth}
+
+El parámetro \texttt{\textbackslash arrayrulewidth} define el grosor de las líneas.
+
+\lipsum[16][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash arrayrulewidth=1.5pt}
+\label{tab:arrayrulewidth}
+\setlength{\arrayrulewidth}{1.5pt}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Modelo} & \textbf{Año} & \textbf{Precio} \\
+\hline
+Modelo X & 2023 & \$35,000 \\
+Modelo Y & 2024 & \$42,000 \\
+\hline
+\end{tabular}
+\setlength{\arrayrulewidth}{0.4pt}
+\end{table}
+
+\subsection{Separador Personalizado: @\{\}}
+
+El separador \texttt{@\{\}} permite personalizar el espacio entre columnas.
+
+\lipsum[17][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con separador personalizado @\{:\}}
+\label{tab:custom-sep}
+\begin{tabular}{l@{ : }c@{ = }r}
+\hline
+\textbf{Variable} & \textbf{Símbolo} & \textbf{Valor} \\
+\hline
+Velocidad & v & 100 m/s \\
+Aceleración & a & 9.8 m/s² \\
+Tiempo & t & 10 s \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Paquete booktabs -- Tablas Profesionales}
+
+El paquete \texttt{booktabs} proporciona comandos para crear tablas con aspecto profesional.
+
+\subsection{Comandos básicos: \textbackslash toprule, \textbackslash midrule, \textbackslash bottomrule}
+
+\lipsum[18][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla profesional con booktabs}
+\label{tab:booktabs-basic}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Método} & \textbf{Precisión (\%)} & \textbf{Tiempo (ms)} \\
+\midrule
+Método A & 95.2 & 1.23 \\
+Método B & 97.8 & 2.45 \\
+Método C & 92.1 & 0.89 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\lipsum[18][3-4]
+
+\subsection{Tabla Científica con booktabs}
+
+Las tablas científicas se benefician del estilo limpio de booktabs.
+
+\lipsum[19][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Resultados experimentales con valores estadísticos}
+\label{tab:booktabs-science}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Tratamiento} & \textbf{Media} & \textbf{Desv. Est.} & \textbf{n} \\
+\midrule
+Control & 12.5 & 1.2 & 30 \\
+Tratamiento A & 15.8 & 1.5 & 30 \\
+Tratamiento B & 18.2 & 1.8 & 30 \\
+Tratamiento C & 14.1 & 1.3 & 30 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tabla con \textbackslash cmidrule}
+
+El comando \texttt{\textbackslash cmidrule} crea líneas parciales con mejor estética.
+
+\lipsum[19][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con \textbackslash cmidrule de booktabs}
+\label{tab:cmidrule}
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{2023}} & \multicolumn{2}{c}{\textbf{2024}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+\textbf{Producto} & \textbf{Q1} & \textbf{Q2} & \textbf{Q1} & \textbf{Q2} \\
+\midrule
+Producto A & 100 & 120 & 130 & 150 \\
+Producto B & 80 & 95 & 100 & 110 \\
+Producto C & 110 & 105 & 115 & 125 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Tablas con Colores}
+
+El paquete \texttt{xcolor} con la opción \texttt{[table]} permite colorear tablas.
+
+\subsection{Colorear Filas: \textbackslash rowcolor}
+
+\lipsum[20][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con filas coloreadas}
+\label{tab:rowcolor}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Departamento} & \textbf{Empleados} & \textbf{Presupuesto} \\
+\midrule
+\rowcolor{blue!10}
+Ventas & 25 & \$500,000 \\
+Marketing & 15 & \$300,000 \\
+\rowcolor{blue!10}
+IT & 20 & \$450,000 \\
+Recursos Humanos & 10 & \$200,000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Colorear Celdas Individuales: \textbackslash cellcolor}
+
+\lipsum[20][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con celdas individuales coloreadas}
+\label{tab:cellcolor}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Indicador} & \textbf{Actual} & \textbf{Meta} \\
+\midrule
+Satisfacción & \cellcolor{green!30}92\% & 90\% \\
+Eficiencia & \cellcolor{yellow!30}78\% & 85\% \\
+Calidad & \cellcolor{red!30}65\% & 80\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tabla con Alternancia de Colores}
+
+Las filas alternadas mejoran la legibilidad.
+
+\lipsum[21][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con filas alternadas en color}
+\label{tab:alternate-rows}
+\rowcolors{2}{gray!15}{white}
+\begin{tabular}{lcr}
+\toprule
+\textbf{País} & \textbf{Código} & \textbf{Población (M)} \\
+\midrule
+España & ES & 47 \\
+Francia & FR & 67 \\
+Italia & IT & 60 \\
+Alemania & DE & 83 \\
+Portugal & PT & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Paquete tabularx -- Ancho Automático}
+
+El paquete \texttt{tabularx} crea tablas con un ancho total específico.
+
+\lipsum[21][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Tabla con tabularx de ancho \textbackslash textwidth}
+\label{tab:tabularx}
+\begin{tabularx}{\textwidth}{lXr}
+\toprule
+\textbf{Término} & \textbf{Definición} & \textbf{Página} \\
+\midrule
+LaTeX & Sistema de composición de textos orientado a la creación de documentos escritos que presenten una alta calidad tipográfica & 5 \\
+Tabla & Entorno flotante que contiene estructuras tabulares & 12 \\
+Booktabs & Paquete para crear tablas con aspecto profesional & 18 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Paquete makecell -- Celdas Multilínea}
+
+El paquete \texttt{makecell} facilita la creación de celdas con múltiples líneas.
+
+\lipsum[22][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Tabla usando \textbackslash makecell}
+\label{tab:makecell}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Característica} & \textbf{Opción A} & \textbf{Opción B} \\
+\midrule
+\makecell[l]{Rendimiento\\(ops/seg)} & 1,000 & 1,500 \\
+\makecell[l]{Consumo\\(Watts)} & 50 & 75 \\
+\makecell[l]{Precio\\(USD)} & \$200 & \$300 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Tablas Complejas -- Ejemplos Avanzados}
+
+\subsection{Tabla de Horario Escolar}
+
+\lipsum[23][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Horario semanal de clases}
+\label{tab:schedule}
+\small
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Hora} & \textbf{Lunes} & \textbf{Martes} & \textbf{Miércoles} & \textbf{Jueves} & \textbf{Viernes} \\
+\hline
+8:00-9:00 & Matemáticas & Física & Matemáticas & Química & Matemáticas \\
+\hline
+9:00-10:00 & Historia & Literatura & Inglés & Historia & Literatura \\
+\hline
+10:00-11:00 & Inglés & Matemáticas & Física & Inglés & Química \\
+\hline
+11:00-11:30 & \multicolumn{5}{|c|}{Recreo} \\
+\hline
+11:30-12:30 & Química & Educación Física & Literatura & Matemáticas & Física \\
+\hline
+12:30-13:30 & Física & Inglés & Historia & Literatura & Inglés \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Tabla Financiera con Totales}
+
+\lipsum[23][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Estado de resultados trimestral}
+\label{tab:financial}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Concepto} & \textbf{Q1} & \textbf{Q2} & \textbf{Q3} & \textbf{Q4} \\
+\midrule
+Ingresos por ventas & 150,000 & 175,000 & 168,000 & 195,000 \\
+Costo de ventas & 90,000 & 105,000 & 100,800 & 117,000 \\
+\cmidrule{2-5}
+Utilidad bruta & 60,000 & 70,000 & 67,200 & 78,000 \\
+\midrule
+Gastos operativos & 25,000 & 28,000 & 26,500 & 30,000 \\
+Gastos administrativos & 15,000 & 16,000 & 15,500 & 17,000 \\
+\cmidrule{2-5}
+Total gastos & 40,000 & 44,000 & 42,000 & 47,000 \\
+\midrule
+\textbf{Utilidad neta} & \textbf{20,000} & \textbf{26,000} & \textbf{25,200} & \textbf{31,000} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tabla de Comparación de Productos}
+
+\lipsum[24][1-2]
+
+\begin{table}[h]
+\centering
+\caption{Comparación de especificaciones técnicas}
+\label{tab:comparison}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Especificación} & \textbf{Básico} & \textbf{Estándar} & \textbf{Premium} \\
+\midrule
+Procesador & \makecell{Intel Core i3\\2.4 GHz} & \makecell{Intel Core i5\\3.2 GHz} & \makecell{Intel Core i7\\3.8 GHz} \\
+\midrule
+RAM & 8 GB & 16 GB & 32 GB \\
+\midrule
+Almacenamiento & 256 GB SSD & 512 GB SSD & 1 TB SSD \\
+\midrule
+GPU & Integrada & \makecell{NVIDIA\\GTX 1650} & \makecell{NVIDIA\\RTX 3060} \\
+\midrule
+Pantalla & 15.6" FHD & 15.6" FHD & 17.3" 4K \\
+\midrule
+Precio & \$699 & \$1,199 & \$1,899 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tabla Estadística Compleja}
+
+\lipsum[24][3-4]
+
+\begin{table}[h]
+\centering
+\caption{Análisis estadístico de múltiples grupos}
+\label{tab:statistics}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{\textbf{Grupo Control}} & \multicolumn{3}{c}{\textbf{Grupo Tratamiento}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\textbf{Variable} & \textbf{Media} & \textbf{DE} & \textbf{n} & \textbf{Media} & \textbf{DE} & \textbf{n} \\
+\midrule
+Edad (años) & 45.2 & 12.3 & 50 & 46.1 & 11.8 & 50 \\
+Peso (kg) & 72.5 & 15.2 & 50 & 71.8 & 14.9 & 50 \\
+Altura (cm) & 168.3 & 8.5 & 50 & 169.1 & 8.2 & 50 \\
+IMC (kg/m²) & 25.6 & 4.1 & 50 & 25.1 & 3.9 & 50 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Resumen y Mejores Prácticas}
+
+\subsection{Recomendaciones Generales}
+
+\begin{itemize}
+    \item Utilizar \texttt{booktabs} para tablas profesionales y evitar líneas verticales
+    \item Colocar el \texttt{\textbackslash label} siempre después del \texttt{\textbackslash caption}
+    \item Usar \texttt{[htbp]} como opción de posición más flexible
+    \item Preferir \texttt{\textbackslash centering} sobre \texttt{center} dentro de \texttt{table}
+    \item Limitar el uso de líneas horizontales y verticales para mejor estética
+    \item Usar \texttt{tabularx} cuando se necesite un ancho específico de tabla
+    \item Aplicar colores de forma moderada para destacar información importante
+    \item Mantener consistencia en el formato de números y unidades
+\end{itemize}
+
+\subsection{Errores Comunes a Evitar}
+
+\begin{itemize}
+    \item No combinar \texttt{\textbackslash hline} con comandos de \texttt{booktabs}
+    \item Olvidar el \texttt{\&} entre columnas o el \texttt{\textbackslash\textbackslash} al final de fila
+    \item Usar demasiadas líneas que hacen la tabla difícil de leer
+    \item No especificar el número correcto de columnas en \texttt{\textbackslash multicolumn}
+    \item Olvidar cerrar el entorno \texttt{tabular} antes de cerrar \texttt{table}
+\end{itemize}
+
+\vspace{2cm}
+
+\begin{center}
+\large
+\textit{Documento generado con \LaTeX{} y múltiples paquetes de tablas}
+
+\textit{\today}
+\end{center}
+
+\end{document}

@@ -1,0 +1,1024 @@
+\documentclass[11pt,a4paper]{article}
+
+% =====================================================
+% PREÁMBULO: CONFIGURACIÓN DEL DOCUMENTO
+% =====================================================
+
+% Detección de motor de compilación
+\usepackage{iftex}
+
+\ifluatex
+  \usepackage{fontspec}
+  \usepackage{polyglossia}
+  \setdefaultlanguage[variant=mexican]{spanish}
+\else
+  \ifxetex
+    \usepackage{fontspec}
+    \usepackage{polyglossia}
+    \setdefaultlanguage[variant=mexican]{spanish}
+  \else
+    \usepackage[T1]{fontenc}
+    \usepackage[spanish,es-tabla]{babel}
+  \fi
+\fi
+
+% Paquetes esenciales
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+
+% Definición de colores
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{azulclaro}{RGB}{230,240,250}
+\definecolor{verdeoscuro}{RGB}{0,100,0}
+\definecolor{verdeclaro}{RGB}{230,255,230}
+\definecolor{rojoclaro}{RGB}{255,230,230}
+\definecolor{amarilloclaro}{RGB}{255,255,200}
+\definecolor{grisclaro}{RGB}{245,245,245}
+\definecolor{naranjaoscuro}{RGB}{230,115,0}
+\definecolor{moradoclaro}{RGB}{240,230,255}
+
+% Configuración de listings
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    columns=flexible,
+    showstringspaces=false,
+    frame=single,
+    backgroundcolor=\color{grisclaro},
+    xleftmargin=10pt,
+    xrightmargin=10pt,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt
+}
+
+% Hyperref al final
+\usepackage[
+    colorlinks=true,
+    linkcolor=azuloscuro,
+    urlcolor=blue,
+    citecolor=verdeoscuro,
+    pdftitle={Guía de Git Local para Proyectos LaTeX},
+    pdfauthor={Toribio Arrieta},
+    bookmarks=true,
+    unicode=true,
+    breaklinks=true
+]{hyperref}
+
+% Título
+\title{\textbf{\Huge Guía de Git Local}\\[0.5cm]
+\Large Control de Versiones para Proyectos \LaTeX{}\\[0.3cm]
+\large Guardar estados y recuperar versiones antiguas}
+\author{Toribio Arrieta}
+\date{\today}
+
+% =====================================================
+% INICIO DEL DOCUMENTO
+% =====================================================
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =====================================================
+% SECCIÓN 1: INTRODUCCIÓN
+% =====================================================
+\section{¿Qué es Git y por qué usarlo?}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Git: Tu máquina del tiempo para documentos LaTeX}]
+\textbf{Git} es un sistema de control de versiones que te permite:
+\begin{itemize}
+    \item Guardar ``fotografías'' de tu proyecto en diferentes momentos
+    \item Volver a cualquier versión anterior
+    \item Ver exactamente qué cambió entre versiones
+    \item Nunca más perder trabajo importante
+    \item Trabajar sin miedo a romper el documento
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{El problema sin Git}
+
+\textbf{Situación típica sin Git:}
+
+\begin{lstlisting}[language=bash,numbers=none]
+Mi_Tesis.tex
+Mi_Tesis_final.tex
+Mi_Tesis_final_v2.tex
+Mi_Tesis_final_v2_AHORA_SI.tex
+Mi_Tesis_final_v2_AHORA_SI_revisor.tex
+Mi_Tesis_DEFINITIVO.tex
+Mi_Tesis_DEFINITIVO_FINAL.tex
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=rojoclaro,colframe=red!75!black,title=\textbf{Problemas:}]
+\begin{itemize}
+    \item No sabes qué versión es la correcta
+    \item Ocupa mucho espacio en disco
+    \item No sabes qué cambió entre versiones
+    \item Si borras algo importante, se perdió para siempre
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{La solución con Git}
+
+\textbf{Con Git solo tienes:}
+
+\begin{lstlisting}[language=bash,numbers=none]
+Mi_Tesis.tex
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Ventajas:}]
+\begin{itemize}
+    \item Un solo archivo, múltiples versiones guardadas internamente
+    \item Cada versión tiene fecha, hora y descripción
+    \item Puedes ver cambios línea por línea
+    \item Recuperar versiones anteriores en segundos
+    \item Trabajar sin miedo: siempre puedes volver atrás
+\end{itemize}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 2: CONCEPTOS BÁSICOS
+% =====================================================
+\section{Conceptos básicos de Git}
+
+\subsection{Vocabulario esencial}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{9cm}|}
+\hline
+\textbf{Término} & \textbf{Significado} \\
+\hline
+\hline
+\textbf{Repositorio} & Una carpeta de tu proyecto que Git vigila \\
+\hline
+\textbf{Commit} & Una ``fotografía'' guardada de tu proyecto en un momento específico \\
+\hline
+\textbf{Staging} & Preparar archivos antes de guardarlos (commit) \\
+\hline
+\textbf{Hash} & Código único de cada commit (ej: \texttt{a3f2b1c}) \\
+\hline
+\textbf{HEAD} & Dónde estás ahora (el commit actual) \\
+\hline
+\textbf{Branch} & Rama de desarrollo (por ahora usas solo \texttt{master}) \\
+\hline
+\textbf{Working directory} & Tus archivos actuales en la carpeta \\
+\hline
+\end{tabular}
+\caption{Términos clave de Git}
+\end{table}
+
+\subsection{El flujo de trabajo en tres pasos}
+
+\begin{tcolorbox}[colback=moradoclaro,colframe=purple!75!black,title=\textbf{Los tres pasos para guardar cambios:}]
+
+\textbf{Paso 1: Working Directory} (tus archivos)
+\begin{lstlisting}[language=bash,numbers=none]
+Editas: Mi_Tesis.tex
+\end{lstlisting}
+
+\textbf{Paso 2: Staging Area} (preparación)
+\begin{lstlisting}[language=bash,numbers=none]
+git add Mi_Tesis.tex
+\end{lstlisting}
+
+\textbf{Paso 3: Repository} (guardado permanente)
+\begin{lstlisting}[language=bash,numbers=none]
+git commit -m "Agregue capitulo 3"
+\end{lstlisting}
+
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 3: CONFIGURACIÓN INICIAL
+% =====================================================
+\section{Configuración inicial de Git}
+
+\subsection{Verificar que Git está instalado}
+
+\begin{lstlisting}[language=bash]
+git --version
+\end{lstlisting}
+
+\textbf{Salida esperada:}
+\begin{lstlisting}[numbers=none]
+git version 2.50.0
+\end{lstlisting}
+
+\subsection{Configurar tu identidad (solo una vez)}
+
+\begin{lstlisting}[language=bash]
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+\end{lstlisting}
+
+\textbf{Verificar configuración:}
+\begin{lstlisting}[language=bash]
+git config user.name
+git config user.email
+\end{lstlisting}
+
+\subsection{Crear el archivo .gitignore}
+
+Este archivo le dice a Git qué archivos ignorar (archivos auxiliares de LaTeX):
+
+\begin{tcolorbox}[colback=grisclaro,colframe=black,title=\textbf{Contenido del archivo .gitignore}]
+\begin{lstlisting}[language=bash,numbers=none]
+# Archivos auxiliares de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ilg
+*.ind
+
+# PDFs (opcional: comentar si quieres guardar PDFs)
+*.pdf
+
+# Archivos de sistema
+.DS_Store
+*~
+*.swp
+\end{lstlisting}
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 4: INICIALIZAR REPOSITORIO
+% =====================================================
+\section{Inicializar un repositorio Git}
+
+\subsection{Paso a paso para tu primer proyecto}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Ejemplo: Configurar Git para tu tesis}]
+
+\textbf{Paso 1: Ve a la carpeta de tu proyecto}
+\begin{lstlisting}[language=bash]
+cd /Users/toribioarrieta/Documents/MiTesis
+\end{lstlisting}
+
+\textbf{Paso 2: Inicializa Git}
+\begin{lstlisting}[language=bash]
+git init
+\end{lstlisting}
+
+\textbf{Salida esperada:}
+\begin{lstlisting}[numbers=none]
+Initialized empty Git repository in
+/Users/toribioarrieta/Documents/MiTesis/.git/
+\end{lstlisting}
+
+\textbf{Paso 3: Crea el archivo .gitignore}
+\begin{lstlisting}[language=bash]
+# Crear archivo con contenido
+cat > .gitignore << 'EOF'
+*.aux
+*.log
+*.pdf
+*.synctex.gz
+.DS_Store
+EOF
+\end{lstlisting}
+
+\textbf{Paso 4: Añade tus archivos importantes}
+\begin{lstlisting}[language=bash]
+git add *.tex
+git add .gitignore
+git add figuras/
+\end{lstlisting}
+
+\textbf{Paso 5: Haz tu primer commit}
+\begin{lstlisting}[language=bash]
+git commit -m "Version inicial de la tesis"
+\end{lstlisting}
+
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 5: USO DIARIO
+% =====================================================
+\section{Comandos para uso diario}
+
+\subsection{Ver el estado actual}
+
+\begin{lstlisting}[language=bash]
+git status
+\end{lstlisting}
+
+\textbf{Interpretación de la salida:}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{5cm}|p{8cm}|}
+\hline
+\textbf{Mensaje} & \textbf{Significado} \\
+\hline
+\texttt{Changes not staged} & Archivos modificados pero no preparados \\
+\hline
+\texttt{Changes to be committed} & Archivos listos para guardar \\
+\hline
+\texttt{Untracked files} & Archivos nuevos que Git no vigila \\
+\hline
+\texttt{nothing to commit} & Todo está guardado, sin cambios \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Guardar cambios (workflow completo)}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Flujo típico después de editar}]
+
+\textbf{1. Editas tu documento en TeXstudio}
+\begin{verbatim}
+[Editas Mi_Tesis.tex]
+[Guardas el archivo]
+[Compilas y verificas que funciona]
+\end{verbatim}
+
+\textbf{2. Ves qué cambió}
+\begin{lstlisting}[language=bash]
+git status
+git diff Mi_Tesis.tex
+\end{lstlisting}
+
+\textbf{3. Preparas el archivo}
+\begin{lstlisting}[language=bash]
+git add Mi_Tesis.tex
+\end{lstlisting}
+
+\textbf{4. Guardas con mensaje descriptivo}
+\begin{lstlisting}[language=bash]
+git commit -m "Agregue seccion sobre metodologia"
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{Mensajes de commit efectivos}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{10cm}|}
+\hline
+\textbf{Estado} & \textbf{Mensaje} \\
+\hline
+\hline
+✅ BIEN & \texttt{Agregue capitulo 3 sobre resultados} \\
+\hline
+✅ BIEN & \texttt{Corregi errores de ortografia en seccion 2.1} \\
+\hline
+✅ BIEN & \texttt{Anadi 5 figuras nuevas al capitulo 4} \\
+\hline
+✅ BIEN & \texttt{Reorganice estructura del preambulo} \\
+\hline
+❌ MAL & \texttt{cambios} \\
+\hline
+❌ MAL & \texttt{actualizacion} \\
+\hline
+❌ MAL & \texttt{asdf} \\
+\hline
+❌ MAL & \texttt{final} \\
+\hline
+\end{tabular}
+\caption{Ejemplos de mensajes de commit}
+\end{table}
+
+% =====================================================
+% SECCIÓN 6: VER HISTORIAL
+% =====================================================
+\section{Ver el historial de cambios}
+
+\subsection{Comando básico}
+
+\begin{lstlisting}[language=bash]
+git log
+\end{lstlisting}
+
+\textbf{Salida ejemplo:}
+\begin{lstlisting}[numbers=none]
+commit a3f2b1c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0
+Author: Toribio Arrieta <toribio99@gmail.com>
+Date:   Thu Oct 17 10:30:00 2025 -0600
+
+    Agregue capitulo 3 sobre resultados
+
+commit 9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0
+Author: Toribio Arrieta <toribio99@gmail.com>
+Date:   Wed Oct 16 15:45:00 2025 -0600
+
+    Version inicial de la tesis
+\end{lstlisting}
+
+\subsection{Versión compacta (recomendada)}
+
+\begin{lstlisting}[language=bash]
+git log --oneline
+\end{lstlisting}
+
+\textbf{Salida ejemplo:}
+\begin{lstlisting}[numbers=none]
+a3f2b1c Agregue capitulo 3 sobre resultados
+9f8e7d6 Version inicial de la tesis
+\end{lstlisting}
+
+\subsection{Ver últimos N commits}
+
+\begin{lstlisting}[language=bash]
+# Ver ultimos 5 commits
+git log --oneline -5
+
+# Ver ultimos 10 commits
+git log --oneline -10
+\end{lstlisting}
+
+\subsection{Ver cambios detallados}
+
+\begin{lstlisting}[language=bash]
+# Ver que cambio en cada commit
+git log -p
+
+# Ver solo estadisticas
+git log --stat
+\end{lstlisting}
+
+% =====================================================
+% SECCIÓN 7: COMPARAR VERSIONES
+% =====================================================
+\section{Comparar versiones}
+
+\subsection{Ver cambios NO guardados}
+
+\begin{lstlisting}[language=bash]
+# Ver diferencias en archivos modificados
+git diff
+
+# Ver diferencias en archivo especifico
+git diff Mi_Tesis.tex
+\end{lstlisting}
+
+\subsection{Ver cambios preparados (staged)}
+
+\begin{lstlisting}[language=bash]
+git diff --staged
+\end{lstlisting}
+
+\subsection{Comparar con commit anterior}
+
+\begin{lstlisting}[language=bash]
+# Comparar con el commit anterior
+git diff HEAD~1
+
+# Comparar con 3 commits atras
+git diff HEAD~3
+\end{lstlisting}
+
+\subsection{Comparar dos commits específicos}
+
+\begin{lstlisting}[language=bash]
+# Primero obtener los hashes
+git log --oneline
+
+# Luego comparar (ejemplo)
+git diff a3f2b1c 9f8e7d6
+\end{lstlisting}
+
+% =====================================================
+% SECCIÓN 8: RECUPERAR VERSIONES
+% =====================================================
+\section{Recuperar versiones anteriores}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{⚠️ IMPORTANTE}]
+Antes de recuperar versiones antiguas, \textbf{asegúrate de haber guardado (commit) tus cambios actuales}. De lo contrario, los perderás.
+\end{tcolorbox}
+
+\subsection{Recuperar UN archivo específico}
+
+\textbf{Escenario:} Borraste una sección importante de \texttt{Mi\_Tesis.tex} y quieres recuperarla.
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Procedimiento:}]
+
+\textbf{Paso 1: Ver historial}
+\begin{lstlisting}[language=bash]
+git log --oneline
+\end{lstlisting}
+
+\textbf{Salida:}
+\begin{lstlisting}[numbers=none]
+a3f2b1c Agregue capitulo 3
+b4c5d6e Corregi capitulo 2
+e7f8g9h Version inicial
+\end{lstlisting}
+
+\textbf{Paso 2: Recuperar archivo de commit específico}
+\begin{lstlisting}[language=bash]
+# Recuperar Mi_Tesis.tex del commit b4c5d6e
+git checkout b4c5d6e Mi_Tesis.tex
+\end{lstlisting}
+
+\textbf{Paso 3: Revisar el archivo recuperado}
+\begin{verbatim}
+[Abre Mi_Tesis.tex en TeXstudio]
+[Verifica que tiene la sección que necesitabas]
+\end{verbatim}
+
+\textbf{Paso 4: Guardar la recuperación}
+\begin{lstlisting}[language=bash]
+git add Mi_Tesis.tex
+git commit -m "Recupere seccion eliminada del capitulo 2"
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{Ver versión antigua SIN modificar la actual}
+
+\begin{lstlisting}[language=bash]
+# Ver el archivo como era en ese commit (solo lectura)
+git show b4c5d6e:Mi_Tesis.tex
+\end{lstlisting}
+
+Puedes copiar la parte que necesitas y pegarla manualmente.
+
+\subsection{Viajar en el tiempo (TODO el proyecto)}
+
+\begin{tcolorbox}[colback=rojoclaro,colframe=red!75!black,title=\textbf{⚠️ CUIDADO: Modo avanzado}]
+
+\textbf{Esto mueve TODO tu proyecto a una versión anterior:}
+\begin{lstlisting}[language=bash]
+# Viajar al commit b4c5d6e
+git checkout b4c5d6e
+\end{lstlisting}
+
+\textbf{Para volver al presente:}
+\begin{lstlisting}[language=bash]
+git checkout master
+\end{lstlisting}
+
+\textbf{Nota:} Mientras estás en el pasado, estás en modo ``detached HEAD''. Solo observa, no hagas commits.
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 9: DESHACER CAMBIOS
+% =====================================================
+\section{Deshacer cambios}
+
+\subsection{Deshacer cambios NO guardados}
+
+\textbf{Escenario:} Hiciste cambios en \texttt{Mi\_Tesis.tex} pero NO has hecho \texttt{git add} ni \texttt{git commit}.
+
+\begin{lstlisting}[language=bash]
+# Restaurar archivo a la ultima version guardada
+git checkout -- Mi_Tesis.tex
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=rojoclaro,colframe=red!75!black]
+⚠️ \textbf{CUIDADO:} Esto BORRA todos los cambios no guardados en ese archivo.
+\end{tcolorbox}
+
+\subsection{Quitar archivo del staging}
+
+\textbf{Escenario:} Hiciste \texttt{git add Mi\_Tesis.tex} pero NO quieres incluirlo en el commit.
+
+\begin{lstlisting}[language=bash]
+git reset Mi_Tesis.tex
+\end{lstlisting}
+
+El archivo sigue modificado, solo lo quitas del área de preparación.
+
+\subsection{Deshacer el último commit}
+
+\begin{tcolorbox}[colback=amarilloclaro,colframe=naranjaoscuro,title=\textbf{Deshacer commit manteniendo cambios:}]
+\begin{lstlisting}[language=bash]
+git reset --soft HEAD~1
+\end{lstlisting}
+
+\textbf{Efecto:}
+\begin{itemize}
+    \item Deshace el commit
+    \item Los cambios quedan en staging (listos para nuevo commit)
+    \item Puedes modificar y hacer commit de nuevo
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=rojoclaro,colframe=red!75!black,title=\textbf{Deshacer commit BORRANDO cambios:}]
+\begin{lstlisting}[language=bash]
+git reset --hard HEAD~1
+\end{lstlisting}
+
+⚠️ \textbf{MUY PELIGROSO:} Borra el commit Y los cambios permanentemente.
+\end{tcolorbox}
+
+% =====================================================
+% SECCIÓN 10: CASOS DE USO PRÁCTICOS
+% =====================================================
+\section{Casos de uso prácticos}
+
+\subsection{Caso 1: Trabajo diario en tu tesis}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro,title=\textbf{Flujo diario recomendado}]
+
+\textbf{Mañana (inicio):}
+\begin{lstlisting}[language=bash]
+cd /Users/toribioarrieta/Documents/MiTesis
+git status
+\end{lstlisting}
+
+\textbf{Durante el día:}
+\begin{verbatim}
+[Editas archivos .tex en TeXstudio]
+[Compilas y verificas]
+\end{verbatim}
+
+\textbf{Cada 1-2 horas o al terminar una sección:}
+\begin{lstlisting}[language=bash]
+git add *.tex
+git commit -m "Descripcion breve"
+\end{lstlisting}
+
+\textbf{Tarde (final del día):}
+\begin{lstlisting}[language=bash]
+git log --oneline -5
+# Verificar que guardaste todo
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{Caso 2: Experimentar sin miedo}
+
+\textbf{Escenario:} Quieres probar una nueva estructura pero no estás seguro si funcionará.
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro]
+
+\textbf{Paso 1: Guarda el estado actual}
+\begin{lstlisting}[language=bash]
+git add .
+git commit -m "Version estable antes de experimento"
+\end{lstlisting}
+
+\textbf{Paso 2: Experimenta libremente}
+\begin{verbatim}
+[Haz cambios grandes]
+[Reorganiza capítulos]
+[Prueba nuevos enfoques]
+\end{verbatim}
+
+\textbf{Paso 3a: Si funciona, guárdalo}
+\begin{lstlisting}[language=bash]
+git add .
+git commit -m "Nueva estructura - funciono bien"
+\end{lstlisting}
+
+\textbf{Paso 3b: Si NO funciona, descártalo}
+\begin{lstlisting}[language=bash]
+git checkout -- .
+# Vuelve todo a como estaba
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{Caso 3: Recuperar trabajo perdido}
+
+\textbf{Escenario:} Borraste accidentalmente 2 páginas importantes.
+
+\begin{lstlisting}[language=bash]
+# Ver cuando estaba bien
+git log --oneline
+
+# Recuperar version antigua
+git checkout a3f2b1c Mi_Tesis.tex
+
+# Copiar lo que necesitas a un archivo temporal
+cp Mi_Tesis.tex Mi_Tesis_recuperado.tex
+
+# Volver a la version actual
+git checkout master
+
+# Fusionar manualmente lo recuperado
+\end{lstlisting}
+
+% =====================================================
+% SECCIÓN 11: TIPS Y BUENAS PRÁCTICAS
+% =====================================================
+\section{Tips y buenas prácticas}
+
+\subsection{Frecuencia de commits}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{10cm}|}
+\hline
+\textbf{Frecuencia} & \textbf{Cuándo hacer commit} \\
+\hline
+\hline
+✅ Ideal & Cada sección completa (30 min - 1 hora de trabajo) \\
+\hline
+✅ Bueno & Al terminar el día de trabajo \\
+\hline
+⚠️ Aceptable & Cada cambio importante (nuevo capítulo, figuras, etc.) \\
+\hline
+❌ Muy poco & Solo al terminar TODO el documento \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Qué incluir en commits}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{5cm}|p{5cm}|}
+\hline
+ & \textbf{SÍ guardar} & \textbf{NO guardar} \\
+\hline
+\hline
+Archivos & \texttt{*.tex} & \texttt{*.aux} \\
+ & Figuras (\texttt{.png, .jpg}) & \texttt{*.log} \\
+ & \texttt{.bib} (bibliografía) & \texttt{*.pdf} (opcional) \\
+ & \texttt{.gitignore} & \texttt{*.synctex.gz} \\
+\hline
+\end{tabular}
+\caption{Qué archivos incluir}
+\end{table}
+
+\subsection{Comandos útiles rápidos}
+
+\begin{lstlisting}[language=bash]
+# Ver estado rapido
+git status -s
+
+# Anadir todos los .tex modificados
+git add *.tex
+
+# Ver historial bonito
+git log --oneline --graph --all
+
+# Ver ultimo commit
+git log -1
+
+# Ver archivos en el ultimo commit
+git show --name-only
+
+# Contar commits totales
+git log --oneline | wc -l
+\end{lstlisting}
+
+% =====================================================
+% SECCIÓN 12: SOLUCIÓN DE PROBLEMAS
+% =====================================================
+\section{Solución de problemas comunes}
+
+\subsection{Error: ``Not a git repository''}
+
+\textbf{Problema:}
+\begin{lstlisting}[numbers=none]
+fatal: not a git repository
+\end{lstlisting}
+
+\textbf{Solución:}
+\begin{lstlisting}[language=bash]
+# Estas en el directorio correcto?
+pwd
+
+# Si no, ve al directorio del proyecto
+cd /Users/toribioarrieta/Documents/MiTesis
+
+# Si nunca inicializaste Git:
+git init
+\end{lstlisting}
+
+\subsection{Error: ``Please tell me who you are''}
+
+\textbf{Solución:}
+\begin{lstlisting}[language=bash]
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+\end{lstlisting}
+
+\subsection{Error: ``Changes not staged for commit''}
+
+\textbf{No es error, es informativo.}
+
+\textbf{Solución:}
+\begin{lstlisting}[language=bash]
+# Anadir archivos modificados
+git add *.tex
+git commit -m "Tu mensaje"
+\end{lstlisting}
+
+\subsection{¿Cómo saber en qué commit estoy?}
+
+\begin{lstlisting}[language=bash]
+git log -1 --oneline
+# O simplemente:
+git status
+\end{lstlisting}
+
+% =====================================================
+% SECCIÓN 13: COMANDOS DE REFERENCIA RÁPIDA
+% =====================================================
+\section{Referencia rápida de comandos}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{6cm}|p{7cm}|}
+\hline
+\textbf{Comando} & \textbf{Qué hace} \\
+\hline
+\hline
+\multicolumn{2}{|c|}{\textbf{CONFIGURACIÓN}} \\
+\hline
+\texttt{git init} & Inicializar repositorio \\
+\hline
+\texttt{git config user.name} & Ver tu nombre \\
+\hline
+\texttt{git config user.email} & Ver tu email \\
+\hline
+\hline
+\multicolumn{2}{|c|}{\textbf{USO DIARIO}} \\
+\hline
+\texttt{git status} & Ver estado actual \\
+\hline
+\texttt{git add archivo.tex} & Preparar archivo \\
+\hline
+\texttt{git add *.tex} & Preparar todos los .tex \\
+\hline
+\texttt{git commit -m "msg"} & Guardar cambios \\
+\hline
+\hline
+\multicolumn{2}{|c|}{\textbf{HISTORIAL}} \\
+\hline
+\texttt{git log} & Ver historial completo \\
+\hline
+\texttt{git log --oneline} & Ver historial compacto \\
+\hline
+\texttt{git log -5} & Ver últimos 5 commits \\
+\hline
+\texttt{git show} & Ver último commit en detalle \\
+\hline
+\hline
+\multicolumn{2}{|c|}{\textbf{COMPARAR}} \\
+\hline
+\texttt{git diff} & Ver cambios no guardados \\
+\hline
+\texttt{git diff archivo.tex} & Ver cambios en archivo \\
+\hline
+\texttt{git diff --staged} & Ver cambios preparados \\
+\hline
+\hline
+\multicolumn{2}{|c|}{\textbf{RECUPERAR}} \\
+\hline
+\texttt{git checkout hash archivo} & Recuperar archivo antiguo \\
+\hline
+\texttt{git checkout -{}-} archivo & Descartar cambios locales \\
+\hline
+\texttt{git reset -{}-soft HEAD\textasciitilde{}1} & Deshacer último commit \\
+\hline
+\end{tabular}
+\caption{Comandos esenciales de Git}
+\end{table}
+
+% =====================================================
+% SECCIÓN 14: EJERCICIO PRÁCTICO
+% =====================================================
+\section{Ejercicio práctico paso a paso}
+
+\begin{tcolorbox}[colback=moradoclaro,colframe=purple!75!black,title=\textbf{Ejercicio: Tu primer repositorio Git}]
+
+\textbf{Objetivo:} Crear un mini-proyecto LaTeX con Git desde cero.
+
+\textbf{Paso 1: Crear directorio}
+\begin{lstlisting}[language=bash]
+mkdir ~/Documents/PracticaGit
+cd ~/Documents/PracticaGit
+\end{lstlisting}
+
+\textbf{Paso 2: Crear archivo LaTeX simple}
+\begin{lstlisting}[language=bash]
+cat > documento.tex << 'EOF'
+\documentclass{article}
+\begin{document}
+Hola, este es mi primer documento con Git.
+\end{document}
+EOF
+\end{lstlisting}
+
+\textbf{Paso 3: Inicializar Git}
+\begin{lstlisting}[language=bash]
+git init
+\end{lstlisting}
+
+\textbf{Paso 4: Crear .gitignore}
+\begin{lstlisting}[language=bash]
+cat > .gitignore << 'EOF'
+*.aux
+*.log
+*.pdf
+EOF
+\end{lstlisting}
+
+\textbf{Paso 5: Primer commit}
+\begin{lstlisting}[language=bash]
+git add documento.tex .gitignore
+git commit -m "Version inicial del documento"
+\end{lstlisting}
+
+\textbf{Paso 6: Hacer cambios}
+\begin{lstlisting}[language=bash]
+cat >> documento.tex << 'EOF'
+
+Este es un parrafo nuevo que estoy agregando.
+EOF
+\end{lstlisting}
+
+\textbf{Paso 7: Ver diferencias}
+\begin{lstlisting}[language=bash]
+git diff documento.tex
+\end{lstlisting}
+
+\textbf{Paso 8: Guardar cambios}
+\begin{lstlisting}[language=bash]
+git add documento.tex
+git commit -m "Agregue un parrafo nuevo"
+\end{lstlisting}
+
+\textbf{Paso 9: Ver historial}
+\begin{lstlisting}[language=bash]
+git log --oneline
+\end{lstlisting}
+
+\textbf{Paso 10: Recuperar versión anterior}
+\begin{lstlisting}[language=bash]
+git log --oneline
+# Anota el hash del primer commit
+git checkout [hash] documento.tex
+# Verificar que volvio
+cat documento.tex
+# Regresar a la version mas reciente
+git checkout master
+\end{lstlisting}
+
+\end{tcolorbox}
+
+% =====================================================
+% CONCLUSIÓN
+% =====================================================
+\section{Conclusión}
+
+\begin{tcolorbox}[colback=verdeclaro,colframe=verdeoscuro,title=\textbf{Resumen final}]
+
+\textbf{Lo más importante que debes recordar:}
+
+\begin{enumerate}
+    \item \textbf{Haz commits frecuentemente} - Mejor muchos pequeños que uno gigante
+    \item \textbf{Mensajes descriptivos} - Tu yo del futuro te lo agradecerá
+    \item \textbf{Git es local} - Todo está en tu computadora, no necesita internet
+    \item \textbf{No temas experimentar} - Siempre puedes volver atrás
+    \item \textbf{Usa .gitignore} - No guardes archivos auxiliares
+\end{enumerate}
+
+\textbf{Los 5 comandos que usarás el 90\% del tiempo:}
+\begin{lstlisting}[language=bash,numbers=none]
+git status           # Ver que cambio
+git add *.tex        # Preparar archivos
+git commit -m "..."  # Guardar cambios
+git log --oneline    # Ver historial
+git diff             # Ver diferencias
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=azulclaro,colframe=azuloscuro]
+\textbf{Próximos pasos:}
+\begin{itemize}
+    \item Inicia Git en tu proyecto actual
+    \item Haz tu primer commit hoy mismo
+    \item Practica con el ejercicio de la sección 14
+    \item Consulta esta guía cuando tengas dudas
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+
+\begin{center}
+\textit{Documento generado con \LaTeX{} -- \today}\\[0.2cm]
+\small Con Git, nunca más perderás tu trabajo importante 🎉
+\end{center}
+
+\end{document}

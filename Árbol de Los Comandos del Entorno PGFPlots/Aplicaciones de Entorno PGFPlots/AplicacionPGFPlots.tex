@@ -1,0 +1,1373 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{lipsum}
+\pgfplotsset{compat=1.18}
+
+% Librerías adicionales de PGFPlots
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{polar}
+
+% Título
+\title{\textbf{\Huge Aplicaciones Prácticas de PGFPlots} \\[3mm] \large Ejemplos de Uso de Comandos y Opciones}
+\author{}
+\date{\today}
+
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Configuración Básica del Paquete}
+
+\subsection{Carga Básica con pgfplotsset}
+
+Este ejemplo muestra la configuración básica del paquete PGFPlots con opciones globales.
+
+\begin{verbatim}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\end{verbatim}
+
+\lipsum[1][1-3]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}
+    \addplot[smooth] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Configuración Global con pgfplotsset}
+
+Podemos establecer opciones globales que afectan a todos los gráficos del documento.
+
+\begin{verbatim}
+\pgfplotsset{
+    width=10cm,
+    height=6cm,
+    grid=major
+}
+\end{verbatim}
+
+\lipsum[1][1-2]
+
+\section{Tamaño y Dimensiones}
+
+\subsection{Opción width y height}
+
+Control del tamaño del gráfico mediante las opciones \texttt{width} y \texttt{height}.
+
+\lipsum[2][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=10cm,
+    height=6cm,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Gráfico con width=10cm, height=6cm}
+]
+    \addplot[smooth] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción scale}
+
+Escala todo el gráfico incluyendo etiquetas y títulos.
+
+\lipsum[2][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    scale=1.2,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Gráfico con scale=1.2}
+]
+    \addplot[smooth] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción scale only axis}
+
+Escala solo el área del gráfico, manteniendo el tamaño de etiquetas y títulos.
+
+\lipsum[2][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=10cm,
+    height=6cm,
+    scale only axis,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Gráfico con scale only axis}
+]
+    \addplot[smooth] {x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Límites de Ejes}
+
+\subsection{Opciones xmin, xmax, ymin, ymax}
+
+Define explícitamente los límites de los ejes.
+
+\lipsum[3][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=0, xmax=10,
+    ymin=-2, ymax=2,
+    xlabel=$x$,
+    ylabel=$\sin(x)$,
+    title={Límites personalizados: xmin=0, xmax=10, ymin=-2, ymax=2}
+]
+    \addplot[blue, thick, smooth, samples=50] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción domain}
+
+Define el dominio para la evaluación de funciones.
+
+\lipsum[3][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$x^3$,
+    title={Función con domain=-2:2}
+]
+    \addplot[red, thick, smooth, samples=50, domain=-2:2] {x^3};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción restrict y to domain}
+
+Útil para funciones con discontinuidades, restringe valores de y a un rango.
+
+\lipsum[3][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$1/x$,
+    title={Función 1/x con restrict y to domain=-10:10},
+    grid=major
+]
+    \addplot[green!70!black, thick, smooth, samples=50, restrict y to domain=-10:10] {1/x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Escalas de Ejes}
+
+\subsection{Escala Logarítmica: xmode=log, ymode=log}
+
+Cambia la escala de los ejes a logarítmica.
+
+\lipsum[4][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xmode=log,
+    ymode=log,
+    xlabel=$x$,
+    ylabel=$x^2$,
+    title={Gráfica logarítmica: xmode=log, ymode=log},
+    grid=major
+]
+    \addplot[blue, thick, smooth, samples=50, domain=1:100] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Base del Logaritmo: log basis y}
+
+Permite cambiar la base del logaritmo (por defecto es 10).
+
+\lipsum[4][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ymode=log,
+    log basis y=2,
+    xlabel=$x$,
+    ylabel=$2^x$,
+    title={Escala logarítmica base 2},
+    grid=major
+]
+    \addplot[red, thick, smooth, samples=50, domain=0:8] {2^x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción axis equal}
+
+Mantiene proporción 1:1 entre los ejes (útil para círculos).
+
+\lipsum[4][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis equal,
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Círculo con axis equal},
+    grid=major,
+    domain=-1:1
+]
+    \addplot[blue, thick, smooth, samples=50] {sqrt(1-x^2)};
+    \addplot[blue, thick, smooth, samples=50] {-sqrt(1-x^2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Grillas}
+
+\subsection{Opción grid=major}
+
+Muestra una grilla principal en el gráfico.
+
+\lipsum[5][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    grid=major,
+    xlabel=$x$,
+    ylabel=$x^2$,
+    title={Grilla principal: grid=major}
+]
+    \addplot[purple, thick, smooth, samples=50] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción grid=both}
+
+Muestra grilla principal y secundaria.
+
+\lipsum[5][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    grid=both,
+    xlabel=$x$,
+    ylabel=$\sin(x)$,
+    title={Grilla principal y secundaria: grid=both}
+]
+    \addplot[cyan!70!blue, thick, smooth, samples=50] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Personalización de Estilo de Grilla}
+
+Podemos personalizar el estilo de las grillas mayor y menor.
+
+\lipsum[5][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    grid=both,
+    major grid style={thick, red!50},
+    minor grid style={thin, gray!30},
+    xlabel=$x$,
+    ylabel=$\cos(x)$,
+    title={Grillas personalizadas}
+]
+    \addplot[orange, thick, smooth, samples=50] {cos(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Etiquetas y Títulos}
+
+\subsection{Opciones xlabel y ylabel}
+
+Define las etiquetas de los ejes.
+
+\lipsum[6][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=Tiempo (segundos),
+    ylabel=Distancia (metros),
+    title={Movimiento Rectilíneo Uniforme}
+]
+    \addplot[blue, thick, smooth, samples=50] {5*x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Estilo de Etiquetas: xlabel style}
+
+Personaliza el estilo de las etiquetas.
+
+\lipsum[6][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    xlabel style={font=\Large, color=red},
+    ylabel style={font=\Large, color=blue},
+    title={Etiquetas personalizadas}
+]
+    \addplot[green!70!black, thick, smooth, samples=50] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Estilo del Título: title style}
+
+Personaliza la apariencia del título.
+
+\lipsum[6][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$x^3$,
+    title=Función Cúbica,
+    title style={font=\bfseries\Large, color=purple}
+]
+    \addplot[magenta, thick, smooth, samples=50] {x^3};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Ticks (Marcas)}
+
+\subsection{Posiciones Específicas: xtick y ytick}
+
+Define manualmente las posiciones de los ticks.
+
+\lipsum[7][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,1,2,3,4,5},
+    ytick={0,5,10,15,20,25},
+    xlabel=$x$,
+    ylabel=$x^2$,
+    title={Ticks personalizados}
+]
+    \addplot[brown, thick, smooth, samples=50] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Etiquetas Personalizadas: xticklabels}
+
+Asigna etiquetas personalizadas a los ticks.
+
+\lipsum[7][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={1,2,3,4},
+    xticklabels={Ene, Feb, Mar, Abr},
+    ylabel=Ventas,
+    title={Ventas Mensuales},
+    ymin=0
+]
+    \addplot coordinates {(1,10) (2,15) (3,12) (4,18)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Distancia entre Ticks: xtick distance}
+
+Establece la distancia entre ticks consecutivos.
+
+\lipsum[7][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xtick distance=2,
+    ytick distance=5,
+    xlabel=$x$,
+    ylabel=$2x+1$,
+    title={xtick distance=2, ytick distance=5}
+]
+    \addplot[violet, thick, smooth, samples=50] {2*x + 1};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Estilo de Etiquetas de Ticks}
+
+Personaliza la apariencia de las etiquetas de ticks (ej. rotación).
+
+\lipsum[7][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={1,2,3,4,5},
+    xticklabels={Categoría A, Categoría B, Categoría C, Categoría D, Categoría E},
+    xticklabel style={rotate=45, anchor=east, font=\small},
+    ylabel=Valor,
+    title={Etiquetas rotadas 45 grados},
+    ymin=0
+]
+    \addplot coordinates {(1,5) (2,8) (3,6) (4,9) (5,7)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Posición de Ejes}
+
+\subsection{Opción axis lines=center}
+
+Coloca los ejes en el centro del gráfico (estilo cartesiano).
+
+\lipsum[8][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=center,
+    xlabel=$x$,
+    ylabel=$y$,
+    title={axis lines=center}
+]
+    \addplot[blue, thick, smooth, samples=50] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción axis lines=left}
+
+Los ejes en el borde izquierdo e inferior (estilo estándar).
+
+\lipsum[8][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=left,
+    xlabel=$x$,
+    ylabel=$y$,
+    title={axis lines=left}
+]
+    \addplot[red, thick, smooth, samples=50] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción axis lines=box}
+
+Dibuja un recuadro completo alrededor del gráfico.
+
+\lipsum[8][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=box,
+    xlabel=$x$,
+    ylabel=$y$,
+    title={axis lines=box},
+    grid=major
+]
+    \addplot[green!70!black, thick, smooth, samples=50] {x^3};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Leyendas}
+
+\subsection{Posición de Leyenda: legend pos}
+
+Define la posición de la leyenda en el gráfico.
+
+\lipsum[9][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    legend pos=north west,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Leyenda en north west}
+]
+    \addplot[blue, thick, smooth, samples=50] {x};
+    \addlegendentry{$f(x)=x$}
+
+    \addplot[red, thick, smooth, samples=50] {x^2};
+    \addlegendentry{$f(x)=x^2$}
+
+    \addplot[green!70!black, thick, smooth, samples=50] {x^3};
+    \addlegendentry{$f(x)=x^3$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Leyenda en Posición sur este: south east}
+
+\lipsum[9][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    legend pos=south east,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Leyenda en south east}
+]
+    \addplot[cyan, thick, smooth, samples=50] {sin(deg(x))};
+    \addlegendentry{$\sin(x)$}
+
+    \addplot[magenta, thick, smooth, samples=50] {cos(deg(x))};
+    \addlegendentry{$\cos(x)$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Estilo Personalizado de Leyenda}
+
+Personaliza la posición y estilo de la leyenda.
+
+\lipsum[9][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    legend style={at={(0.5,-0.15)}, anchor=north, legend columns=3},
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Leyenda horizontal debajo del gráfico}
+]
+    \addplot[blue, thick, smooth, samples=50] {x};
+    \addlegendentry{Lineal}
+
+    \addplot[red, thick, smooth, samples=50] {x^2};
+    \addlegendentry{Cuadrática}
+
+    \addplot[green!70!black, thick, smooth, samples=50] {x^3};
+    \addlegendentry{Cúbica}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Tipos de Plot}
+
+\subsection{Expresiones Matemáticas}
+
+Grafica funciones usando expresiones matemáticas directas.
+
+\lipsum[10][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Expresiones matemáticas},
+    legend pos=north west
+]
+    \addplot[blue, thick, smooth, samples=50] {x^2 - 2*x + 1};
+    \addlegendentry{$x^2-2x+1$}
+
+    \addplot[red, thick, smooth, samples=50] {exp(x/5)};
+    \addlegendentry{$e^{x/5}$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Coordenadas Específicas}
+
+Grafica puntos específicos usando \texttt{coordinates}.
+
+\lipsum[10][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=Mes,
+    ylabel=Temperatura (°C),
+    title={Temperatura promedio mensual}
+]
+    \addplot[blue, thick, mark=*] coordinates {
+        (1,15) (2,17) (3,20) (4,23) (5,26) (6,29)
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Datos Tabulares Inline}
+
+Usa formato de tabla inline para datos estructurados.
+
+\lipsum[10][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=x,
+    ylabel=y,
+    title={Datos en formato tabla}
+]
+    \addplot[red, thick, mark=square*] table {
+        x  y
+        0  0
+        1  1
+        2  4
+        3  9
+        4  16
+        5  25
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Estilos de Líneas y Marcadores}
+
+\subsection{Colores}
+
+Diferentes colores para las líneas.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Gráficas con diferentes colores},
+    legend pos=north west
+]
+    \addplot[red, thick, smooth, samples=50] {x};
+    \addlegendentry{Rojo}
+
+    \addplot[blue, thick, smooth, samples=50] {x+1};
+    \addlegendentry{Azul}
+
+    \addplot[green!70!black, thick, smooth, samples=50] {x+2};
+    \addlegendentry{Verde}
+
+    \addplot[purple, thick, smooth, samples=50] {x+3};
+    \addlegendentry{Púrpura}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Tipos de Marcadores}
+
+Diferentes estilos de marcadores en los puntos.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Diferentes tipos de marcadores},
+    legend pos=north west
+]
+    \addplot[mark=*, blue] coordinates {(0,0) (1,1) (2,2) (3,3)};
+    \addlegendentry{mark=*}
+
+    \addplot[mark=square*, red] coordinates {(0,0.5) (1,1.5) (2,2.5) (3,3.5)};
+    \addlegendentry{mark=square*}
+
+    \addplot[mark=triangle*, green!70!black] coordinates {(0,1) (1,2) (2,3) (3,4)};
+    \addlegendentry{mark=triangle*}
+
+    \addplot[mark=diamond*, purple] coordinates {(0,1.5) (1,2.5) (2,3.5) (3,4.5)};
+    \addlegendentry{mark=diamond*}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción only marks}
+
+Muestra solo los marcadores sin líneas conectoras.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Gráfico de dispersión con only marks}
+]
+    \addplot[only marks, mark=o, blue] coordinates {
+        (1,2) (2,4) (3,3) (4,5) (5,6) (6,5) (7,7)
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Estilos de Línea}
+
+Diferentes estilos: sólida, punteada, discontinua.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Diferentes estilos de línea},
+    legend pos=north west,
+    domain=0:5
+]
+    \addplot[blue, thick, smooth, samples=50] {x};
+    \addlegendentry{Sólida}
+
+    \addplot[red, thick, dashed, smooth, samples=50] {x+1};
+    \addlegendentry{Dashed}
+
+    \addplot[green!70!black, thick, dotted, smooth, samples=50] {x+2};
+    \addlegendentry{Dotted}
+
+    \addplot[purple, thick, dashdotted, smooth, samples=50] {x+3};
+    \addlegendentry{Dashdotted}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Grosor de Línea: line width}
+
+Control del grosor de las líneas.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Diferentes grosores de línea},
+    legend pos=north west
+]
+    \addplot[blue, line width=0.5pt, smooth, samples=50] {x};
+    \addlegendentry{0.5pt}
+
+    \addplot[red, line width=1pt, smooth, samples=50] {x+1};
+    \addlegendentry{1pt}
+
+    \addplot[green!70!black, line width=2pt, smooth, samples=50] {x+2};
+    \addlegendentry{2pt}
+
+    \addplot[purple, ultra thick, smooth, samples=50] {x+3};
+    \addlegendentry{Ultra thick}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción smooth}
+
+Suaviza las curvas entre puntos.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Curva suavizada con smooth},
+    legend pos=north west
+]
+    \addplot[blue, thick] coordinates {(0,0) (1,3) (2,1) (3,4) (4,2) (5,5)};
+    \addlegendentry{Sin smooth}
+
+    \addplot[red, thick, smooth] coordinates {(0,0.5) (1,3.5) (2,1.5) (3,4.5) (4,2.5) (5,5.5)};
+    \addlegendentry{Con smooth}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Opción samples}
+
+Controla el número de puntos evaluados para funciones.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$\sin(x)$,
+    title={Comparación: samples=10 vs samples=100},
+    legend pos=north east,
+    domain=0:10
+]
+    \addplot[red, thick, samples=10] {sin(deg(x))};
+    \addlegendentry{samples=10}
+
+    \addplot[blue, thick, samples=100] {sin(deg(x))};
+    \addlegendentry{samples=100}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Relleno: fill y closedcycle}
+
+Rellena el área bajo la curva.
+
+\lipsum[11][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    title={Área bajo la curva con fill},
+    domain=0:3
+]
+    \addplot[fill=blue!20, draw=blue, thick, smooth, samples=50] {x^2} \closedcycle;
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Gráficas de Barras}
+
+\subsection{Barras Verticales: ybar}
+
+Gráfico de barras verticales.
+
+\lipsum[12][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    xlabel=Mes,
+    ylabel=Ventas (miles),
+    title={Ventas mensuales (ybar)},
+    xtick=data,
+    symbolic x coords={Ene, Feb, Mar, Abr, May, Jun},
+    ymin=0
+]
+    \addplot[fill=blue!50] coordinates {
+        (Ene,10) (Feb,15) (Mar,12) (Abr,18) (May,14) (Jun,20)
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Barras Horizontales: xbar}
+
+Gráfico de barras horizontales.
+
+\lipsum[12][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    ylabel=Producto,
+    xlabel=Cantidad vendida,
+    title={Productos más vendidos (xbar)},
+    ytick=data,
+    symbolic y coords={Producto A, Producto B, Producto C, Producto D},
+    xmin=0
+]
+    \addplot[fill=red!50] coordinates {
+        (25,Producto A) (40,Producto B) (15,Producto C) (35,Producto D)
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Ancho de Barras: bar width}
+
+Control del ancho de las barras.
+
+\lipsum[12][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=20pt,
+    xlabel=Categoría,
+    ylabel=Valor,
+    title={Barras anchas con bar width=20pt},
+    xtick=data,
+    symbolic x coords={A, B, C, D},
+    ymin=0
+]
+    \addplot[fill=green!50] coordinates {
+        (A,8) (B,12) (C,10) (D,15)
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Barras Múltiples Comparativas}
+
+Comparación de múltiples conjuntos de datos con barras.
+
+\lipsum[12][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=10pt,
+    xlabel=Trimestre,
+    ylabel=Ingresos (millones),
+    title={Comparación anual de ingresos},
+    legend pos=north west,
+    xtick=data,
+    symbolic x coords={Q1, Q2, Q3, Q4},
+    ymin=0
+]
+    \addplot[fill=blue!50] coordinates {
+        (Q1,20) (Q2,25) (Q3,22) (Q4,30)
+    };
+    \addlegendentry{2023}
+
+    \addplot[fill=red!50] coordinates {
+        (Q1,25) (Q2,28) (Q3,27) (Q4,35)
+    };
+    \addlegendentry{2024}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Gráficas 3D}
+
+\subsection{Superficie 3D: surf}
+
+Gráfica de superficie tridimensional.
+
+\lipsum[13][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={Superficie 3D: $z = x^2 - y^2$},
+    view={45}{30}
+]
+    \addplot3[
+        surf,
+        samples=20,
+        domain=-2:2,
+        y domain=-2:2
+    ] {x^2 - y^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Malla 3D: mesh}
+
+Gráfica de malla tridimensional.
+
+\lipsum[13][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={Malla 3D: $z = \sin(x) \cdot \cos(y)$},
+    view={60}{30}
+]
+    \addplot3[
+        mesh,
+        samples=15,
+        domain=-pi:pi,
+        y domain=-pi:pi
+    ] {sin(deg(x)) * cos(deg(y))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Ángulo de Visión: view}
+
+Control del ángulo de visualización con diferentes valores de azimut y elevación.
+
+\lipsum[13][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={view=\{120\}\{45\}},
+    view={120}{45}
+]
+    \addplot3[
+        surf,
+        samples=15,
+        domain=-1:1,
+        y domain=-1:1
+    ] {x^2 + y^2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Colormap en Superficies 3D}
+
+Las superficies pueden usar colormaps para representar valores.
+
+\lipsum[13][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={Superficie con colormap},
+    colorbar,
+    colormap/cool,
+    view={40}{35}
+]
+    \addplot3[
+        surf,
+        samples=20,
+        domain=-2:2,
+        y domain=-2:2
+    ] {exp(-x^2-y^2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Librería fillbetween}
+
+\subsection{Relleno entre Dos Curvas}
+
+La librería \texttt{fillbetween} permite rellenar el área entre dos funciones.
+
+\lipsum[14][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Área entre dos funciones},
+    legend pos=north west,
+    domain=0:3
+]
+    \addplot[name path=A, blue, thick, smooth, samples=50] {x^2};
+    \addlegendentry{$x^2$}
+
+    \addplot[name path=B, red, thick, smooth, samples=50] {2*x};
+    \addlegendentry{$2x$}
+
+    \addplot[fill=green!20, opacity=0.5] fill between[of=A and B];
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Relleno entre Curva y Eje}
+
+También podemos rellenar entre una curva y el eje horizontal.
+
+\lipsum[14][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$\sin(x)$,
+    title={Área bajo la curva seno},
+    domain=0:2*pi,
+    axis lines=center
+]
+    \addplot[name path=seno, blue, thick, smooth, samples=100] {sin(deg(x))};
+
+    \path[name path=eje] (axis cs:0,0) -- (axis cs:6.28,0);
+
+    \addplot[fill=blue!20] fill between[of=seno and eje, soft clip={domain=0:3.14}];
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Librería groupplots}
+
+\subsection{Múltiples Gráficas en Matriz}
+
+La librería \texttt{groupplots} permite crear matrices de gráficas.
+
+\lipsum[15][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={
+        group size=2 by 2,
+        horizontal sep=2cm,
+        vertical sep=2cm
+    },
+    width=6cm,
+    height=5cm
+]
+    \nextgroupplot[title={$f(x)=x$}, xlabel=$x$, ylabel=$y$]
+    \addplot[blue, thick, smooth, samples=50] {x};
+
+    \nextgroupplot[title={$f(x)=x^2$}, xlabel=$x$, ylabel=$y$]
+    \addplot[red, thick, smooth, samples=50] {x^2};
+
+    \nextgroupplot[title={$f(x)=\sin(x)$}, xlabel=$x$, ylabel=$y$]
+    \addplot[green!70!black, thick, smooth, samples=50] {sin(deg(x))};
+
+    \nextgroupplot[title={$f(x)=\cos(x)$}, xlabel=$x$, ylabel=$y$]
+    \addplot[purple, thick, smooth, samples=50] {cos(deg(x))};
+\end{groupplot}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Matriz de Gráficas con Ejes Compartidos}
+
+Podemos compartir ejes entre gráficas adyacentes.
+
+\lipsum[15][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={
+        group size=1 by 3,
+        vertical sep=1.5cm,
+        xlabels at=edge bottom
+    },
+    width=10cm,
+    height=4cm,
+    xlabel=$x$
+]
+    \nextgroupplot[title={Función Lineal}, ylabel=$x$]
+    \addplot[blue, thick, smooth, samples=50] {x};
+
+    \nextgroupplot[title={Función Cuadrática}, ylabel=$x^2$]
+    \addplot[red, thick, smooth, samples=50] {x^2};
+
+    \nextgroupplot[title={Función Cúbica}, ylabel=$x^3$]
+    \addplot[green!70!black, thick, smooth, samples=50] {x^3};
+\end{groupplot}
+\end{tikzpicture}
+\end{center}
+
+\section{Librería polar}
+
+\subsection{Gráficas en Coordenadas Polares}
+
+La librería \texttt{polar} permite crear gráficas en coordenadas polares.
+
+\lipsum[16][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{polaraxis}[
+    title={Rosa polar: $r=\sin(3\theta)$}
+]
+    \addplot[blue, thick, domain=0:360, samples=100] {sin(3*x)};
+\end{polaraxis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Espiral en Coordenadas Polares}
+
+Ejemplo de espiral de Arquímedes.
+
+\lipsum[16][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{polaraxis}[
+    title={Espiral de Arquímedes: $r=\theta$}
+]
+    \addplot[red, thick, domain=0:720, samples=200] {x/100};
+\end{polaraxis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Cardioide en Coordenadas Polares}
+
+Forma de corazón en coordenadas polares.
+
+\lipsum[16][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{polaraxis}[
+    title={Cardioide: $r=1+\cos(\theta)$}
+]
+    \addplot[purple, thick, domain=0:360, samples=100] {1 + cos(x)};
+\end{polaraxis}
+\end{tikzpicture}
+\end{center}
+
+\section{Ejemplos Avanzados}
+
+\subsection{Gráfica Científica Completa}
+
+Ejemplo de gráfica científica con todas las características.
+
+\lipsum[17][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=8cm,
+    xlabel={Tiempo (s)},
+    ylabel={Voltaje (V)},
+    title={Señal de Voltaje vs Tiempo},
+    legend pos=north east,
+    grid=both,
+    major grid style={gray!30},
+    minor grid style={gray!10},
+    domain=0:10,
+    samples=200,
+    axis lines=box
+]
+    \addplot[blue, thick, smooth, samples=200] {3*sin(deg(x)) + 0.5*sin(deg(3*x))};
+    \addlegendentry{Señal 1}
+
+    \addplot[red, thick, dashed, smooth, samples=200] {2*cos(deg(x))};
+    \addlegendentry{Señal 2}
+
+    \addplot[green!70!black, thick, dotted, smooth, samples=200] {exp(-x/5)*sin(deg(2*x))};
+    \addlegendentry{Señal amortiguada}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Gráfica Estadística con Error Bars}
+
+Representación de datos experimentales con barras de error.
+
+\lipsum[17][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Concentración (mg/L)},
+    ylabel={Absorción},
+    title={Curva de Calibración},
+    legend pos=north west,
+    grid=major
+]
+    \addplot[
+        only marks,
+        mark=*,
+        mark size=3pt,
+        error bars/.cd,
+        y dir=both,
+        y explicit
+    ] coordinates {
+        (0,0) +- (0,0.02)
+        (1,0.15) +- (0,0.03)
+        (2,0.28) +- (0,0.04)
+        (3,0.45) +- (0,0.05)
+        (4,0.58) +- (0,0.06)
+        (5,0.72) +- (0,0.07)
+    };
+    \addlegendentry{Datos experimentales}
+
+    \addplot[red, thick, smooth, samples=50, domain=0:5] {0.14*x + 0.01};
+    \addlegendentry{Ajuste lineal}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Gráfica Paramétrica}
+
+Curva de Lissajous en forma paramétrica.
+
+\lipsum[17][1-2]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Curva de Lissajous: $x=\sin(3t)$, $y=\sin(2t)$},
+    axis equal,
+    axis lines=center,
+    ticks=none
+]
+    \addplot[blue, thick, smooth, samples=200, domain=0:2*pi] ({sin(deg(3*x))}, {sin(deg(2*x))});
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Resumen y Mejores Prácticas}
+
+\subsection{Consejos Importantes}
+
+\begin{itemize}
+    \item Siempre especifica \texttt{compat=1.18} para acceder a las características más recientes
+    \item Usa \texttt{samples=n} apropiado: valores bajos (50) para funciones simples, valores altos (200) para funciones complejas
+    \item Para funciones trigonométricas, usa \texttt{deg(x)} si $x$ está en grados
+    \item Usa \texttt{restrict y to domain} para evitar discontinuidades en funciones como $1/x$
+    \item Para gráficas 3D, ajusta el número de samples para balance entre calidad y rendimiento
+    \item Las leyendas pueden posicionarse con \texttt{legend pos} o manualmente con \texttt{legend style}
+    \item Usa \texttt{grid=both} para mayor precisión en la lectura de valores
+    \item El comando \texttt{domain} define el rango de evaluación para funciones
+\end{itemize}
+
+\subsection{Errores Comunes a Evitar}
+
+\begin{itemize}
+    \item \textbf{Olvidar el punto y coma}: Todo comando \texttt{\textbackslash addplot} debe terminar con ;
+    \item \textbf{Funciones trigonométricas}: Si no usas \texttt{deg(x)}, PGFPlots interpreta en radianes
+    \item \textbf{Demasiados samples en 3D}: Puede causar compilación muy lenta
+    \item \textbf{No usar restrict}: Funciones con discontinuidades pueden mostrar líneas verticales incorrectas
+    \item \textbf{Leyendas inconsistentes}: El número de \texttt{\textbackslash addlegendentry} debe coincidir con el número de plots
+\end{itemize}
+
+\vspace{2cm}
+
+\begin{center}
+\large
+\textit{Documento generado con \LaTeX{} y PGFPlots}
+
+\textit{\today}
+\end{center}
+
+\end{document}

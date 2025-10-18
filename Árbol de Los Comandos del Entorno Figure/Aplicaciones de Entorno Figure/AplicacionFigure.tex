@@ -1,0 +1,636 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes básicos
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{hyperref}
+
+% Paquetes para figuras
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+
+% Configurar ruta de figuras
+\graphicspath{{../figuras/}}
+
+% Colores personalizados
+\definecolor{ejemplocolor}{RGB}{41,128,185}
+
+% Configuración de hyperref
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+	pdftitle={Aplicaciones del Entorno Figure en LaTeX},
+	pdfauthor={Ejemplos Prácticos}
+}
+
+\title{\textbf{\Huge Aplicaciones del Entorno \texttt{figure}}\\[0.5cm]\large Ejemplos Prácticos con Imágenes Reales}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=Introducción]
+Este documento contiene ejemplos prácticos de aplicación del entorno \texttt{figure} en \LaTeX{}, mostrando todos los comandos y opciones disponibles con imágenes reales.
+
+\textbf{Contenido:}
+\begin{itemize}
+\item Opciones de posicionamiento de figuras
+\item Diferentes formas de insertar y ajustar imágenes
+\item Uso de captions y referencias cruzadas
+\item Subfiguras y figuras múltiples
+\item Figuras envolventes con texto
+\end{itemize}
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\section{Opciones de Posicionamiento}
+
+Las opciones de posicionamiento controlan dónde LaTeX coloca la figura en el documento.
+
+\subsection{Opción [h] - Here (Aquí)}
+
+La opción \texttt{[h]} intenta colocar la figura en la posición exacta donde aparece en el código.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{Latex1.png}
+\caption{Figura con opción [h] - Colocada aquí en el texto}
+\label{fig:ejemplo-h}
+\end{figure}
+
+Como puede verse, la Figura \ref{fig:ejemplo-h} aparece aproximadamente donde se definió en el código.
+
+\lipsum[1]
+
+\subsection{Opción [t] - Top (Arriba)}
+
+La opción \texttt{[t]} coloca la figura en la parte superior de la página.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.4\textwidth]{Latex2.png}
+\caption{Figura con opción [t] - En la parte superior de la página}
+\label{fig:ejemplo-t}
+\end{figure}
+
+\lipsum[2]
+
+\subsection{Opción [b] - Bottom (Abajo)}
+
+La opción \texttt{[b]} coloca la figura en la parte inferior de la página.
+
+\begin{figure}[b]
+\centering
+\includegraphics[width=0.4\textwidth]{latex1.jpg}
+\caption{Figura con opción [b] - En la parte inferior de la página}
+\label{fig:ejemplo-b}
+\end{figure}
+
+\lipsum[3]
+
+\newpage
+
+\subsection{Opción [H] - HERE (Forzada)}
+
+La opción \texttt{[H]} (mayúscula) fuerza la posición exacta, sin permitir que LaTeX la mueva. Requiere el paquete \texttt{float}.
+
+\lipsum[4][1-3]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{latex2.jpg}
+\caption{Figura con opción [H] - Posición exacta forzada}
+\label{fig:ejemplo-H}
+\end{figure}
+
+La Figura \ref{fig:ejemplo-H} está exactamente donde se colocó en el código fuente, sin excepciones.
+
+\lipsum[5][1-3]
+
+\subsection{Opción [htbp] - Combinación Flexible}
+
+La opción \texttt{[htbp]} es la más flexible, permitiendo a LaTeX elegir la mejor posición entre varias opciones.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.45\textwidth]{latex3.png}
+\caption{Figura con opción [htbp] - LaTeX elige la mejor posición}
+\label{fig:ejemplo-htbp}
+\end{figure}
+
+\lipsum[6]
+
+\section{Ajustes de Tamaño con includegraphics}
+
+\subsection{Ajuste por Ancho (width)}
+
+Podemos controlar el ancho de la imagen usando la opción \texttt{width}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{Latex4.png}
+\caption{Imagen con ancho de 0.3\textbackslash textwidth}
+\label{fig:width-30}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{Latex4.png}
+\caption{La misma imagen con ancho de 0.6\textbackslash textwidth}
+\label{fig:width-60}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Latex4.png}
+\caption{La misma imagen con ancho de 0.9\textbackslash textwidth}
+\label{fig:width-90}
+\end{figure}
+
+Las Figuras \ref{fig:width-30}, \ref{fig:width-60} y \ref{fig:width-90} muestran la misma imagen con diferentes anchos.
+
+\newpage
+
+\subsection{Ajuste por Altura (height)}
+
+También podemos especificar la altura de la imagen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=4cm]{latex4.jpg}
+\caption{Imagen con altura fija de 4cm}
+\label{fig:height-4cm}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=6cm]{latex4.jpg}
+\caption{La misma imagen con altura de 6cm}
+\label{fig:height-6cm}
+\end{figure}
+
+\subsection{Ajuste por Escala (scale)}
+
+La opción \texttt{scale} permite escalar la imagen proporcionalmente.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{Latex31.png}
+\caption{Imagen con escala 0.3 (30\% del tamaño original)}
+\label{fig:scale-03}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{Latex31.png}
+\caption{Imagen con escala 0.6 (60\% del tamaño original)}
+\label{fig:scale-06}
+\end{figure}
+
+\newpage
+
+\subsection{Rotación con angle}
+
+Podemos rotar imágenes usando la opción \texttt{angle} (en grados, sentido antihorario).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{Copia_de_Latex1.png}
+\caption{Imagen sin rotación (0 grados)}
+\label{fig:angle-0}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth,angle=45]{Copia_de_Latex1.png}
+\caption{Imagen rotada 45 grados}
+\label{fig:angle-45}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth,angle=90]{Copia_de_Latex1.png}
+\caption{Imagen rotada 90 grados}
+\label{fig:angle-90}
+\end{figure}
+
+\newpage
+
+\subsection{Mantener Proporción (keepaspectratio)}
+
+La opción \texttt{keepaspectratio} mantiene las proporciones cuando especificamos tanto ancho como altura.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=6cm,height=3cm]{Copia_de_Latex2.png}
+\caption{Sin keepaspectratio - Imagen deformada}
+\label{fig:no-keep}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=6cm,height=3cm,keepaspectratio]{Copia_de_Latex2.png}
+\caption{Con keepaspectratio - Proporciones mantenidas}
+\label{fig:keep}
+\end{figure}
+
+Compare las Figuras \ref{fig:no-keep} y \ref{fig:keep}: la segunda mantiene las proporciones originales.
+
+\subsection{Opciones Combinadas}
+
+Podemos combinar múltiples opciones para lograr efectos específicos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth,angle=10,keepaspectratio]{Copia_de_Latex31.png}
+\caption{Imagen con múltiples opciones: ancho 0.5\textbackslash textwidth, rotación 10°, proporciones mantenidas}
+\label{fig:combinado}
+\end{figure}
+
+\newpage
+
+\section{Tipos de Caption (Pie de Figura)}
+
+\subsection{Caption Básico}
+
+Un caption simple proporciona descripción y numeración automática.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{Copia_de_Latex4.png}
+\caption{Este es un caption básico que describe la figura}
+\label{fig:caption-basico}
+\end{figure}
+
+\subsection{Caption con Versión Corta}
+
+Podemos proporcionar una versión corta para el índice de figuras usando \texttt{\textbackslash caption[corto]\{largo\}}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{Copia_de_latex1.jpg}
+\caption[Versión Corta]{Este es un caption largo y detallado que aparece bajo la figura, pero la versión corta "Versión Corta" aparecerá en el índice de figuras}
+\label{fig:caption-corto}
+\end{figure}
+
+\subsection{Caption Sin Numeración}
+
+Usando \texttt{\textbackslash caption*} podemos crear captions sin número (requiere paquete \texttt{caption}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{Copia_de_latex2.jpg}
+\caption*{Esta figura tiene un caption sin numeración}
+\end{figure}
+
+\newpage
+
+\section{Referencias Cruzadas}
+
+\subsection{Uso de label y ref}
+
+Las etiquetas permiten referenciar figuras en cualquier parte del documento.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{Copia_de_latex3.png}
+\caption{Figura para demostrar referencias cruzadas}
+\label{fig:referencias}
+\end{figure}
+
+Podemos referirnos a la Figura \ref{fig:referencias} desde cualquier lugar del documento. La figura está en la página \pageref{fig:referencias}.
+
+\subsection{Múltiples Referencias}
+
+Podemos hacer referencias a varias figuras en el mismo párrafo:
+
+Como se puede observar en las Figuras \ref{fig:ejemplo-h}, \ref{fig:ejemplo-t} y \ref{fig:ejemplo-b}, cada opción de posicionamiento produce resultados diferentes. La Figura \ref{fig:ejemplo-H} muestra el caso especial de posicionamiento forzado.
+
+\section{Alineación de Figuras}
+
+\subsection{Centrado (centering)}
+
+La alineación centrada es la más común para figuras.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{Copia_de_latex4.jpg}
+\caption{Figura centrada (opción más común)}
+\label{fig:centrada}
+\end{figure}
+
+\newpage
+
+\subsection{Alineación a la Izquierda (raggedright)}
+
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=0.4\textwidth]{latex1.jpg}
+\caption{Figura alineada a la izquierda}
+\label{fig:izquierda}
+\end{figure}
+
+\subsection{Alineación a la Derecha (raggedleft)}
+
+\begin{figure}[H]
+\raggedleft
+\includegraphics[width=0.4\textwidth]{latex2.jpg}
+\caption{Figura alineada a la derecha}
+\label{fig:derecha}
+\end{figure}
+
+\section{Subfiguras}
+
+Las subfiguras permiten incluir múltiples imágenes relacionadas en una sola figura, cada una con su propio subcaption.
+
+\subsection{Dos Subfiguras Lado a Lado}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{latex3.png}
+	\caption{Primera subfigura}
+	\label{fig:sub-a}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{latex4.jpg}
+	\caption{Segunda subfigura}
+	\label{fig:sub-b}
+\end{subfigure}
+\caption{Dos subfiguras mostrando diferentes imágenes}
+\label{fig:dos-subfiguras}
+\end{figure}
+
+Podemos referenciar la figura completa (\ref{fig:dos-subfiguras}) o las subfiguras individuales (\ref{fig:sub-a} y \ref{fig:sub-b}).
+
+\newpage
+
+\subsection{Cuatro Subfiguras en Cuadrícula}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Latex1.png}
+	\caption{Subfigura A}
+	\label{fig:grid-a}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Latex2.png}
+	\caption{Subfigura B}
+	\label{fig:grid-b}
+\end{subfigure}
+
+\vspace{0.5cm}
+
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Latex31.png}
+	\caption{Subfigura C}
+	\label{fig:grid-c}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Latex4.png}
+	\caption{Subfigura D}
+	\label{fig:grid-d}
+\end{subfigure}
+\caption{Cuatro subfiguras organizadas en cuadrícula 2x2}
+\label{fig:cuadricula}
+\end{figure}
+
+La Figura \ref{fig:cuadricula} muestra un arreglo de cuatro subfiguras (\ref{fig:grid-a}, \ref{fig:grid-b}, \ref{fig:grid-c} y \ref{fig:grid-d}).
+
+\newpage
+
+\subsection{Tres Subfiguras con Diferentes Tamaños}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.6\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Copia_de_Latex1.png}
+	\caption{Subfigura principal (60\% de ancho)}
+	\label{fig:tres-principal}
+\end{subfigure}
+
+\vspace{0.5cm}
+
+\begin{subfigure}{0.28\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Copia_de_Latex2.png}
+	\caption{Subfigura secundaria 1}
+	\label{fig:tres-sec1}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.28\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Copia_de_Latex31.png}
+	\caption{Subfigura secundaria 2}
+	\label{fig:tres-sec2}
+\end{subfigure}
+\caption{Tres subfiguras con diferentes tamaños}
+\label{fig:tres-subfiguras}
+\end{figure}
+
+\section{Figuras Envolventes (wrapfig)}
+
+El paquete \texttt{wrapfig} permite que el texto fluya alrededor de las figuras.
+
+\subsection{Figura Envuelta a la Derecha}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+\centering
+\includegraphics[width=0.38\textwidth]{Copia_de_Latex4.png}
+\caption{Figura envuelta a la derecha}
+\label{fig:wrap-derecha}
+\end{wrapfigure}
+
+\lipsum[7-8]
+
+Como puede verse, el texto fluye naturalmente alrededor de la Figura \ref{fig:wrap-derecha}, que está posicionada a la derecha. Este efecto es particularmente útil en documentos tipo artículo o revista donde se busca un diseño más compacto y visualmente atractivo.
+
+\lipsum[9]
+
+\subsection{Figura Envuelta a la Izquierda}
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+\centering
+\includegraphics[width=0.33\textwidth]{Copia_de_latex1.jpg}
+\caption{Figura envuelta a la izquierda}
+\label{fig:wrap-izquierda}
+\end{wrapfigure}
+
+\lipsum[10-11]
+
+En este caso, la Figura \ref{fig:wrap-izquierda} está posicionada a la izquierda y el texto fluye por su lado derecho. Este tipo de disposición es muy efectiva para mantener la continuidad visual del texto mientras se incorporan elementos gráficos relevantes.
+
+\lipsum[12][1-2]
+
+\newpage
+
+\section{Ejemplos Avanzados}
+
+\subsection{Figura con Múltiples Opciones Combinadas}
+
+Este ejemplo combina varias opciones para lograr un resultado específico.
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.6\textwidth,angle=5,keepaspectratio]{Copia_de_latex2.jpg}}
+\caption[Ejemplo Avanzado]{Figura con marco (\texttt{\textbackslash fbox}), rotación de 5 grados, ancho de 0.6\textbackslash textwidth y proporciones mantenidas}
+\label{fig:avanzado1}
+\end{figure}
+
+\subsection{Dos Figuras Independientes Lado a Lado}
+
+Usando \texttt{minipage} podemos colocar dos figuras independientes lado a lado.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Copia_de_latex3.png}
+	\caption{Primera figura independiente}
+	\label{fig:mini-a}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Copia_de_latex4.jpg}
+	\caption{Segunda figura independiente}
+	\label{fig:mini-b}
+\end{minipage}
+\end{figure}
+
+A diferencia de las subfiguras, las Figuras \ref{fig:mini-a} y \ref{fig:mini-b} tienen numeración independiente.
+
+\newpage
+
+\subsection{Figura con Texto Descriptivo Adicional}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{latex1.jpg}
+\caption{Ejemplo de figura científica}
+\label{fig:cientifica}
+
+\vspace{0.3cm}
+
+\small
+\textbf{Nota:} Esta figura muestra un ejemplo típico de contenido científico en LaTeX. Las figuras pueden incluir texto adicional debajo del caption para proporcionar contexto extra o notas metodológicas.
+\normalsize
+\end{figure}
+
+\section{Lista de Figuras}
+
+Al final del documento, podemos incluir una lista automática de todas las figuras.
+
+\newpage
+\listoffigures
+
+\section{Mejores Prácticas}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=Recomendaciones]
+\begin{enumerate}
+\item \textbf{Posicionamiento}: Usa \texttt{[htbp]} para máxima flexibilidad, o \texttt{[H]} solo cuando necesites posición exacta.
+
+\item \textbf{Tamaño}: Prefiere especificar anchos relativos (\texttt{0.5\textbackslash textwidth}) en lugar de absolutos (5cm) para mejor adaptabilidad.
+
+\item \textbf{Referencias}: Siempre coloca \texttt{\textbackslash label} DESPUÉS de \texttt{\textbackslash caption}.
+
+\item \textbf{Alineación}: Usa \texttt{\textbackslash centering} en lugar de \texttt{\textbackslash begin\{center\}} dentro de figuras para evitar espacio vertical extra.
+
+\item \textbf{Captions}: Sé descriptivo en los captions; deben permitir que el lector entienda la figura sin leer el texto principal.
+
+\item \textbf{Formato}: Usa .png para gráficos con áreas de color sólido, .jpg para fotografías.
+
+\item \textbf{Nombrado}: Usa nombres de archivo descriptivos y prefijos \texttt{fig:} en labels.
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black,title=Paquetes Importantes]
+\begin{itemize}
+\item \texttt{graphicx}: Esencial para incluir imágenes
+\item \texttt{float}: Añade la opción [H]
+\item \texttt{caption}: Personalización avanzada de captions
+\item \texttt{subcaption}: Para crear subfiguras
+\item \texttt{wrapfig}: Para figuras envolventes
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=Errores Comunes a Evitar]
+\begin{itemize}
+\item No usar extensión de archivo en \texttt{\textbackslash includegraphics} (LaTeX la detecta automáticamente)
+\item Poner \texttt{\textbackslash label} antes de \texttt{\textbackslash caption}
+\item Abusar de la opción [H] (hace el documento menos flexible)
+\item No especificar ruta de figuras con \texttt{\textbackslash graphicspath}
+\item Usar tamaños absolutos que no escalan bien
+\end{itemize}
+\end{tcolorbox}
+
+\section{Resumen de Comandos}
+
+\begin{tcolorbox}[colback=gray!10,colframe=gray!75!black,title=Referencia Rápida]
+\textbf{Opciones de posición:}
+\begin{itemize}
+\item \texttt{[h]} - aquí
+\item \texttt{[t]} - arriba
+\item \texttt{[b]} - abajo
+\item \texttt{[p]} - página de flotantes
+\item \texttt{[H]} - forzado aquí
+\item \texttt{[htbp]} - flexible
+\end{itemize}
+
+\textbf{Opciones de includegraphics:}
+\begin{itemize}
+\item \texttt{width=} - ancho
+\item \texttt{height=} - altura
+\item \texttt{scale=} - escala
+\item \texttt{angle=} - rotación
+\item \texttt{keepaspectratio} - mantener proporciones
+\item \texttt{trim=, clip} - recortar
+\end{itemize}
+
+\textbf{Comandos principales:}
+\begin{itemize}
+\item \texttt{\textbackslash centering} - centrar
+\item \texttt{\textbackslash caption\{\}} - pie de figura
+\item \texttt{\textbackslash label\{\}} - etiqueta
+\item \texttt{\textbackslash ref\{\}} - referencia
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\begin{center}
+\large\textbf{Fin del Documento}
+
+\vspace{0.5cm}
+
+\normalsize\textit{Ejemplos de aplicación del entorno figure en \LaTeX{}}
+
+\today
+\end{center}
+
+\end{document}

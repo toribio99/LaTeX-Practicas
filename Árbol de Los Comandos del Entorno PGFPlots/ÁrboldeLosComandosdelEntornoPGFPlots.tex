@@ -1,0 +1,963 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\pgfplotsset{compat=1.18}
+
+% Colores personalizados
+\definecolor{commandcolor}{RGB}{39,174,96}
+
+% Configuración de listings
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true
+}
+
+% Título
+\title{\textbf{\Huge PGFPlots en \LaTeX{}} \\[3mm] \large Guía Completa de Comandos, Opciones y Librerías}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		PGFPlots es un paquete construido sobre TikZ/PGF para crear gráficas científicas de alta calidad. Soporta gráficas 2D y 3D, gráficas de barras, diagramas de dispersión, contornos, superficies, y mucho más.
+	\end{tcolorbox}
+	
+	\tableofcontents
+	
+	\section{Carga del Paquete}
+	
+	\subsection*{\texttt{\textbackslash usepackage\{pgfplots\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Carga básica del paquete PGFPlots
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{pgfplots}
+			\pgfplotsset{compat=1.18}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Es recomendable especificar \texttt{compat} para usar características más recientes
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash usepgfplotslibrary\{library\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Carga librerías adicionales de PGFPlots
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepgfplotslibrary{polar, colorbrewer, statistics}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash pgfplotsset\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Configura opciones globales para todos los gráficos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\pgfplotsset{
+				compat=1.18,
+				width=10cm,
+				height=6cm
+			}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Entorno axis}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\begin{tikzpicture}
+			\begin{axis}[opciones]
+				... comandos de plot ...
+			\end{axis}
+		\end{tikzpicture}
+	\end{lstlisting}
+	
+	\section{Opciones Globales del Entorno axis}
+	
+	\subsection{Tamaño y Dimensiones}
+	
+	\subsubsection*{\texttt{width=dimension, height=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define el tamaño del gráfico
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[width=10cm, height=6cm]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{scale=factor}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala todo el gráfico
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[scale=1.5]
+				\addplot {sin(deg(x))};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{scale only axis}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala solo el área del gráfico, no las etiquetas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[width=10cm, height=6cm, scale only axis]
+				\addplot {x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Límites de Ejes}
+	
+	\subsubsection*{\texttt{xmin=value, xmax=value, ymin=value, ymax=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define los límites de los ejes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xmin=0, xmax=10, ymin=-2, ymax=2]
+				\addplot {sin(deg(x))};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{domain=min:max}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define el dominio para funciones
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}
+				\addplot[domain=-2:2] {x^3};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{restrict x to domain=min:max, restrict y to domain=min:max}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Restringe valores a un rango (útil para discontinuidades)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}
+				\addplot[restrict y to domain=-10:10] {1/x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Escalas de Ejes}
+	
+	\subsubsection*{\texttt{xmode=normal/log, ymode=normal/log}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala lineal o logarítmica
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xmode=log, ymode=log]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{log basis x=value, log basis y=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Base del logaritmo (por defecto 10)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[ymode=log, log basis y=2]
+				\addplot {2^x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{axis equal, axis equal image}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Mantiene proporción 1:1 en los ejes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[axis equal]
+				\addplot {sqrt(1-x^2)};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Grillas}
+	
+	\subsubsection*{\texttt{grid=none/major/minor/both}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Muestra grilla en el gráfico
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[grid=both]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{grid style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de la grilla
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[grid=major, grid style={dashed, gray}]
+				\addplot {x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{major grid style=\{options\}, minor grid style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilos separados para grilla mayor y menor
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[grid=both,
+				major grid style={thick, red},
+				minor grid style={thin, gray!50}]
+				\addplot {sin(deg(x))};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Etiquetas de Ejes}
+	
+	\subsubsection*{\texttt{xlabel=text, ylabel=text}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Etiquetas de los ejes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xlabel=$x$, ylabel=$f(x)$]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xlabel style=\{options\}, ylabel style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de las etiquetas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[
+				xlabel=$x$,
+				xlabel style={font=\Large, color=red}]
+				\addplot {x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Título}
+	
+	\subsubsection*{\texttt{title=text}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Título del gráfico
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[title=Función Cuadrática]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{title style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo del título
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[
+				title=Mi Gráfico,
+				title style={font=\bfseries\Large, color=blue}]
+				\addplot {x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Ticks (Marcas)}
+	
+	\subsubsection*{\texttt{xtick=\{list\}, ytick=\{list\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Posiciones específicas de los ticks
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xtick={0,1,2,3,4}, ytick={0,5,10,15}]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xticklabels=\{list\}, yticklabels=\{list\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Etiquetas personalizadas para los ticks
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[
+				xtick={1,2,3,4},
+				xticklabels={Ene, Feb, Mar, Abr}]
+				\addplot coordinates {(1,10) (2,15) (3,12) (4,18)};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xtick distance=value, ytick distance=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Distancia entre ticks
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xtick distance=2, ytick distance=5]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{minor tick num=n}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Número de ticks menores entre mayores
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[minor tick num=4]
+				\addplot {x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xticklabel style=\{options\}, yticklabel style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de las etiquetas de ticks
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[
+				xticklabel style={rotate=45, anchor=east, font=\small}]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{xtickten=\{exponents\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ticks en potencias de 10 (para escala log)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[xmode=log, xtickten={-2,-1,0,1,2}]
+				\addplot {10^x};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Posición de Ejes}
+	
+	\subsubsection*{\texttt{axis lines=none/box/left/center/right/middle}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo y posición de los ejes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[axis lines=center]
+				\addplot {sin(deg(x))};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{axis x line=bottom/top/middle/center/none}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Posición del eje X
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[axis x line=middle, axis y line=center]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{hide x axis, hide y axis}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Oculta ejes específicos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[hide x axis]
+				\addplot {x^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Leyenda}
+	
+	\subsubsection*{\texttt{legend pos=position}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Posición de la leyenda
+		
+		\textbf{Posiciones:} north west, north east, south west, south east, outer north east
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[legend pos=north west]
+				\addplot {x}; \addlegendentry{$f(x)=x$}
+				\addplot {x^2}; \addlegendentry{$f(x)=x^2$}
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{legend style=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de la leyenda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[
+				legend style={at={(0.5,-0.15)}, anchor=north, 
+					legend columns=2}]
+				\addplot {x}; \addlegendentry{Linear}
+				\addplot {x^2}; \addlegendentry{Cuadrática}
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{legend cell align=left/center/right}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Alineación del texto en la leyenda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[legend cell align=left]
+				\addplot {x}; \addlegendentry{Función 1}
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{Comando \textbackslash addplot}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\addplot[options] expression/coordinates;
+	\end{lstlisting}
+	
+	\subsection{Tipos de Plot}
+	
+	\subsubsection*{\texttt{\textbackslash addplot \{expression\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grafica una expresión matemática
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot {x^2 - 2*x + 1};
+			\addplot {sin(deg(x))};
+			\addplot {exp(x)};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash addplot coordinates \{(x,y) ...\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grafica puntos específicos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot coordinates {
+				(0,0) (1,1) (2,4) (3,9) (4,16)
+			};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash addplot table \{data.dat\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grafica desde archivo externo
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot table {datos.dat};
+			\addplot table[x=columna1, y=columna2] {archivo.txt};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash addplot table \{inline data\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Datos tabulares inline
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot table {
+				x  y
+				0  0
+				1  1
+				2  4
+				3  9
+			};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash addplot3 \{expression\};}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Gráficas 3D
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}
+				\addplot3 {x^2 + y^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Opciones de Estilo para \textbackslash addplot}
+	
+	\subsubsection*{\texttt{color=color, draw=color}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Color de la línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[red] {x^2};
+			\addplot[color=blue!50!black] {x^3};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{mark=type}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tipo de marcador en los puntos
+		
+		\textbf{Tipos:} *, o, x, +, |, -, square, square*, triangle, triangle*, diamond, pentagon, star
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[mark=*] coordinates {(0,0) (1,1) (2,4)};
+			\addplot[mark=square*] {x^2};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{mark size=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tamaño de los marcadores
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[mark=*, mark size=3pt] {x};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{mark options=\{options\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Opciones de estilo para marcadores
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[mark=*, mark options={fill=red, draw=blue}] {x^2};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{only marks}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Solo muestra marcadores, sin línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[only marks, mark=o] coordinates {(0,0) (1,1) (2,4)};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{no marks}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Solo línea, sin marcadores
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[no marks] {x^2};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{line width=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Grosor de la línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[line width=2pt] {x};
+			\addplot[ultra thick] {x^2};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{dashed, dotted, dashdotted, densely dashed, loosely dashed}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Estilo de línea
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[dashed] {x};
+			\addplot[dotted] {x^2};
+			\addplot[dashdotted] {x^3};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{smooth}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Suaviza la curva entre puntos
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[smooth] coordinates {(0,0) (1,3) (2,1) (3,4)};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{const plot, jump mark left, jump mark right}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Gráfica de escalera
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[const plot] coordinates {(0,0) (1,1) (2,3) (3,2)};
+			\addplot[jump mark left] coordinates {(0,0) (1,1) (2,3)};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{samples=n}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Número de puntos para evaluar función
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[samples=50] {sin(deg(x))};
+			\addplot[samples=200] {1/x};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{domain=min:max}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rango de evaluación
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[domain=-pi:pi] {sin(deg(x))};
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{fill=color, fill opacity=value}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rellena el área bajo la curva
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot[fill=blue!20] {x^2} \closedcycle;
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Leyenda}
+	
+	\subsubsection*{\texttt{\textbackslash addlegendentry\{text\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Añade entrada a la leyenda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot {x^2};
+			\addlegendentry{$f(x)=x^2$}
+			\addplot {x^3};
+			\addlegendentry{$f(x)=x^3$}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{\textbackslash legend\{entry1, entry2, ...\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Define todas las entradas de leyenda a la vez
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\addplot {x};
+			\addplot {x^2};
+			\legend{Linear, Cuadrática}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Tipos Especiales de Gráficas}
+	
+	\subsection{Gráficas de Barras}
+	
+	\subsubsection*{\texttt{ybar, xbar}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Gráfica de barras verticales u horizontales
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[ybar]
+				\addplot coordinates {(1,10) (2,15) (3,8) (4,20)};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{bar width=dimension}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ancho de las barras
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[ybar, bar width=10pt]
+				\addplot coordinates {(1,10) (2,15) (3,12)};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{Gráficas 3D}
+	
+	\subsubsection*{\texttt{view=\{azimuth\}\{elevation\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ángulo de visión 3D
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}[view={60}{30}]
+				\addplot3 {x^2 + y^2};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsubsection*{\texttt{surf, mesh}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Superficie o malla 3D
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{axis}
+				\addplot3[surf] {x^2 - y^2};
+				\addplot3[mesh] {sin(deg(x)) * cos(deg(y))};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{Librerías de PGFPlots}
+	
+	\subsection{statistics - Estadísticas}
+	
+	\subsubsection*{\texttt{\textbackslash usepgfplotslibrary\{statistics\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Funcionalidades estadísticas (boxplot, histogram)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepgfplotslibrary{statistics}
+			\begin{axis}
+				\addplot+[boxplot] table {data.dat};
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{polar - Coordenadas Polares}
+	
+	\subsubsection*{\texttt{\textbackslash usepgfplotslibrary\{polar\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Gráficas en coordenadas polares
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepgfplotslibrary{polar}
+			\begin{polaraxis}
+				\addplot {sin(3*x)};
+			\end{polaraxis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{fillbetween - Relleno Entre Curvas}
+	
+	\subsubsection*{\texttt{\textbackslash usepgfplotslibrary\{fillbetween\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rellena el área entre dos curvas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepgfplotslibrary{fillbetween}
+			\begin{axis}
+				\addplot[name path=A] {x^2};
+				\addplot[name path=B] {x};
+				\addplot[fill=blue!20] fill between[of=A and B];
+			\end{axis}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection{groupplots - Múltiples Subgráficas}
+	
+	\subsubsection*{\texttt{\textbackslash usepgfplotslibrary\{groupplots\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Matriz de gráficas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepgfplotslibrary{groupplots}
+			\begin{tikzpicture}
+				\begin{groupplot}[group style={group size=2 by 2}]
+					\nextgroupplot
+					\addplot {x};
+					\nextgroupplot
+					\addplot {x^2};
+				\end{groupplot}
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section*{\faCheckCircle\ Ejemplos Completos}
+	
+	\subsection*{Ejemplo 1: Gráfica Básica}
+	
+	\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Múltiples funciones]
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				\begin{axis}[
+					width=12cm, height=8cm,
+					xlabel=$x$, ylabel=$f(x)$,
+					title=Funciones Matemáticas,
+					legend pos=north west,
+					grid=both,
+					domain=-2:2,
+					samples=100
+					]
+					\addplot[blue, thick] {x^2};
+					\addlegendentry{$x^2$}
+					
+					\addplot[red, dashed, thick] {x^3};
+					\addlegendentry{$x^3$}
+					
+					\addplot[green!70!black, dotted, ultra thick] {sin(deg(x))};
+					\addlegendentry{$\sin(x)$}
+				\end{axis}
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 2: Gráfica de Barras}
+	
+	\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faCode\ Comparativa]
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				\begin{axis}[
+					ybar,
+					bar width=15pt,
+					ylabel=Ventas (miles),
+					symbolic x coords={Ene, Feb, Mar, Abr},
+					xtick=data,
+					legend pos=north west,
+					ymin=0
+					]
+					\addplot coordinates {(Ene,20) (Feb,25) (Mar,22) (Abr,30)};
+					\addlegendentry{2023}
+					
+					\addplot coordinates {(Ene,25) (Feb,28) (Mar,27) (Abr,35)};
+					\addlegendentry{2024}
+				\end{axis}
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Ejemplo 3: Superficie 3D}
+	
+	\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faCode\ Tridimensional]
+		\begin{lstlisting}[language=TeX]
+			\begin{tikzpicture}
+				\begin{axis}[
+					colormap/viridis,
+					colorbar,
+					xlabel=$x$,
+					ylabel=$y$,
+					zlabel=$z$,
+					view={45}{30}
+					]
+					\addplot3[
+					surf,
+					samples=30,
+					domain=-2:2,
+					y domain=-2:2
+					] {x^2 - y^2};
+				\end{axis}
+			\end{tikzpicture}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section*{\faLightbulb\ Tips Importantes}
+	
+	\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+		\begin{itemize}[leftmargin=*]
+			\item Siempre especifica \texttt{compat=1.18} para usar características recientes
+			\item Usa \texttt{samples=n} para controlar suavidad de curvas
+			\item Para trigonométricas usa \texttt{deg(x)} para convertir radianes a grados
+			\item \texttt{domain} define rango de x para funciones
+			\item Usa \texttt{restrict y to domain} para evitar discontinuidades
+			\item Para 3D, ajusta \texttt{view} para cambiar ángulo de visualización
+			\item Usa \texttt{only marks} con \texttt{mark=*} para dispersión
+			\item Para rendimiento, usa librería \texttt{external}
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\section*{\faExclamationTriangle\ Errores Comunes}
+	
+	\begin{tcolorbox}[colback=red!10,colframe=red!75!black]
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Olvidar punto y coma}: \texttt{\textbackslash addplot} debe terminar con ;
+			\item \textbf{Funciones trigonométricas}: Usar \texttt{sin(deg(x))} cuando x está en grados
+			\item \textbf{Compilación lenta}: Demasiados samples en 3D
+			\item \textbf{Leyenda incorrecta}: Número de \texttt{\textbackslash addlegendentry} debe coincidir
+			\item \textbf{Discontinuidades}: No usar \texttt{restrict} causa saltos verticales
+			\item \textbf{Memoria}: Gráficas 3D muy detalladas exceden memoria de TeX
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\textit{Documento generado con \LaTeX{} y PGFPlots -- \today}
+		
+		\textit{Para más información, consulta el manual oficial de PGFPlots.}
+	\end{center}
+	
+\end{document}

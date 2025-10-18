@@ -1,0 +1,741 @@
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage{ifxetex,ifluatex}
+\ifxetex
+  % XeLaTeX no necesita inputenc
+\else
+  \ifluatex
+    % LuaLaTeX no necesita inputenc
+  \else
+    % pdfLaTeX necesita inputenc
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{listings}
+
+% Definición de colores
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{azulclaro}{RGB}{230,240,250}
+\definecolor{verdeoscuro}{RGB}{0,100,0}
+\definecolor{rojoclaro}{RGB}{255,230,230}
+\definecolor{grisclaro}{RGB}{240,240,240}
+
+% Configuración de listings para código
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    columns=flexible,
+    showstringspaces=false
+}
+
+% IMPORTANTE: hyperref debe ir casi al final
+\usepackage[
+    colorlinks=true,
+    linkcolor=azuloscuro,
+    urlcolor=blue,
+    citecolor=verdeoscuro,
+    pdftitle={Guía de tcblisting e hyperref},
+    pdfauthor={Documentación LaTeX},
+    pdfsubject={Paquetes LaTeX},
+    bookmarks=true,
+    bookmarksopen=true,
+    unicode=true
+]{hyperref}
+
+% Título
+\title{\textbf{Guía Práctica:} \\
+\large Entorno \texttt{tcblisting} y Paquete \texttt{hyperref}}
+\author{Documentación de LaTeX}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% =====================================
+% PARTE 1: TCBLISTING
+% =====================================
+
+\section{El Entorno \texttt{tcblisting}}
+
+\subsection{?`Qué es \texttt{tcblisting}?}
+
+El entorno \texttt{tcblisting} es parte del paquete \texttt{tcolorbox} y se utiliza para \textbf{mostrar código fuente con formato dentro de una caja coloreada y estilizada}.
+
+\subsection{Características Principales}
+
+\begin{itemize}
+    \item Combina cajas estilizadas (\texttt{tcolorbox}) con listados de código (\texttt{listings})
+    \item Permite resaltado de sintaxis
+    \item Altamente personalizable en colores, bordes y estilos
+    \item Soporta múltiples lenguajes de programación
+    \item Puede mostrar código y su salida compilada simultáneamente
+\end{itemize}
+
+\subsection{Modos de Uso}
+
+\subsubsection{Modo 1: Solo Código (\texttt{listing only})}
+
+Muestra únicamente el código fuente sin compilarlo.
+
+\begin{tcblisting}{
+    listing only,
+    title=Ejemplo: Código Python,
+    colback=grisclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries,
+    listing options={language=Python}
+}
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n-1)
+
+print(factorial(5))
+\end{tcblisting}
+
+\subsubsection{Modo 2: Código LaTeX con Salida (\texttt{text side listing})}
+
+Muestra el código LaTeX a la izquierda y el resultado compilado a la derecha.
+
+\begin{tcblisting}{
+    text side listing,
+    title=Ejemplo: Ecuación,
+    colback=azulclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries
+}
+La fórmula de la energía cinética es:
+\begin{equation*}
+    E_k = \frac{1}{2}mv^2
+\end{equation*}
+\end{tcblisting}
+
+\subsubsection{Modo 3: Solo Salida (\texttt{text only})}
+
+Muestra únicamente el resultado compilado, sin el código.
+
+\begin{tcblisting}{
+    text only,
+    title=Ejemplo: Solo Resultado,
+    colback=rojoclaro,
+    colframe=red!70!black,
+    fonttitle=\bfseries
+}
+\textbf{Teorema de Pitágoras:}
+\[
+    a^2 + b^2 = c^2
+\]
+\end{tcblisting}
+
+\subsection{Opciones Principales de \texttt{tcblisting}}
+
+\subsubsection{Opción 1: \texttt{listing only}}
+
+\textbf{Descripción:} Muestra únicamente el código fuente sin compilarlo ni mostrar su salida.
+
+\textbf{Uso:} Para mostrar código de cualquier lenguaje de programación o LaTeX sin ejecutarlo.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{listing only}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 2: \texttt{text side listing}}
+
+\textbf{Descripción:} Muestra el código LaTeX a la izquierda y el resultado compilado a la derecha, en disposición horizontal lado a lado.
+
+\textbf{Uso:} Ideal para tutoriales de LaTeX donde se quiere mostrar el código y su resultado simultáneamente.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{text side listing}
+    código LaTeX aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 3: \texttt{listing and text}}
+
+\textbf{Descripción:} Muestra el código LaTeX arriba y el resultado compilado abajo, en disposición vertical.
+
+\textbf{Uso:} Similar a \texttt{text side listing} pero con disposición vertical.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{listing and text}
+    código LaTeX aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 4: \texttt{text only}}
+
+\textbf{Descripción:} Muestra únicamente el resultado compilado del código LaTeX, sin mostrar el código fuente.
+
+\textbf{Uso:} Para mostrar solo la salida de código LaTeX en una caja estilizada.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{text only}
+    código LaTeX que se compilará
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 5: \texttt{title}}
+
+\textbf{Descripción:} Define el título que aparece en la parte superior de la caja.
+
+\textbf{Valores:} Cualquier texto
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{title=Mi Código Python}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 6: \texttt{colback}}
+
+\textbf{Descripción:} Define el color de fondo de la caja.
+
+\textbf{Valores:} Cualquier color definido o mezclas (ej: \texttt{yellow!10}, \texttt{blue!20})
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{colback=yellow!10}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 7: \texttt{colframe}}
+
+\textbf{Descripción:} Define el color del borde/marco de la caja.
+
+\textbf{Valores:} Cualquier color definido o mezclas
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{colframe=red!75!black}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 8: \texttt{fonttitle}}
+
+\textbf{Descripción:} Define el estilo de la fuente del título.
+
+\textbf{Valores:} Comandos de fuente como \texttt{\textbackslash bfseries}, \texttt{\textbackslash itshape}, etc.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{fonttitle=\bfseries}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 9: \texttt{listing options}}
+
+\textbf{Descripción:} Permite pasar opciones al paquete \texttt{listings} para controlar el resaltado de sintaxis.
+
+\textbf{Valores:} Opciones de \texttt{listings} como \texttt{language}, \texttt{numbers}, \texttt{numberstyle}, etc.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{listing options={language=Python, numbers=left}}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\textbf{Sub-opciones comunes:}
+\begin{itemize}
+    \item \texttt{language=Python/C/Java/...} - Define el lenguaje de programación
+    \item \texttt{numbers=left/right/none} - Posición de números de línea
+    \item \texttt{numberstyle=\textbackslash tiny} - Estilo de los números de línea
+    \item \texttt{stepnumber=1} - Incremento de numeración
+    \item \texttt{basicstyle=\textbackslash ttfamily} - Estilo básico del código
+\end{itemize}
+
+\subsubsection{Opción 10: \texttt{label}}
+
+\textbf{Descripción:} Asigna una etiqueta para referencias cruzadas.
+
+\textbf{Valores:} Cualquier identificador único
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{label=code:ejemplo}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+Luego se puede referenciar con \texttt{\textbackslash ref\{code:ejemplo\}}.
+
+\subsubsection{Opción 11: \texttt{boxrule}}
+
+\textbf{Descripción:} Define el grosor del borde de la caja.
+
+\textbf{Valores:} Dimensión en pt, mm, cm, etc.
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{boxrule=2pt}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 12: \texttt{sharp corners}}
+
+\textbf{Descripción:} Hace que las esquinas de la caja sean rectangulares en lugar de redondeadas.
+
+\textbf{Valores:} No requiere valor, es una opción booleana
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{sharp corners}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 13: \texttt{arc}}
+
+\textbf{Descripción:} Define el radio de curvatura de las esquinas redondeadas.
+
+\textbf{Valores:} Dimensión (por defecto 4mm)
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{arc=1mm}
+    código aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsubsection{Opción 14: \texttt{breakable}}
+
+\textbf{Descripción:} Permite que la caja se divida entre páginas si es muy larga.
+
+\textbf{Valores:} No requiere valor
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\begin{tcblisting}{breakable}
+    código muy largo aquí
+\end{tcblisting}
+\end{verbatim}
+
+\subsection{Ejemplos de Personalización}
+
+\subsubsection{Colores de Fondo y Marco}
+
+\begin{tcblisting}{
+    listing only,
+    title=Caja con Colores Personalizados,
+    colback=yellow!10,
+    colframe=red!75!black,
+    listing options={language=C}
+}
+#include <stdio.h>
+int main() {
+    printf("Hola Mundo\n");
+    return 0;
+}
+\end{tcblisting}
+
+\subsubsection{Sin Título}
+
+\begin{tcblisting}{
+    listing only,
+    colback=green!5,
+    colframe=verdeoscuro,
+    listing options={language=Java}
+}
+public class Saludo {
+    public static void main(String[] args) {
+        System.out.println("Hola");
+    }
+}
+\end{tcblisting}
+
+\subsubsection{Con Líneas Numeradas}
+
+\begin{tcblisting}{
+    listing only,
+    title=Código con Números de Línea,
+    colback=grisclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries,
+    listing options={
+        language=Python,
+        numbers=left,
+        numberstyle=\tiny,
+        stepnumber=1
+    }
+}
+def suma(a, b):
+    resultado = a + b
+    return resultado
+
+x = suma(5, 3)
+print(f"La suma es: {x}")
+\end{tcblisting}
+
+\subsubsection{Disposición Vertical}
+
+\begin{tcblisting}{
+    listing and text,
+    title={Código Arriba - Resultado Abajo},
+    colback=azulclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries
+}
+Vector de aceleración:
+\[
+    \vec{a} = \frac{d\vec{v}}{dt}
+\]
+\end{tcblisting}
+
+\newpage
+
+% =====================================
+% PARTE 2: HYPERREF
+% =====================================
+
+\section{El Paquete \texttt{hyperref}}
+
+\subsection{?`Qué es \texttt{hyperref}?}
+
+El paquete \texttt{hyperref} permite crear \textbf{hipervínculos interactivos en documentos PDF}, haciendo que las referencias, URLs y el índice sean clickeables.
+
+\subsection{Funcionalidades Principales}
+
+\begin{enumerate}
+    \item \textbf{Enlaces internos:} Referencias cruzadas clickeables (ecuaciones, figuras, secciones)
+    \item \textbf{Enlaces externos:} URLs clickeables hacia sitios web
+    \item \textbf{Tabla de contenidos interactiva:} Índice navegable
+    \item \textbf{Metadatos del PDF:} Información del documento
+    \item \textbf{Marcadores (bookmarks):} Panel lateral de navegación
+\end{enumerate}
+
+\subsection{Opciones Principales de \texttt{hyperref}}
+
+\subsubsection{Opción 1: \texttt{colorlinks}}
+
+\textbf{Descripción:} Muestra los enlaces con colores en lugar de cajas rectangulares.
+
+\textbf{Valores:} \texttt{true} o \texttt{false}
+
+\textbf{Ejemplo de uso:}
+\begin{verbatim}
+\usepackage[colorlinks=true]{hyperref}
+\end{verbatim}
+
+\textbf{Resultado:} Los enlaces en este documento tienen colores (azul, verde) en lugar de bordes.
+
+\subsubsection{Opción 2: \texttt{linkcolor}}
+
+\textbf{Descripción:} Define el color de los enlaces internos (referencias a secciones, ecuaciones, figuras).
+
+\textbf{Valores:} Cualquier color definido (red, blue, black, o colores personalizados)
+
+\textbf{Ejemplo:} Haz clic para ir a la \hyperref[sec:tcb]{Sección 1 (tcblisting)}.
+
+\begin{verbatim}
+\usepackage[linkcolor=azuloscuro]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 3: \texttt{urlcolor}}
+
+\textbf{Descripción:} Define el color de las URLs externas.
+
+\textbf{Ejemplo:} Visita \url{https://www.latex-project.org}
+
+\begin{verbatim}
+\usepackage[urlcolor=blue]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 4: \texttt{citecolor}}
+
+\textbf{Descripción:} Define el color de las citas bibliográficas.
+
+\textbf{Ejemplo de código:}
+\begin{verbatim}
+\usepackage[citecolor=green]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 5: \texttt{pdftitle}}
+
+\textbf{Descripción:} Define el título del documento PDF (visible en propiedades del archivo).
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[pdftitle={Mi Documento}]{hyperref}
+\end{verbatim}
+
+\textbf{Resultado:} El PDF tendrá ``Mi Documento'' como título en sus metadatos.
+
+\subsubsection{Opción 6: \texttt{pdfauthor}}
+
+\textbf{Descripción:} Define el autor del documento PDF.
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[pdfauthor={Juan Pérez}]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 7: \texttt{pdfsubject}}
+
+\textbf{Descripción:} Define el tema o asunto del documento.
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[pdfsubject={Física Cuántica}]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 8: \texttt{pdfkeywords}}
+
+\textbf{Descripción:} Define palabras clave para el documento (útil para búsquedas).
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[pdfkeywords={LaTeX, física, mecánica}]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 9: \texttt{bookmarks}}
+
+\textbf{Descripción:} Habilita o deshabilita los marcadores laterales en el PDF.
+
+\textbf{Valores:} \texttt{true} o \texttt{false}
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[bookmarks=true]{hyperref}
+\end{verbatim}
+
+\textbf{Resultado:} Este PDF tiene marcadores en el panel lateral izquierdo.
+
+\subsubsection{Opción 10: \texttt{bookmarksopen}}
+
+\textbf{Descripción:} Los marcadores aparecen expandidos al abrir el PDF.
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[bookmarksopen=true]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 11: \texttt{hidelinks}}
+
+\textbf{Descripción:} Oculta todos los colores y bordes de los enlaces (enlaces invisibles pero funcionales).
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[hidelinks]{hyperref}
+\end{verbatim}
+
+\textbf{Uso recomendado:} Para documentos impresos donde no se desean colores en los enlaces.
+
+\subsubsection{Opción 12: \texttt{unicode}}
+
+\textbf{Descripción:} Permite caracteres Unicode en los marcadores del PDF.
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[unicode=true]{hyperref}
+\end{verbatim}
+
+\textbf{Uso:} Necesario para caracteres especiales como ñ, á, é, ü en marcadores.
+
+\subsubsection{Opción 13: \texttt{breaklinks}}
+
+\textbf{Descripción:} Permite que los enlaces largos se dividan en varias líneas.
+
+\textbf{Ejemplo:}
+\begin{verbatim}
+\usepackage[breaklinks=true]{hyperref}
+\end{verbatim}
+
+\subsubsection{Opción 14: \texttt{pdfborder}}
+
+\textbf{Descripción:} Define el estilo del borde de los enlaces.
+
+\textbf{Valores:} \texttt{\{ancho alto profundidad\}}
+
+\textbf{Ejemplo sin bordes:}
+\begin{verbatim}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\end{verbatim}
+
+\subsection{Comandos Útiles de \texttt{hyperref}}
+
+\subsubsection{Comando \texttt{\textbackslash url}}
+
+Crea un enlace a una URL mostrando la URL completa.
+
+\textbf{Sintaxis:}
+\begin{verbatim}
+\url{https://www.ejemplo.com}
+\end{verbatim}
+
+\textbf{Ejemplo:} \url{https://www.overleaf.com}
+
+\subsubsection{Comando \texttt{\textbackslash href}}
+
+Crea un enlace con texto personalizado.
+
+\textbf{Sintaxis:}
+\begin{verbatim}
+\href{URL}{texto a mostrar}
+\end{verbatim}
+
+\textbf{Ejemplo:} Visita \href{https://www.latex-project.org}{el sitio oficial de LaTeX}.
+
+\subsubsection{Comando \texttt{\textbackslash hyperref}}
+
+Crea un enlace interno personalizado.
+
+\textbf{Sintaxis:}
+\begin{verbatim}
+\hyperref[etiqueta]{texto}
+\end{verbatim}
+
+\textbf{Ejemplo:} Ve a la \hyperref[sec:tcb]{sección de tcblisting}.
+
+\subsubsection{Comando \texttt{\textbackslash autoref}}
+
+Crea una referencia automática con el tipo de objeto.
+
+\textbf{Sintaxis:}
+\begin{verbatim}
+\autoref{etiqueta}
+\end{verbatim}
+
+\textbf{Ejemplo con ecuación:}
+
+\begin{equation}
+    E = mc^2
+    \label{eq:einstein}
+\end{equation}
+
+Referencia: Como se ve en \autoref{eq:einstein}, la energía y masa están relacionadas.
+
+\subsection{Configuración Completa Recomendada}
+
+Para documentos académicos de física (como tus ejercicios):
+
+\begin{verbatim}
+\usepackage[
+    colorlinks=true,
+    linkcolor=azuloscuro,
+    urlcolor=blue,
+    citecolor=verdeoscuro,
+    pdftitle={Solución Ejercicio 3.35},
+    pdfauthor={Física Universitaria},
+    pdfsubject={Movimiento Circular},
+    pdfkeywords={física, cinemática, LaTeX},
+    bookmarks=true,
+    bookmarksopen=true,
+    unicode=true,
+    breaklinks=true
+]{hyperref}
+\end{verbatim}
+
+\subsection{IMPORTANTE: Orden de Carga}
+
+El paquete \texttt{hyperref} debe cargarse \textbf{casi al final del preámbulo}, después de la mayoría de los paquetes.
+
+\textbf{Orden correcto:}
+
+\begin{verbatim}
+% Primero: paquetes básicos
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+
+% Casi al final: hyperref
+\usepackage[opciones]{hyperref}
+
+% Después de hyperref (solo estos)
+\usepackage{cleveref}  % si se usa
+\end{verbatim}
+
+\section{Ejemplos Combinados}
+
+\subsection{Ejemplo 1: Código con Enlace}
+
+\begin{tcblisting}{
+    text side listing,
+    title=Aceleración Centrípeta,
+    colback=azulclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries
+}
+\label{sec:tcb}
+La aceleración centrípeta es:
+\begin{equation*}
+    a_c = \frac{v^2}{R}
+\end{equation*}
+Para más información, visita
+\href{https://es.wikipedia.org/wiki/Aceleraci\%C3\%B3n_centr\%C3\%ADpeta}{Wikipedia}.
+\end{tcblisting}
+
+\subsection{Ejemplo 2: Código Python con Referencia}
+
+\begin{tcblisting}{
+    listing only,
+    title=Programa de Física,
+    colback=green!5,
+    colframe=verdeoscuro,
+    fonttitle=\bfseries,
+    label={code:python},
+    listing options={language=Python}
+}
+import numpy as np
+
+# Calcular velocidad
+R = 14.0  # metros
+omega = 0.5  # rad/s
+v = omega * R
+print(f"Velocidad: {v} m/s")
+\end{tcblisting}
+
+Puedes ver el código Python en el cuadro anterior (referencia interna funcional si se configura).
+
+\section{Resumen Comparativo}
+
+\begin{center}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Característica} & \textbf{Descripción} \\
+\hline
+\texttt{tcblisting} & Entorno para mostrar código con cajas estilizadas. Parte de \texttt{tcolorbox}. \\
+\hline
+\texttt{hyperref} & Paquete para crear hipervínculos y hacer PDFs interactivos. \\
+\hline
+Uso conjunto & Se pueden combinar: código en cajas con enlaces a documentación externa. \\
+\hline
+Orden de carga & \texttt{tcolorbox} antes, \texttt{hyperref} casi al final del preámbulo. \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Conclusiones}
+
+\begin{itemize}
+    \item \texttt{tcblisting} es ideal para tutoriales, documentación técnica y presentaciones de código.
+    \item \texttt{hyperref} mejora significativamente la navegación en documentos PDF largos.
+    \item Ambos son altamente personalizables y se complementan bien.
+    \item Siempre cargar \texttt{hyperref} casi al final del preámbulo.
+\end{itemize}
+
+\end{document}

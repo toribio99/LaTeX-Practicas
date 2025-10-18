@@ -1,0 +1,637 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+% Colores personalizados
+\definecolor{categorycolor}{RGB}{41,128,185}
+\definecolor{commandcolor}{RGB}{39,174,96}
+\definecolor{examplecolor}{RGB}{149,165,166}
+
+% Configuración de listings
+\lstset{
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	columns=fullflexible,
+	keepspaces=true
+}
+
+% Título
+\title{\textbf{\Huge Entorno \texttt{figure} en \LaTeX{}}\\\large Guía Completa de Comandos y Opciones}
+\author{}
+\date{\today}
+ \usepackage[
+%colorlinks=true,        % Enlaces con color (en lugar de cajas)
+linkcolor=blue,         % Color de enlaces internos
+urlcolor=cyan,          % Color de URLs
+citecolor=green,        % Color de citas bibliográficas
+filecolor=magenta,      % Color de enlaces a archivos
+pdfborder={0 0 0},      % Sin bordes en los enlaces
+bookmarks=true,         % Crear marcadores en el PDF
+bookmarksopen=true,     % Marcadores expandidos al abrir
+pdftitle={Mi Título},   % Título del PDF
+pdfauthor={Mi Nombre},  % Autor del PDF
+pdfsubject={Tema},      % Tema del documento
+pdfkeywords={palabra1, palabra2}, % Palabras clave
+%hidelinks,              % Ocultar todos los bordes/colores de enlaces
+unicode=true,           % Permitir caracteres Unicode en marcadores
+breaklinks=true         % Permitir saltos de línea en enlaces
+]{hyperref}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{tcolorbox}[colback=blue!5,colframe=blue!75!black,title=\faInfoCircle\ Introducción]
+		El entorno \texttt{figure} es un contenedor flotante que permite insertar imágenes en documentos \LaTeX{} con numeración automática, títulos y referencias cruzadas.
+	\end{tcolorbox}
+	
+	\tableofcontents
+	
+	\section*{\faImage\ Entorno figure}
+	
+	\subsection*{Sintaxis básica}
+	\begin{lstlisting}[language=TeX]
+		\begin{figure}[opciones]
+			... contenido ...
+		\end{figure}
+	\end{lstlisting}
+	
+	\section{Opciones de Posición}
+	
+	Controlan dónde \LaTeX{} coloca la figura en el documento.
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[h]}} -- Here}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Intenta colocar la figura aquí (where defined)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[h]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[t]}} -- Top}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Parte superior de la página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[t]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[b]}} -- Bottom}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Parte inferior de la página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[b]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[p]}} -- Page}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Página solo para flotantes
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[p]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[H]}} -- HERE (forzado)}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Fuerza posición exacta (requiere paquete \texttt{float})
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{float}
+			\begin{figure}[H]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{float\}}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[htbp]}} -- Combinación}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Múltiples opciones de posición (más flexible)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Más flexible, \LaTeX{} elige la mejor opción
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textcolor{commandcolor}{[!h]}} -- Override}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ignora restricciones internas de \LaTeX{}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[!h]
+				\centering
+				\includegraphics{imagen.png}
+			\end{figure}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} El ! relaja las restricciones de \LaTeX{}
+	\end{tcolorbox}
+	
+	%\f
+	
+	\section{\faImage\ Comando \textbackslash includegraphics}
+	
+	Inserta la imagen en la figura.
+	
+	\subsection*{Forma básica}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Tamaño original
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics{imagen.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[width=valor]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Ancho específico
+		
+		\textbf{Ejemplos:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[width=5cm]{img.png}
+			\includegraphics[width=0.8\textwidth]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[height=valor]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Altura específica
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[height=4cm]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[scale=factor]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Escala proporcional (1.0 = 100\%)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[scale=0.5]{img.png}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} 0.5 = 50\% del tamaño original
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[angle=grados]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Rotación en grados (sentido antihorario)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[angle=90]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[keepaspectratio]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Mantiene proporciones al usar width y height
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[width=5cm,height=3cm,keepaspectratio]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{[trim=l b r t, clip]}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Recorta bordes (left bottom right top)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[trim=1cm 2cm 1cm 2cm, clip]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{Opciones combinadas}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Múltiples opciones separadas por comas
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\includegraphics[width=0.7\textwidth,angle=15,keepaspectratio]{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{\faFont\ Comando \textbackslash caption}
+	
+	Añade pie de figura numerado.
+	
+	\subsection*{\texttt{\textbackslash caption\{texto\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Pie de figura básico
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\caption{Gráfica de resultados experimentales}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash caption[corto]\{largo\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Versión corta para índice de figuras
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\caption[Resultados]{Resultados experimentales completos con análisis detallado}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Corto aparece en \texttt{\textbackslash listoffigures}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash caption*\{texto\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Caption sin numeración (requiere paquete caption)
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{caption}
+			\caption*{Nota: Sin número}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Necesita \texttt{\textbackslash usepackage\{caption\}}
+	\end{tcolorbox}
+	
+	\section{\faTag\ Comando \textbackslash label}
+	
+	Etiqueta para referencias cruzadas.
+	
+	\subsection*{\texttt{\textbackslash label\{nombre\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Crea etiqueta identificadora
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\label{fig:experimento1}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Usar prefijo \texttt{fig:} es convención común
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash ref\{nombre\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Referencia al número de figura
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			Ver Figura \ref{fig:experimento1}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Muestra solo el número
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash pageref\{nombre\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Referencia al número de página
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			En la página \pageref{fig:experimento1}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	%\newpage
+	
+	\section{\faAlignCenter\ Comando \textbackslash centering}
+	
+	Centra el contenido de la figura.
+	
+	\subsection*{\texttt{\textbackslash centering}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Comando preferido dentro de figure
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\begin{figure}[h]
+				\centering
+				\includegraphics{img.png}
+			\end{figure}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Preferible a \texttt{\textbackslash begin\{center\}...\textbackslash end\{center\}}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash raggedright}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Alineación a la izquierda
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\raggedright
+			\includegraphics{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash raggedleft}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Alineación a la derecha
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\raggedleft
+			\includegraphics{img.png}
+		\end{lstlisting}
+	\end{tcolorbox}
+	
+	\section{\faBox\ Paquetes Relacionados}
+	
+	Paquetes que extienden la funcionalidad del entorno figure.
+	
+	\subsection*{\texttt{\textbackslash usepackage\{graphicx\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Esencial - permite \texttt{\textbackslash includegraphics}
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{graphicx}
+		\end{lstlisting}
+		
+		\tcblower
+		\faLightbulb\ \textbf{Nota:} Obligatorio para insertar imágenes
+	\end{tcolorbox}
+	
+	\subsection*{\texttt{\textbackslash usepackage\{float\}}}
+	\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+		\textbf{Descripción:} Añade opción [H] para posición forzada
+		
+		\textbf{Ejemplo:}
+		\begin{lstlisting}[language=TeX]
+			\usepackage{float}
+			\begin{figure}[H]
+			\end{lstlisting}
+		\end{tcolorbox}
+		
+		\subsection*{\texttt{\textbackslash usepackage\{caption\}}}
+		\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+			\textbf{Descripción:} Personalización avanzada de captions
+			
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				\usepackage{caption}
+				\captionsetup{font=small,labelfont=bf}
+			\end{lstlisting}
+		\end{tcolorbox}
+		
+		\subsection*{\texttt{\textbackslash usepackage\{subcaption\}}}
+		\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+			\textbf{Descripción:} Subfiguras con subcaptions individuales
+			
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				\usepackage{subcaption}
+				\begin{subfigure}{0.45\textwidth}
+					\includegraphics{a.png}
+					\caption{Parte A}
+				\end{subfigure}
+			\end{lstlisting}
+		\end{tcolorbox}
+		
+		\subsection*{\texttt{\textbackslash usepackage\{wrapfig\}}}
+		\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+			\textbf{Descripción:} Texto envolviendo la figura
+			
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				\usepackage{wrapfig}
+				\begin{wrapfigure}{r}{0.4\textwidth}
+					\includegraphics{img.png}
+				\end{wrapfigure}
+			\end{lstlisting}
+
+		\tcblower
+		\faLightbulb\ \textbf{Opciones de posición:} \texttt{r} (derecha), \texttt{l} (izquierda), \texttt{i} (interior), \texttt{o} (exterior)
+		\end{tcolorbox}
+
+		\subsubsection*{Control de distancias en wrapfigure}
+
+		\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faRuler\ Parámetro \textbackslash columnsep]
+			\textbf{Descripción:} Controla la distancia horizontal entre la figura y el texto que la rodea
+
+			\textbf{Valor por defecto:} 10pt
+
+			\textbf{Ejemplo - Ajuste global:}
+			\begin{lstlisting}[language=TeX]
+				% En el preámbulo
+				\setlength{\columnsep}{20pt}
+
+				\begin{wrapfigure}{r}{0.4\textwidth}
+					\includegraphics{img.png}
+				\end{wrapfigure}
+			\end{lstlisting}
+
+			\tcblower
+			\faLightbulb\ \textbf{Nota:} Afecta a TODAS las wrapfigure del documento
+		\end{tcolorbox}
+
+		\begin{tcolorbox}[colback=yellow!10,colframe=orange!75!black,title=\faRuler\ Parámetro \textbackslash intextsep]
+			\textbf{Descripción:} Controla la distancia vertical (arriba y abajo) de la figura
+
+			\textbf{Valor por defecto:} ~12pt
+
+			\textbf{Ejemplo - Ajuste global:}
+			\begin{lstlisting}[language=TeX]
+				% En el preámbulo
+				\setlength{\intextsep}{15pt}
+
+				\begin{wrapfigure}{r}{0.4\textwidth}
+					\includegraphics{img.png}
+				\end{wrapfigure}
+			\end{lstlisting}
+
+			\tcblower
+			\faLightbulb\ \textbf{Nota:} Afecta al espacio superior e inferior
+		\end{tcolorbox}
+
+		\begin{tcolorbox}[colback=cyan!10,colframe=cyan!75!black,title=\faEdit\ Ajuste local (solo una figura)]
+			\textbf{Descripción:} Cambiar distancias solo para una wrapfigure específica
+
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				% Guardar valores originales y cambiar temporalmente
+				\begingroup
+				\setlength{\columnsep}{5pt}   % Muy cerca del texto
+				\setlength{\intextsep}{20pt}  % Mucho espacio arriba/abajo
+
+				\begin{wrapfigure}{r}{0.3\textwidth}
+					\centering
+					\includegraphics[width=0.28\textwidth]{imagen.png}
+					\caption{Figura con ajustes especiales}
+				\end{wrapfigure}
+
+				Texto que rodea la figura...
+
+				\endgroup  % Restaurar valores originales
+
+				% Aquí ya se usan los valores globales de nuevo
+			\end{lstlisting}
+
+			\tcblower
+			\faLightbulb\ \textbf{Nota:} Usar \texttt{\textbackslash begingroup} y \texttt{\textbackslash endgroup} para aislar cambios
+		\end{tcolorbox}
+
+		\begin{tcolorbox}[colback=purple!10,colframe=purple!75!black,title=\faTable\ Resumen de parámetros de distancia]
+			\begin{center}
+				\begin{tabular}{|l|l|c|}
+					\hline
+					\textbf{Parámetro} & \textbf{Controla} & \textbf{Default} \\
+					\hline
+					\texttt{\textbackslash columnsep} & Distancia horizontal (lateral) & ~10pt \\
+					\hline
+					\texttt{\textbackslash intextsep} & Distancia vertical (arriba/abajo) & ~12pt \\
+					\hline
+				\end{tabular}
+			\end{center}
+		\end{tcolorbox}
+
+		\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCheckCircle\ Ejemplo completo con ajustes]
+			\begin{lstlisting}[language=TeX]
+				\documentclass{article}
+				\usepackage{graphicx}
+				\usepackage{wrapfig}
+
+				% Ajustes globales en el preámbulo
+				\setlength{\columnsep}{15pt}
+				\setlength{\intextsep}{10pt}
+
+				\begin{document}
+
+				% Figura con valores globales
+				\begin{wrapfigure}{r}{0.4\textwidth}
+					\centering
+					\includegraphics[width=0.38\textwidth]{img1.png}
+					\caption{Figura normal}
+				\end{wrapfigure}
+
+				Lorem ipsum dolor sit amet...
+
+				% Figura con valores locales diferentes
+				\begingroup
+				\setlength{\columnsep}{25pt}
+				\setlength{\intextsep}{5pt}
+
+				\begin{wrapfigure}{l}{0.35\textwidth}
+					\centering
+					\includegraphics[width=0.33\textwidth]{img2.png}
+					\caption{Figura especial}
+				\end{wrapfigure}
+
+				Texto alrededor...
+				\endgroup
+
+				\end{document}
+			\end{lstlisting}
+		\end{tcolorbox}
+
+		\subsection*{\texttt{\textbackslash graphicspath\{\{carpeta/\}\}}}
+		\begin{tcolorbox}[colback=green!5,colframe=green!50!black]
+			\textbf{Descripción:} Define ruta para buscar imágenes
+			
+			\textbf{Ejemplo:}
+			\begin{lstlisting}[language=TeX]
+				\graphicspath{{imagenes/}{figuras/}}
+			\end{lstlisting}
+			
+			\tcblower
+			\faLightbulb\ \textbf{Nota:} Poner en el preámbulo
+		\end{tcolorbox}
+		
+		%\newpage
+		
+		\section*{\faCheckCircle\ Ejemplo Completo}
+		
+		\begin{tcolorbox}[colback=green!10,colframe=green!75!black,title=\faCode\ Código completo de ejemplo]
+			\begin{lstlisting}[language=TeX]
+				\documentclass{article}
+				\usepackage{graphicx}
+				
+				\begin{document}
+					
+					\begin{figure}[htbp]
+						\centering
+						\includegraphics[width=0.7\textwidth]{mi_grafica.png}
+						\caption[Título corto]{Título largo y descriptivo de la figura}
+						\label{fig:mi_grafica}
+					\end{figure}
+					
+					Como se observa en la Figura \ref{fig:mi_grafica}...
+					
+				\end{document}
+			\end{lstlisting}
+		\end{tcolorbox}
+		
+		\section*{\faLightbulb\ Tips Importantes}
+		
+		\begin{tcolorbox}[colback=blue!10,colframe=blue!75!black]
+			\begin{itemize}[leftmargin=*]
+				\item El \texttt{\textbackslash label} debe ir DESPUÉS del \texttt{\textbackslash caption}
+				\item Usar \texttt{\textbackslash centering} en lugar de \texttt{\textbackslash begin\{center\}} para evitar espacios extra
+				\item \texttt{[htbp]} es la combinación más flexible para posicionamiento
+				\item Formatos soportados: .png, .jpg, .pdf, .eps (con pdflatex usa .png, .jpg, .pdf)
+				\item Es recomendable usar siempre \texttt{[htbp]} a menos que tengas una razón específica
+				\item El paquete \texttt{graphicx} es obligatorio para usar \texttt{\textbackslash includegraphics}
+			\end{itemize}
+		\end{tcolorbox}
+		
+		\vspace{1cm}
+
+		\begin{center}
+			\textit{Documento generado con \LaTeX{} -- \today}
+		\end{center}
+
+	\end{document}

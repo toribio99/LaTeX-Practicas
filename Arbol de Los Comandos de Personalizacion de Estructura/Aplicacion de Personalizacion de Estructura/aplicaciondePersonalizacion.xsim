@@ -1,0 +1,42 @@
+\providecommand\numberofexercises{}
+\XSIM{solution-body}{exercise-1=={Sumando elemento a elemento, obtenemos que la matriz resultante tiene elementos 6, 8, 10, 12 en ese orden.}||exercise-2=={Esta es la identidad pitagórica fundamental. Se deriva directamente del teorema de Pitágoras aplicado al círculo unitario.}||exercise-3=={Usando la fórmula del área del círculo: $$A = \pi r^2 = \pi (5)^2 = 25\pi \approx 78.54 \text { cm}^2$$}||exercise-4=={De la segunda ecuación: $x = 1 + y$ \par Sustituyendo en la primera: $2(1+y) + 3y = 7$ \par Simplificando: $2 + 2y + 3y = 7$, entonces $5y = 5$, por lo tanto $y = 1$ \par Y entonces: $x = 1 + 1 = 2$ \par Solución: $(x, y) = (2, 1)$}}
+\XSIM{exercise-body}{exercise-1=={Dadas dos matrices $A$ y $B$ de dimensión $2 \times 2$, donde $A$ tiene elementos 1, 2, 3, 4 y $B$ tiene elementos 5, 6, 7, 8, calcular la suma $A + B$.}||exercise-2=={Demostrar que $\sin ^2(x) + \cos ^2(x) = 1$.}||exercise-3=={Calcular el área de un círculo de radio $r = 5$ cm.}||exercise-4=={Integra todos los conceptos aprendidos para resolver: \par Dado un sistema de ecuaciones lineales: $2x + 3y = 7$ y $x - y = 1$. \par Encuentra los valores de $x$ e $y$.}}
+\XSIM{goal}{exercise}{points}{10}
+\XSIM{totalgoal}{points}{10}
+\XSIM{goal}{exercise}{bonus-points}{0}
+\XSIM{totalgoal}{bonus-points}{0}
+\XSIM{order}{1||2||3||4}
+\XSIM{use}{}
+\XSIM{use!}{}
+\XSIM{used}{exercise-1=={true}||exercise-2=={true}||exercise-3=={true}||exercise-4=={true}}
+\XSIM{print}{}
+\XSIM{print!}{}
+\XSIM{printed}{exercise-1=={true}||exercise-2=={true}||exercise-3=={true}||exercise-4=={true}}
+\XSIM{total-number}{4}
+\XSIM{exercise}{4}
+\XSIM{types}{exercise}
+\XSIM{idtypes}{1=={exercise}||2=={exercise}||3=={exercise}||4=={exercise}}
+\XSIM{collections}{exercise-1=={all exercises}||exercise-2=={all exercises}||exercise-3=={all exercises}||exercise-4=={all exercises}}
+\XSIM{collection:all exercises}{exercise-1||exercise-2||exercise-3||exercise-4}
+\setcounter{totalexerciseinall exercises}{4}
+\XSIM{id}{exercise-1=={1}||exercise-2=={2}||exercise-3=={3}||exercise-4=={4}}
+\XSIM{ID}{exercise-1=={1}||exercise-2=={2}||exercise-3=={3}||exercise-4=={4}}
+\XSIM{counter}{exercise-1=={1}||exercise-2=={2}||exercise-3=={3}||exercise-4=={4}}
+\XSIM{counter-value}{exercise-1=={1}||exercise-2=={2}||exercise-3=={3}||exercise-4=={4}}
+\XSIM{solution}{}
+\XSIM{chapter-value}{exercise-1=={5}||exercise-2=={5}||exercise-3=={5}||exercise-4=={6}}
+\XSIM{chapter}{exercise-1=={5}||exercise-2=={5}||exercise-3=={5}||exercise-4=={6}}
+\XSIM{section-value}{exercise-1=={2}||exercise-2=={2}||exercise-3=={2}||exercise-4=={3}}
+\XSIM{section}{exercise-1=={5.2}||exercise-2=={5.2}||exercise-3=={5.2}||exercise-4=={6.3}}
+\XSIM{sectioning}{exercise-1=={{5}{2}{3}{0}{0}}||exercise-2=={{5}{2}{3}{0}{0}}||exercise-3=={{5}{2}{4}{0}{0}}||exercise-4=={{6}{3}{2}{0}{0}}}
+\XSIM{subtitle}{exercise-1=={Álgebra Lineal}||exercise-2=={Trigonometría}||exercise-3=={Geometría}||exercise-4=={Práctica Final}}
+\XSIM{points}{exercise-3=={10}}
+\XSIM{bonus-points}{}
+\XSIM{page-value}{exercise-1=={29}||exercise-2=={30}||exercise-3=={30}||exercise-4=={38}}
+\XSIM{page}{exercise-1=={29}||exercise-2=={30}||exercise-3=={30}||exercise-4=={38}}
+\XSIM{tags}{}
+\XSIM{topics}{}
+\XSIM{userpoints}{exercise-3=={10}}
+\XSIM{bodypoints}{}
+\XSIM{userbonus-points}{}
+\XSIM{bodybonus-points}{}
