@@ -15,7 +15,7 @@
 %\usepackage{hyperref}
 \begin{document}
 	\textbf{Entorno tikzpicture} Sintaxis básica\\[5mm]
-\begin{tikzpicture}[scale=2] 
+\begin{tikzpicture}[scale=2]
 	\draw (0,0) -- (1,1);
 \end{tikzpicture}
 
@@ -46,7 +46,7 @@ Texto \begin{tikzpicture}[baseline=-0.5ex]
 \draw (0,0) -- (2,1) -- (3,0);
 \end{tikzpicture}
 
-2 - \verb|\draw (x,y) - (x,y);| 
+2 - \verb|\draw (x,y) - (x,y);|
 Descripción: Línea horizontal luego vertical
 Ejemplo: \verb|\draw (0,0) - (2,1);|
 
@@ -247,14 +247,34 @@ Ejemplo: \verb|\draw (0,0) - (2,1);|
 	\fill (\x,\y) circle (2pt);
 \end{tikzpicture} \\[3mm]
 
+\begin{tikzpicture}
+
+    \begin{tikzpicture}[scale=0.8]
+        % Triángulo
+        \draw[thick] (0,0) -- (4,0) -- (4,3) -- cycle;
+
+        % Arco del ángulo
+        \draw[blue,thick] (1,0) arc (0:36.87:1);
+
+        % Etiqueta
+        \node[blue] at (2,0.4) {$\theta$=36.87};
+
+        % Puntos
+        \fill (0,0) circle (2pt);
+        \fill (4,0) circle (2pt);
+        \fill (4,3) circle (2pt);
+
+        % Líneas guías
+        \draw[dashed] (0,0) -- (4,3);
+    \end{tikzpicture}
+
+
+\end{tikzpicture} \\[3mm]
+
 %\begin{tikzpicture}
 
 %\end{tikzpicture} \\[3mm]
 
-%\begin{tikzpicture}
-
-%\end{tikzpicture} \\[3mm]
 
 
-	
 \end{document}
